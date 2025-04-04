@@ -4,19 +4,22 @@ NAME = minishell
 # Compilation steps!
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LIBFT = libft/libft.a
 
 # Lib include
 CLIB = -lreadline
+
+LIBFT = libft/libft.a
 
 # src path
 SRC = src/
 
 UTILS = $(SRC)utils/
+PARSE = $(SRC)parse/
 
 # C files
 FILES = $(addprefix $(SRC), main.c) \
-		$(addprefix $(UTILS), signals.c error.c)
+		$(addprefix $(UTILS), signals.c error.c) \
+		$(addprefix $(PARSE), readline.c)
 
 OBJ   = $(FILES:.c=.o)
 
