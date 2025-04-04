@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/04 18:31:54 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/22 10:12:02 by sel-maaq          #+#    #+#             */
+/*   Updated: 2024/10/23 23:36:12 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+size_t	ft_strlen(const char *str)
 {
-	static char	*readline_in;
+	size_t	i;
 
-	signal_init();
-
-	while (1)
-	{
-		readline_in = readline("$> ");
-		if (readline_in == NULL)
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-		printf("%s\n", readline_in);
-		free(readline_in);
-	}
-
-	return (0);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }

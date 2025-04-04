@@ -4,44 +4,53 @@ NAME = minishell
 # Compilation steps!
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+LIBFT = libft/libft.a
 
 # Lib include
 CLIB = -lreadline
 
-# We back to those variables later (ofc after we finish mandatory!)
-MANDATORY = mandatory/
-BONUS = bonus/
-
-# ------------ MANDATORY ------------ #
-
 # src path
-MANDATORY_SRC = src/
-#
-MANDATORY_UTILS = $(MANDATORY_SRC)utils/
+SRC = src/
+
+UTILS = $(SRC)utils/
 
 # C files
-MANDATORY_FILES = $(addprefix $(MANDATORY_SRC), main.c) \
-				  $(addprefix $(MANDATORY_UTILS), signals.c error.c)
-MANDATORY_OBJ = $(MANDATORY_FILES:.c=.o)
+FILES = $(addprefix $(SRC), main.c) \
+		$(addprefix $(UTILS), signals.c error.c)
+
+OBJ   = $(FILES:.c=.o)
 
 # Rule to make $(NAME)
-$(NAME): $(MANDATORY_OBJ)
-	$(CC) $(CFLAGS) $^ $(CLIB) -o $@
+all: $(NAME)
+
+run : fresh
+	./$(NAME)
+
+fresh: all clean clearscr
+
+clearscr:
+	clear
 
 # ----------------------------------- #
+
+$(NAME): $(OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) $^ $(CLIB) $(LIBFT) -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<  -o $@
 
-all: $(NAME)
+$(LIBFT):
+	make -C libft
 
 clean:
-	@rm -f $(MANDATORY_OBJ)
+	@rm -f $(OBJ)
+	@make -C libft clean
 
 fclean: clean
 	@rm -f $(NAME)
+	@make -C libft fclean
 
 re: fclean all
 
 .PHONY: all clean fclean re
-.SECONDARY: $(MANDATORY_OBJ)
+.SECONDARY: $(OBJ)

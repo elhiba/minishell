@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/04 18:31:54 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/24 11:43:43 by sel-maaq          #+#    #+#             */
+/*   Updated: 2024/10/24 15:58:55 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	static char	*readline_in;
+	char	*s;
+	size_t	len;
 
-	signal_init();
-
-	while (1)
-	{
-		readline_in = readline("$> ");
-		if (readline_in == NULL)
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-		printf("%s\n", readline_in);
-		free(readline_in);
-	}
-
-	return (0);
+	if (!s1 || !s2)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	s = malloc(len + 1);
+	if (!s)
+		return (NULL);
+	ft_strlcpy(s, s1, ft_strlen(s1) + 1);
+	ft_strlcat(s, s2, len + 1);
+	return (s);
 }

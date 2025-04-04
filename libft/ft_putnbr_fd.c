@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/04 18:31:54 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/25 10:06:44 by sel-maaq          #+#    #+#             */
+/*   Updated: 2024/10/26 14:56:26 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+void	ft_putnbr_fd(int n, int fd)
 {
-	static char	*readline_in;
+	long	num;
+	long	digit_rep;
 
-	signal_init();
-
-	while (1)
+	num = n;
+	digit_rep = 1;
+	if (n < 0)
 	{
-		readline_in = readline("$> ");
-		if (readline_in == NULL)
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-		printf("%s\n", readline_in);
-		free(readline_in);
+		ft_putchar_fd('-', fd);
+		num = -num;
 	}
-
-	return (0);
+	else if (n == 0)
+	{
+		ft_putchar_fd('0', fd);
+		return ;
+	}
+	while ((num / digit_rep) >= 10)
+	{
+		digit_rep *= 10;
+	}
+	while (digit_rep != 0)
+	{
+		ft_putchar_fd('0' + (num / digit_rep), fd);
+		num = num % digit_rep;
+		digit_rep /= 10;
+	}
 }

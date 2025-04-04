@@ -1,34 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/04 18:31:54 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/23 12:34:58 by sel-maaq          #+#    #+#             */
+/*   Updated: 2024/10/23 23:39:08 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+int	ft_atoi(const char *str)
 {
-	static char	*readline_in;
+	int		i;
+	int		sign;
+	int		result;
 
-	signal_init();
-
-	while (1)
+	i = 0;
+	sign = 1;
+	result = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-')
 	{
-		readline_in = readline("$> ");
-		if (readline_in == NULL)
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-		printf("%s\n", readline_in);
-		free(readline_in);
+		sign = -1;
+		i++;
 	}
-
-	return (0);
+	else if (str[i] == '+')
+		i++;
+	while (ft_isdigit(str[i]))
+	{
+		result *= 10;
+		result += str[i] - '0';
+		i++;
+	}
+	return (result * sign);
 }

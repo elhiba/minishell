@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/04 18:31:54 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/26 12:45:53 by sel-maaq          #+#    #+#             */
+/*   Updated: 2024/10/26 15:45:38 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	static char	*readline_in;
+	int	i;
 
-	signal_init();
-
-	while (1)
+	i = 0;
+	if (!s || !f)
+		return ;
+	while (s[i])
 	{
-		readline_in = readline("$> ");
-		if (readline_in == NULL)
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-		printf("%s\n", readline_in);
-		free(readline_in);
+		f(i, &s[i]);
+		i++;
 	}
-
-	return (0);
 }

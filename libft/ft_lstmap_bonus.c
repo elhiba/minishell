@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/04 18:31:54 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/26 22:26:05 by sel-maaq          #+#    #+#             */
+/*   Updated: 2024/10/27 15:44:54 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	static char	*readline_in;
+	t_list	*new_lst;
+	t_list	*node;
 
-	signal_init();
-
-	while (1)
+	if (!f || !lst)
+		return (NULL);
+	new_lst = NULL;
+	while (lst)
 	{
-		readline_in = readline("$> ");
-		if (readline_in == NULL)
+		node = ft_lstnew(f(lst->content));
+		if (!node)
 		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
+			ft_lstclear(&new_lst, del);
+			return (NULL);
 		}
-		printf("%s\n", readline_in);
-		free(readline_in);
+		ft_lstadd_back(&new_lst, node);
+		lst = lst->next;
 	}
-
-	return (0);
+	return (new_lst);
 }

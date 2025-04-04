@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/04 18:31:54 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/22 11:52:46 by sel-maaq          #+#    #+#             */
+/*   Updated: 2024/10/23 23:40:13 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	static char	*readline_in;
+	size_t		i;
+	size_t		j;
+	size_t		dst_len;
+	size_t		src_len;
 
-	signal_init();
-
-	while (1)
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	j = 0;
+	i = dst_len;
+	if (dstsize <= dst_len)
+		return (dstsize + src_len);
+	while (i < (dstsize - 1) && src[j] != '\0')
 	{
-		readline_in = readline("$> ");
-		if (readline_in == NULL)
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-		printf("%s\n", readline_in);
-		free(readline_in);
+		dst[i] = src[j];
+		i++;
+		j++;
 	}
-
-	return (0);
+	dst[i] = '\0';
+	return (dst_len + src_len);
 }

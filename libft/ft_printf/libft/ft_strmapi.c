@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/04 18:31:54 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/26 15:46:11 by sel-maaq          #+#    #+#             */
+/*   Updated: 2024/10/26 15:55:44 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	static char	*readline_in;
+	int		i;
+	char	*arr;
 
-	signal_init();
-
-	while (1)
+	if (!s || !f)
+		return (NULL);
+	i = 0;
+	arr = malloc(ft_strlen(s) + 1);
+	if (!arr)
+		return (NULL);
+	while (s[i])
 	{
-		readline_in = readline("$> ");
-		if (readline_in == NULL)
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-		printf("%s\n", readline_in);
-		free(readline_in);
+		arr[i] = f(i, s[i]);
+		i++;
 	}
-
-	return (0);
+	arr[i] = '\0';
+	return (arr);
 }
