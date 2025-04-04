@@ -16,14 +16,17 @@ BONUS = bonus/
 
 # src path
 MANDATORY_SRC = src/
+#
+MANDATORY_UTILS = $(MANDATORY_SRC)utils/
 
 # C files
-MANDATORY_FILES = $(addprefix $(MANDATORY_SRC), main.c)
+MANDATORY_FILES = $(addprefix $(MANDATORY_SRC), main.c) \
+				  $(addprefix $(MANDATORY_UTILS), signals.c error.c)
 MANDATORY_OBJ = $(MANDATORY_FILES:.c=.o)
 
 # Rule to make $(NAME)
 $(NAME): $(MANDATORY_OBJ)
-	$(CC) $(CFLAGS) $< $(CLIB) -o $@
+	$(CC) $(CFLAGS) $^ $(CLIB) -o $@
 
 # ----------------------------------- #
 
