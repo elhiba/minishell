@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/04 20:57:05 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/05 21:10:23 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_readline(void)
 			exit(EXIT_SUCCESS);
 		}
 		printf("%s\n", readline_in);
+		add_history(readline_in);
 		free(readline_in);
 	}
 }
