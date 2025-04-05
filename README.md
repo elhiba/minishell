@@ -1,5 +1,5 @@
 <p align="center">
-	<img src=".badge/minishelle.png"/>
+	<img src=".badges/minishelle.png"/>
 </p> 
 
 <h1 align="center">
