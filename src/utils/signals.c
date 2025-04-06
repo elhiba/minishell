@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/04 22:49:01 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/06 10:49:38 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,11 @@ void	signal_init(void)
 	sa.sa_handler = signal_handler;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		error_handler("sigaction");
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		error_handler("sigaction");
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	signal_handler(int sig)
 {
-	if (sig == SIGQUIT)
-		return;
-
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);

@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-lastest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install dependencies
+        run: sudo apt update; sudo apt install -y build-essential
+
+      - name: Compile
+        run: make
+
+      - name: Run program
+        run: ./minishell < inputs.txt

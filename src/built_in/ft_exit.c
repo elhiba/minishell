@@ -6,8 +6,14 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:24:56 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/05 15:24:56 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/06 10:44:18 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/minishell.h"
 
+int	ft_exit()
+{
+	exit(EXIT_SUCCESS);
+	return (0);
+}
