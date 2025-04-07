@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 00:06:14 by sel-maaq          #+#    #+#             */
-/*   Updated: 2024/10/28 00:46:31 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:59:39 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_isalnum(int c)
 {
-	if (ft_isdigit(c) || ft_isalpha(c))
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z'))
 		return (1);
 	return (0);
 }

@@ -6,26 +6,32 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/05 21:10:23 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/07 12:02:50 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_readline(void)
+/*
+ * Waiting for a good idea to parse!*/
+void	ft_parse(t_data *vars)
 {
-	char	*readline_in;
+	(void)vars;
+}
 
+void	ft_readline(t_data *vars)
+{
 	while (1)
 	{
-		readline_in = readline("$> ");
-		if (readline_in == NULL)
+		vars->readline_in = readline("$> ");
+		if (vars->readline_in == NULL)
 		{
 			printf("exit\n");
 			exit(EXIT_SUCCESS);
 		}
-		printf("%s\n", readline_in);
-		add_history(readline_in);
-		free(readline_in);
+		ft_parse(vars);
+		printf("%s\n", vars->readline_in);
+		add_history(vars->readline_in);
+		free(vars->readline_in);
 	}
 }
