@@ -6,8 +6,13 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:25:01 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/05 15:25:01 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:50:26 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/minishell.h"
 
+int	do_unset(void)
+{
+	return (0);
+}

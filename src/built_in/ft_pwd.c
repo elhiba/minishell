@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:24:07 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/06 11:52:21 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/07 19:04:25 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 /*
  * we should use (getcwd) function!
  * */
-int	ft_pwd()
+int	do_pwd(void)
 {
 	char	cwd[PATH_MAX];
 	
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
 		error_handler("getcwd");
-	printf("%s", cwd);
+	printf("%s\n", cwd);
 	return (0);
 }
