@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 23:39:47 by sel-maaq          #+#    #+#             */
-/*   Updated: 2025/04/07 18:39:30 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:36:58 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 
 /* ---------------	STRINGS		--------------- */
+void	ft_bzero(void *s, size_t n);
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *str, int c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);

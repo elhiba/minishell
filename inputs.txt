@@ -1,4 +1,6 @@
 echo Hello
+echo -n Hi
+echo
 pwd
 cd ..
 env

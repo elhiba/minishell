@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 15:22:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/07 22:58:42 by moel-hib         ###   ########.fr       */
+/*   Created: 2025/04/07 22:36:15 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/04/07 22:36:36 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-/*
- * i think echo need only printf? isn't it?
- */
-int	do_echo(t_data *vars)
+void	ft_bzero(void *s, size_t n)
 {
-	if (ft_strcmp(vars->input.flags, "-n") == 0)
-		printf("%s", vars->input.inputs);
-	else if (vars->input.inputs)
-		printf("%s\n", vars->input.inputs);
-	else if ((!vars->input.flags || !vars->input.inputs ))
-		printf("\n");
+	size_t			i;
+	unsigned char	*s1;
 
-	return (0);
+	i = 0;
+	s1 = (unsigned char *)s;
+	while (i < n)
+		s1[i++] = 0;
 }

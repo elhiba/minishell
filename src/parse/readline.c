@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/07 19:05:19 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:51:48 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_builtin (t_data *vars)
 	if (ft_strcmp(vars->input.cmd, "cd") == 0)
 		do_cd(vars->input.inputs);
 	if (ft_strcmp(vars->input.cmd, "echo") == 0)
-		do_echo(vars->input.flags, vars->input.inputs);
+		do_echo(vars);
 	if (ft_strcmp(vars->input.cmd, "env") == 0)
 		do_env();
 	if (ft_strcmp(vars->input.cmd, "exit") == 0)
@@ -36,11 +36,19 @@ void	ft_builtin (t_data *vars)
 void	ft_parse(t_data *vars)
 {
 	char	**full_cmd;
+	int	i;
 
+	i = 0;
 	full_cmd = ft_split(vars->readline_in, 32);
-	
-	vars->input.cmd = full_cmd[0];
-	vars->input.inputs = full_cmd[1];
+
+	vars->input.cmd = full_cmd[i];
+	if (ft_strchr(full_cmd[1], '-'))
+	{
+		++i;
+		vars->input.flags = full_cmd[i];
+	}
+	++i;
+	vars->input.inputs = full_cmd[i];
 
 	ft_builtin(vars);
 }

@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/07 18:50:44 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:30:31 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	error_handler(char *error_name);
 
 /* built in functions */
 int		do_cd(char *path);
-int		do_echo(char *flag, char *input);
+int		do_echo(t_data *vars);
 int		do_env(void);
 int		do_exit(void);
 int		do_export(void);
