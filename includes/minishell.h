@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/09 14:22:19 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:50:53 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	handle_signals(void);
 void	sigint_handler(int sig);
 
 /* Parse */
-void	ft_readline(t_input *input);
 void	ft_parse(t_input *input);
 
 /* error handler */

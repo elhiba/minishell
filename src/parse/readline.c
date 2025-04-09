@@ -6,29 +6,11 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/09 13:02:05 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:04:13 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
-void	ft_readline(t_input *input)
-{
-	while (1)
-	{
-		input->readline_in = readline("$> ");
-		if (input->readline_in == NULL)
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
-		add_history(input->readline_in);
-		ft_parse(input);
-//		printf("%s\n", input->readline_in);
-		free(input->readline_in);
-	}
-}
 
 void	free_d_arr(char **arr)
 {
@@ -56,8 +38,6 @@ void	ft_parse(t_input *input)
 		input->flags = full_cmd[++i];
 	i++;
 	input->args = full_cmd[i];
-	ft_builtin(input);
-	free_d_arr(full_cmd);
 }
 
 /*

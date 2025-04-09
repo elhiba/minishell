@@ -6,11 +6,13 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/09 13:12:58 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/09 20:34:39 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+execut
 
 int	main(int ac, char **av, char **env)
 {
@@ -18,9 +20,22 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
-	bzero(&input, sizeof(input));
+	ft_bzero(&input, sizeof(input));
 	input.env = env;
 	handle_signals();
-	ft_readline(&input);
+	while (1)
+	{
+		input.readline_in = readline("$> ");
+		if (input.readline_in == NULL)
+		{
+			printf("exit\n");
+			exit(EXIT_SUCCESS);
+		}
+		add_history(input.readline_in);
+		ft_parse(&input);
+		ft_builtin(&input);
+		execute_cmd(input);
+		free(input.readline_in);
+	}
 	return (0);
 }
