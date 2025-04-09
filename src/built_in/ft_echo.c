@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:22:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/07 22:58:42 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/09 12:52:38 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 /*
  * i think echo need only printf? isn't it?
  */
-int	do_echo(t_data *vars)
+int	do_echo(t_input *input)
 {
-	if (ft_strcmp(vars->input.flags, "-n") == 0)
-		printf("%s", vars->input.inputs);
-	else if (vars->input.inputs)
-		printf("%s\n", vars->input.inputs);
-	else if ((!vars->input.flags || !vars->input.inputs ))
+	if (ft_strcmp(input->flags, "-n") == 0)
+		printf("%s", input->args);
+	else if (input->args)
+		printf("%s\n", input->args);
+	else if ((!input->flags || !input->args))
 		printf("\n");
-
 	return (0);
 }

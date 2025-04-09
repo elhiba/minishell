@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/06 10:49:38 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/09 10:22:36 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	signal_init(void)
+void	handle_signals(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
 	sigaddset(&sa.sa_mask, SIGQUIT);
 	sa.sa_flags = SA_RESTART;
 
-	sa.sa_handler = signal_handler;
+	sa.sa_handler = sigint_handler;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		error_handler("sigaction");
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	signal_handler(int sig)
+void	sigint_handler(int sig)
 {
 	if (sig == SIGINT)
 	{

@@ -3,69 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/07 22:51:48 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:02:05 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
- * Waiting for a good idea to parse!*/
 
-void	ft_builtin (t_data *vars)
-{
-	if (ft_strcmp(vars->input.cmd, "cd") == 0)
-		do_cd(vars->input.inputs);
-	if (ft_strcmp(vars->input.cmd, "echo") == 0)
-		do_echo(vars);
-	if (ft_strcmp(vars->input.cmd, "env") == 0)
-		do_env();
-	if (ft_strcmp(vars->input.cmd, "exit") == 0)
-		do_exit();
-	if (ft_strcmp(vars->input.cmd, "export") == 0)
-		do_export();
-	if (ft_strcmp(vars->input.cmd, "pwd") == 0)
-		do_pwd();
-	if (ft_strcmp(vars->input.cmd, "unset") == 0)
-		do_unset();
-}
-
-void	ft_parse(t_data *vars)
-{
-	char	**full_cmd;
-	int	i;
-
-	i = 0;
-	full_cmd = ft_split(vars->readline_in, 32);
-
-	vars->input.cmd = full_cmd[i];
-	if (ft_strchr(full_cmd[1], '-'))
-	{
-		++i;
-		vars->input.flags = full_cmd[i];
-	}
-	++i;
-	vars->input.inputs = full_cmd[i];
-
-	ft_builtin(vars);
-}
-
-void	ft_readline(t_data *vars)
+void	ft_readline(t_input *input)
 {
 	while (1)
 	{
-		vars->readline_in = readline("$> ");
-		if (vars->readline_in == NULL)
+		input->readline_in = readline("$> ");
+		if (input->readline_in == NULL)
 		{
 			printf("exit\n");
 			exit(EXIT_SUCCESS);
 		}
-		ft_parse(vars);
-//		printf("%s\n", vars->readline_in);
-		add_history(vars->readline_in);
-		free(vars->readline_in);
+		add_history(input->readline_in);
+		ft_parse(input);
+//		printf("%s\n", input->readline_in);
+		free(input->readline_in);
 	}
+}
+
+void	free_d_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+void	ft_parse(t_input *input)
+{
+	char	**full_cmd;
+	int		i;
+
+	i = 0;
+	full_cmd = ft_split(input->readline_in, 32);
+
+	input->cmd = full_cmd[0];
+	if (ft_strchr(full_cmd[1], '-'))
+		input->flags = full_cmd[++i];
+	i++;
+	input->args = full_cmd[i];
+	ft_builtin(input);
+	free_d_arr(full_cmd);
+}
+
+/*
+ * Waiting for a good idea to parse!*/
+
+void	ft_builtin(t_input *input)
+{
+	if (ft_strcmp(input->cmd, "cd") == 0)
+		do_cd(input->args);
+	if (ft_strcmp(input->cmd, "echo") == 0)
+		do_echo(input);
+	if (ft_strcmp(input->cmd, "env") == 0)
+		do_env(input);
+	if (ft_strcmp(input->cmd, "exit") == 0)
+		do_exit();
+	if (ft_strcmp(input->cmd, "export") == 0)
+		do_export();
+	if (ft_strcmp(input->cmd, "pwd") == 0)
+		do_pwd();
+	if (ft_strcmp(input->cmd, "unset") == 0)
+		do_unset();
 }

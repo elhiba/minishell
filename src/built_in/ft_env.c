@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:46:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/07 18:47:27 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:16:43 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	do_env(void)
+/*
+ * this is probably a complete function!
+ *
+ * 	
+ * */
+void	do_env(t_input *input)
 {
-	return (0);
+	int	i;
+
+	i = 0;
+	while (input->env[i])
+	{
+		printf("%s\n", input->env[i]);
+		i++;
+	}
 }
