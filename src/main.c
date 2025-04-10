@@ -6,7 +6,11 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/04/09 20:34:39 by sel-maaq         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/09 15:59:32 by moel-hib         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +24,12 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
+<<<<<<< Updated upstream
 	ft_bzero(&input, sizeof(input));
+=======
+
+	bzero(&input, sizeof(input));
+>>>>>>> Stashed changes
 	input.env = env;
 	handle_signals();
 	while (1)
