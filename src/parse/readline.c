@@ -6,57 +6,48 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/09 16:04:13 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/10 17:02:42 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_d_arr(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
 void	ft_parse(t_input *input)
 {
-	char	**full_cmd;
-	int		i;
+	t_token	*token;
+	t_token	*node;
+	char	**args;
 
-	i = 0;
-	full_cmd = ft_split(input->readline_in, 32);
+	token = NULL;
+	args = ft_split(input->readline_in, ' ');
+	if (!args)
+		error_handler("Split Args");
 
-	input->cmd = full_cmd[0];
-	if (ft_strchr(full_cmd[1], '-'))
-		input->flags = full_cmd[++i];
-	i++;
-	input->args = full_cmd[i];
+	while (*args)
+	{
+		node = create_node(*args);
+		add_list(&token, node);
+		args++;
+	}
+
+	ft_builtin(token);
+	//free_d_arr(args);
 }
 
-/*
- * Waiting for a good idea to parse!*/
-
-void	ft_builtin(t_input *input)
+void	ft_builtin(t_token *input)
 {
-	if (ft_strcmp(input->cmd, "cd") == 0)
-		do_cd(input->args);
-	if (ft_strcmp(input->cmd, "echo") == 0)
+	if (ft_strcmp(input->arg, "cd") == 0)
+		do_cd(input->next->arg);
+	if (ft_strcmp(input->arg, "echo") == 0)
 		do_echo(input);
-	if (ft_strcmp(input->cmd, "env") == 0)
-		do_env(input);
-	if (ft_strcmp(input->cmd, "exit") == 0)
+	if (ft_strcmp(input->arg, "env") == 0)
+		do_env();
+	if (ft_strcmp(input->arg, "exit") == 0)
 		do_exit();
-	if (ft_strcmp(input->cmd, "export") == 0)
+	if (ft_strcmp(input->arg, "export") == 0)
 		do_export();
-	if (ft_strcmp(input->cmd, "pwd") == 0)
+	if (ft_strcmp(input->arg, "pwd") == 0)
 		do_pwd();
-	if (ft_strcmp(input->cmd, "unset") == 0)
+	if (ft_strcmp(input->arg, "unset") == 0)
 		do_unset();
 }

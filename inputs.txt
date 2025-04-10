@@ -1,6 +1,7 @@
-echo Hello
-echo -n Hi
+echo Hello All we had to was following the damn train cj!
+echo -n Hi it just flag test!
 echo
 pwd
 cd ..
+pwd
 env

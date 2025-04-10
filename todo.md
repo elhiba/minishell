@@ -1,7 +1,9 @@
-# to do
+# To do
 
 ## Parsing
 - handle errors
+- handle variable expansion  
+
 
 ## Exec
-- do 
+- complete cd - env - exit(args) - export - unset  

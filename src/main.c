@@ -6,13 +6,11 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/09 20:34:39 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:49:06 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-execut
 
 int	main(int ac, char **av, char **env)
 {
@@ -33,8 +31,7 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(input.readline_in);
 		ft_parse(&input);
-		ft_builtin(&input);
-		execute_cmd(input);
+//		execute_cmd(input);
 		free(input.readline_in);
 	}
 	return (0);
