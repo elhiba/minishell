@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/10 17:02:42 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/12 21:50:44 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,26 @@ void	ft_parse(t_input *input)
 	t_token	*token;
 	t_token	*node;
 	char	**args;
+	int		i;
 
+	i = 0;
 	token = NULL;
-	args = ft_split(input->readline_in, ' ');
+	args = ft_spliter(input->readline_in);
 	if (!args)
 		error_handler("Split Args");
 
-	while (*args)
+	while (args[i])
 	{
-		node = create_node(*args);
+		node = create_node(args[i]);
 		add_list(&token, node);
-		args++;
+		i++;
 	}
 
 	ft_builtin(token);
-	//free_d_arr(args);
+	ft_execution(input->arg, NULL);
+
+	if (args)
+		free_d_arr(args);
 }
 
 void	ft_builtin(t_token *input)

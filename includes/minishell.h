@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/10 15:44:28 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/12 21:50:08 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,10 @@ typedef struct s_input
 {
 	char	*readline_in;
 
-	char	*args;
 	char	**env;
+	char	**arg;
 
 	t_token token;
-	//char	*cmd;
-	//char	*flags;
 }	t_input;
 
 
@@ -64,11 +62,16 @@ int		do_export(void);
 int		do_pwd(void);
 int		do_unset(void);
 
+/* Excecution! */
+void	ft_execution(char **arg, char *env);
+
 /* cleaner functions */
 void	free_d_arr(char **arr);
 
-/* New split functions*/
-char	**ft_splits(char *arg, char *delimits);
+/* New spliter function:
+ * it can remove any other tabs stuff and replaced by space
+ */
+char	**ft_spliter(char *args);
 
 /* Linked list stuff*/
 t_token	*create_node(char *arg);

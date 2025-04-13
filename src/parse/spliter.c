@@ -1,48 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 10:23:14 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/12 15:18:43 by moel-hib         ###   ########.fr       */
+/*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/04/12 16:01:47 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+# include "../../includes/minishell.h"
 
-void	free_d_arr(char **arr)
+char	*ft_remove_tabs(char *args)
 {
-	char **ptr;
 	int	i;
 
-	ptr = arr;
 	i = 0;
-	while (arr[i])
+	while (args[i])
 	{
-		free(ptr[i]);
-		i++;
-	}
-	free(ptr);
-}
-
-// shitySplit function!
-char **ft_splits(char *arg, char *delimits)
-{
-	int		i;
-	int		len;
-	char	**args;
-
-	i = 0;
-	len = ft_strlen(delimits);
-
-	while (i < len)
-	{
-		args = ft_split(arg, delimits[i]);
-		if (!args)
-			break;
+		if (args[i] == '\t' || args[i] == '\n')
+			args[i] = ' ';
 		i++;
 	}
 	return (args);
+}
+
+char	**ft_spliter(char *args)
+{
+	char	**split;
+
+	ft_remove_tabs(args);
+	split = ft_split(args, ' ');
+	if (!split)
+		error_handler("Split");
+	return (split);
 }
