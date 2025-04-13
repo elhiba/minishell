@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/12 21:50:44 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/13 11:59:48 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,33 @@ void	ft_parse(t_input *input)
 		i++;
 	}
 
-	ft_builtin(token);
-	ft_execution(input->arg, NULL);
+	if (ft_builtin(token) == 0)
+		;
+	else 
+		ft_execution(token->arg, NULL);
 
 	if (args)
 		free_d_arr(args);
 }
 
-void	ft_builtin(t_token *input)
+int	ft_builtin(t_token *input)
 {
+	int	status;
+
+	status = 1;
 	if (ft_strcmp(input->arg, "cd") == 0)
-		do_cd(input->next->arg);
+		status = do_cd(input->next->arg);
 	if (ft_strcmp(input->arg, "echo") == 0)
-		do_echo(input);
+		status = do_echo(input);
 	if (ft_strcmp(input->arg, "env") == 0)
-		do_env();
+		status = do_env();
 	if (ft_strcmp(input->arg, "exit") == 0)
-		do_exit();
+		status = do_exit();
 	if (ft_strcmp(input->arg, "export") == 0)
-		do_export();
+		status = do_export();
 	if (ft_strcmp(input->arg, "pwd") == 0)
-		do_pwd();
+		status = do_pwd();
 	if (ft_strcmp(input->arg, "unset") == 0)
-		do_unset();
+		status = do_unset();
+	return (status);
 }

@@ -5,3 +5,34 @@ pwd
 cd ..
 pwd
 env
+echo Hello, world!
+pwd
+ls
+whoami
+NAME=Amine
+echo "My name is $NAME"
+ls -l; echo "Listed files"
+cat /etc/passwd | grep root
+echo "This is a test" > testfile.txt
+cat < testfile.txt
+echo "Another line" >> testfile.txt
+cat /etc/passwd | grep root > root_users.txt
+export TEST_VAR="testing"
+env | grep TEST_VAR
+cd ..
+pwd
+cd /
+pwd
+false && echo "This won't print"
+true || echo "This won't print either"
+true && echo "This will print"
+false || echo "This will print too"
+echo "Double quotes test"
+echo 'Single quotes test'
+echo Mixed\ quotes\ test
+export FOO=bar
+echo $FOO
+unset FOO
+echo $FOO
+echo $(ls)
+rm -f testfile.txt root_users.txt

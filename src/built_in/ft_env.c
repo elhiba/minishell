@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:46:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/10 16:53:06 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/13 11:54:51 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
  * this is probably a complete function!
  */
-void	do_env(void)
+int	do_env(void)
 {
 //	int	i;
 //
@@ -25,4 +25,5 @@ void	do_env(void)
 //		printf("%s\n", input->env[i]);
 //		i++;
 //	}
+	return (0);
 }

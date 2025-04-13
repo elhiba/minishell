@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/12 21:50:08 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/13 11:54:21 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdio.h>
+# include <sys/wait.h>
 
 typedef struct s_token
 {
@@ -53,17 +54,17 @@ void	ft_parse(t_input *input);
 void	error_handler(char *error_name);
 
 /* built in functions */
-void	ft_builtin(t_token *input);
+int		ft_builtin(t_token *input);
 int		do_cd(char *path);
 int		do_echo(t_token *input);
-void	do_env(void);
+int		do_env(void);
 int		do_exit(void);
 int		do_export(void);
 int		do_pwd(void);
 int		do_unset(void);
 
 /* Excecution! */
-void	ft_execution(char **arg, char *env);
+void	ft_execution(char *arg, char *env);
 
 /* cleaner functions */
 void	free_d_arr(char **arr);
