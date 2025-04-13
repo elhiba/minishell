@@ -5,6 +5,7 @@ pwd
 cd ..
 pwd
 env
+clear
 echo Hello, world!
 pwd
 ls

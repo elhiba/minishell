@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/13 11:59:48 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/13 15:42:54 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_parse(t_input *input)
 	if (ft_builtin(token) == 0)
 		;
 	else 
-		ft_execution(token->arg, NULL);
+		ft_execution(token->arg, NULL, input);
 
 	if (args)
 		free_d_arr(args);
