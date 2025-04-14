@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:22:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/10 16:06:17 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/13 16:06:43 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 /*
  * It hard coded lol!, but it works as we expected it to do!
  */
-int	do_echo(t_token *input)
+int	do_echo(t_token *tok_list)
 {
 	t_token	*ptr;
 	int		is_n;
 
 	is_n = 0;
-	ptr = input->next;
+	ptr = tok_list->next;
 	if (!ptr)
 		printf("\n");
 	else if (ft_strcmp(ptr->arg, "-n") == 0)
@@ -40,5 +40,5 @@ int	do_echo(t_token *input)
 	if (!is_n)
 		printf("\n");
 
-	return (0);
+	return (1);
 }

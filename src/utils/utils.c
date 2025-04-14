@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:23:14 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/12 15:18:43 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/13 18:15:03 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_token_list(t_token **head)
+{
+	t_token	*tmp;
+	t_token	*next;
+
+	if (!head || !*head)
+		return ;
+	tmp = *head;
+	while (tmp)
+	{
+		next = tmp->next;
+		if (tmp->arg)
+			free(tmp->arg);
+		free(tmp);
+		tmp = next;
+	}
+	*head = NULL;
+}
 
 void	free_d_arr(char **arr)
 {

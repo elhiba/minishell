@@ -38,7 +38,12 @@ RESET = \e[0m
 # Rule to make $(NAME)
 all: $(NAME)
 
-run : fresh
+# make features
+
+val: $(NAME) clearscr
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+
+run: fresh
 	./$(NAME)
 
 fresh: all clean clearscr

@@ -6,24 +6,25 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:46:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/13 11:54:51 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/14 11:17:55 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
 /*
  * this is probably a complete function!
  */
-int	do_env(void)
+int	do_env(t_data *data)
 {
-//	int	i;
-//
-//	i = 0;
-//	while (input->env[i])
-//	{
-//		printf("%s\n", input->env[i]);
-//		i++;
-//	}
-	return (0);
+	int	i;
+
+	i = 0;
+	while (data->env[i])
+	{
+		printf("%s\n", data->env[i]);
+		i++;
+	}
+	return (1);
 }

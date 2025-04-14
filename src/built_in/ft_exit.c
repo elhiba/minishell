@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:24:56 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/07 18:41:20 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/14 11:18:02 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	do_exit()
+int	do_exit(t_data *data)
 {
+	free_token_list(&data->token_list);
 	exit(EXIT_SUCCESS);
-	return (0);
+	return (1);
 }

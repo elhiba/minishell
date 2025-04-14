@@ -3,42 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:51:50 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/10 15:47:03 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/14 11:05:01 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token	*create_node(char *arg)
+void	add_token_node(t_token **head, char *arg)
 {
-	t_token	*node;
+	t_token	*new;
+	t_token	*curr;
 
-	node = malloc(sizeof(t_token));
-
-	node->arg = ft_strdup(arg);
-	node->next = NULL;
-	node->prev = NULL;
-
-	return (node);
-}
-
-void	add_list(t_token **head, t_token *node)
-{
-	t_token	*ptr;
-
-	ptr = *head;
-	if (!node)
+	if (!arg)
 		return ;
-
-	else if (!*head)
-		*head = node;
+	new = malloc(sizeof(t_token));
+	if (!new)
+		error_handler("Malloc failed");
+	new->arg = arg;
+	new->next = NULL;
+	new->prev = NULL;
+	if (!*head)
+		*head = new;
 	else
 	{
-		while (ptr->next)
-			ptr = ptr->next;
-		ptr->next = node;
+		curr = *head;
+		while (curr->next)
+			curr = curr->next;
+		curr->next = new;
+		new->prev = curr;
 	}
 }

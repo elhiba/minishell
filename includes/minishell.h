@@ -6,9 +6,11 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/13 21:50:47 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:30:48 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -31,15 +33,14 @@ typedef struct s_token
 	struct s_token *prev;
 } t_token;
 
-typedef struct s_input
+typedef struct s_data
 {
 	char	*readline_in;
 
 	char	**env;
-	char	**arg;
 
-	t_token token;
-}	t_input;
+	t_token *token_list;
+}	t_data;
 
 
 /* Signal func */
@@ -47,27 +48,27 @@ void	handle_signals(void);
 void	sigint_handler(int sig);
 
 /* Parse */
-void	ft_readline(t_input *input);
-void	ft_parse(t_input *input);
+void	ft_parse(t_data *data);
 
 /* error handler */
 void	error_handler(char *error_name);
 
 /* built in functions */
-int		ft_builtin(t_token *input);
+int		ft_builtin(t_data *data);
 int		do_cd(char *path);
-int		do_echo(t_token *input);
-int		do_env(void);
-int		do_exit(void);
+int		do_echo(t_token *token_list);
+int		do_env(t_data *data);
+int		do_exit(t_data *data);
 int		do_export(void);
 int		do_pwd(void);
 int		do_unset(void);
 
 /* Excecution! */
-void	ft_execution(char *arg, char *env, t_input *input);
+void	ft_execution(char *arg, char *env, t_data *data);
 
-/* cleaner functions */
+/* clean-up functions */
 void	free_d_arr(char **arr);
+void	free_token_list(t_token **head);
 
 /* New spliter function:
  * it can remove any other tabs stuff and replaced by space
@@ -75,7 +76,6 @@ void	free_d_arr(char **arr);
 char	**ft_spliter(char *args);
 
 /* Linked list stuff*/
-t_token	*create_node(char *arg);
-void	add_list(t_token **head, t_token *node);
+void	add_token_node(t_token **head, char *arg);
 
 #endif
