@@ -40,7 +40,7 @@ all: $(NAME)
 
 # make features
 
-val: $(NAME) clearscr
+val: fresh
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
 run: fresh

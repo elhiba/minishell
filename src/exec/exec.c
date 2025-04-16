@@ -6,49 +6,94 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/14 14:41:25 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:09:52 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/minishell.h"
 
-char	*ft_merge(char *arg)
+char	*join_path(const char *dir, const char *cmd)
 {
-	char *cmd;
-	cmd = ft_strjoin("/bin/", arg);
+	char	*tmp;
+	char	*full_path;
+
+	tmp = ft_strjoin(dir, "/");
+	full_path = ft_strjoin(tmp, cmd);
+	free(tmp);
+	return (full_path);
+}
+
+char	*check_in_path(char *cmd)
+{
+	char	*full_cmd;
+	char	**dirs;
+	int		i;
+
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
+	dirs = ft_split(getenv("PATH"), ':');
+	if (!dirs)
+		error_handler("path malloc error"); //free list in error 
+	i = 0;
+	while (dirs[i])
+	{
+		full_cmd = join_path(dirs[i], cmd);
+		if (access(full_cmd, X_OK) == 0)
+			return (free_d_arr(dirs), full_cmd);
+		free(full_cmd);
+		i++;
+	}
+	free_d_arr(dirs);
 	return (cmd);
 }
 
-
-
-void	ft_execution(char *arg, char *env, t_data *data)
+char	**build_argv(t_token *tokens)
 {
-	(void)env;
-	pid_t	pid_child;
+	char	**argv;
+	int		count;
+	int		i;
+	t_token	*tmp;
+
+	count = 0;
+	tmp = tokens;
+	while (tmp)
+	{
+		count++;
+		tmp = tmp->next;
+	}
+	argv = malloc(sizeof(char *) * (count + 1));
+	if (!argv)
+		error_handler("Malloc failed");
+	i = 0;
+	while (tokens)
+	{
+		argv[i] = tokens->arg;
+		tokens = tokens->next;
+		i++;
+	}
+	argv[i] = NULL;
+	return (argv);
+}
+
+void	ft_execution(t_data *data)
+{
 	int		status;
+	pid_t	pid_child;
 	char	*cmd;
-	char	**argv = NULL;
-	char	**envi = data->env;
+	char	**argv;
 
-	argv = (char **)malloc(sizeof(char *) * 3);
-	*argv = data->token_list->arg;
-	if (data->token_list->next)
-		argv[1] = data->token_list->next->arg;
-	*(argv + 2) = NULL;
-
-	cmd = ft_merge(arg);
-	//*argv = arg;
+	cmd = check_in_path(data->token_list->arg);
+	argv = build_argv(data->token_list);
 	pid_child = fork();
 	status = 0;
-
 	if (pid_child > 0)
 		wait(&status);
 	if (pid_child == 0)
 	{
-		if (execve(cmd, argv, envi) == -1)
-			error_handler(arg);
+		if (execve(cmd, argv, data->env) == -1)
+			error_handler(cmd);
 	}
 	free_token_list(&data->token_list);
-	wait(&status);
+	free(argv);
 }

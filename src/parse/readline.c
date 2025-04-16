@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/14 15:24:08 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:18:55 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 // 	}
 // }
 
-
-
 void	ft_parse(t_data *data)
 {
 	t_token	*token_list;
@@ -36,17 +34,17 @@ void	ft_parse(t_data *data)
 	args = ft_spliter(data->readline_in);
 	if (!args)
 		error_handler("Split Args");
-
 	while (args[i])
 	{
 		if (getenv(args[i]))
 			args[i] = getenv(args[i]);
 		add_token_node(&token_list, args[i++]);
 	}
-
 	data->token_list = token_list;
 	if (ft_builtin(data) == 0 && token_list)
-		ft_execution(token_list->arg, NULL, data);
+		ft_execution(data);
+	else
+		free_token_list(&token_list);
 }
 
 int	ft_builtin(t_data *data)
@@ -56,7 +54,6 @@ int	ft_builtin(t_data *data)
 
 	if (!data || !data->token_list || !data->token_list->arg)
 		return (0);
-
 	tok_list = data->token_list;
 	if (ft_strcmp(tok_list->arg, "cd") == 0)
 		status = do_cd(tok_list->next->arg);

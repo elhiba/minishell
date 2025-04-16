@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/14 15:30:48 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:31:26 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		do_pwd(void);
 int		do_unset(void);
 
 /* Excecution! */
-void	ft_execution(char *arg, char *env, t_data *data);
+void	ft_execution(t_data *data);
 
 /* clean-up functions */
 void	free_d_arr(char **arr);

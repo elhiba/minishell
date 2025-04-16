@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/14 11:17:47 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:24:01 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(data.readline_in);
 		ft_parse(&data);
-//		execute_cmd(data);
 	}
 	return (0);
 }
