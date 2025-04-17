@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:24:07 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/16 10:28:36 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:18:01 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	do_pwd(void)
 	char	cwd[PATH_MAX];
 
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
-		error_handler("getcwd");
+		error_handler("getcwd", NULL);
 	printf("%s\n", cwd);
 	return (1);
 }

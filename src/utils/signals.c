@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/09 10:22:36 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:19:58 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handle_signals(void)
 
 	sa.sa_handler = sigint_handler;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
-		error_handler("sigaction");
+		error_handler("sigaction", NULL);
 	signal(SIGQUIT, SIG_IGN);
 }
 

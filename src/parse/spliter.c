@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/12 16:01:47 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:19:26 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ char	**ft_spliter(char *args)
 	ft_remove_tabs(args);
 	split = ft_split(args, ' ');
 	if (!split)
-		error_handler("Split");
+		error_handler("Split", NULL);
 	return (split);
 }

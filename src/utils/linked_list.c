@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:51:50 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/14 11:05:01 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:19:51 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	add_token_node(t_token **head, char *arg)
 		return ;
 	new = malloc(sizeof(t_token));
 	if (!new)
-		error_handler("Malloc failed");
+		error_handler("Malloc failed", NULL);
 	new->arg = arg;
 	new->next = NULL;
 	new->prev = NULL;

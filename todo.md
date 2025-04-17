@@ -14,5 +14,3 @@
 - handle exit status (add in struct maybe)
 - handle envirenement updates
 - complete cd(update env) - exit(args) - export - unset
-- Should all args fully enter in any function we need double pointer for it :p;
-- We had problem on args!

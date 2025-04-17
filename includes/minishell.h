@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/15 16:31:26 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:17:48 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_token
 typedef struct s_data
 {
 	char	*readline_in;
-
 	char	**env;
 
 	t_token *token_list;
@@ -51,11 +50,11 @@ void	sigint_handler(int sig);
 void	ft_parse(t_data *data);
 
 /* error handler */
-void	error_handler(char *error_name);
+void	error_handler(char *error_name, t_data *data);
 
 /* built in functions */
 int		ft_builtin(t_data *data);
-int		do_cd(char *path);
+int		do_cd(t_data *data);
 int		do_echo(t_token *token_list);
 int		do_env(t_data *data);
 int		do_exit(t_data *data);

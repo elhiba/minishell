@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/16 15:09:52 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:18:31 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,28 @@ char	*join_path(const char *dir, const char *cmd)
 	return (full_path);
 }
 
-char	*check_in_path(char *cmd)
+char	*check_in_path(t_token *list)
 {
+	char	*cmd;
 	char	*full_cmd;
 	char	**dirs;
 	int		i;
 
+	cmd = list->arg;
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	dirs = ft_split(getenv("PATH"), ':');
 	if (!dirs)
-		error_handler("path malloc error"); //free list in error 
+		error_handler("path malloc error", NULL);
 	i = 0;
 	while (dirs[i])
 	{
 		full_cmd = join_path(dirs[i], cmd);
 		if (access(full_cmd, X_OK) == 0)
-			return (free_d_arr(dirs), full_cmd);
+		{
+			list->arg = full_cmd;
+			return (free(cmd), free_d_arr(dirs), full_cmd);
+		}
 		free(full_cmd);
 		i++;
 	}
@@ -48,7 +53,7 @@ char	*check_in_path(char *cmd)
 	return (cmd);
 }
 
-char	**build_argv(t_token *tokens)
+char	**build_argv(t_data *data, t_token *tokens)
 {
 	char	**argv;
 	int		count;
@@ -64,7 +69,7 @@ char	**build_argv(t_token *tokens)
 	}
 	argv = malloc(sizeof(char *) * (count + 1));
 	if (!argv)
-		error_handler("Malloc failed");
+		error_handler("Malloc failed", data);
 	i = 0;
 	while (tokens)
 	{
@@ -83,8 +88,8 @@ void	ft_execution(t_data *data)
 	char	*cmd;
 	char	**argv;
 
-	cmd = check_in_path(data->token_list->arg);
-	argv = build_argv(data->token_list);
+	cmd = check_in_path(data->token_list);
+	argv = build_argv(data, data->token_list);
 	pid_child = fork();
 	status = 0;
 	if (pid_child > 0)
@@ -92,7 +97,7 @@ void	ft_execution(t_data *data)
 	if (pid_child == 0)
 	{
 		if (execve(cmd, argv, data->env) == -1)
-			error_handler(cmd);
+			(free(argv), error_handler(cmd, data));
 	}
 	free_token_list(&data->token_list);
 	free(argv);
