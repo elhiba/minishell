@@ -17,6 +17,9 @@ cat /etc/passwd | grep root
 echo "This is a test" > testfile.txt
 cat < testfile.txt
 echo "Another line" >> testfile.txt
+echo $NAME
+echo $USER
+echo $PATH Also all we had to was following the damn train cj!
 cat /etc/passwd | grep root > root_users.txt
 export TEST_VAR="testing"
 env | grep TEST_VAR
