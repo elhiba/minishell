@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/17 22:18:55 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/19 10:43:42 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,37 @@
 // 	}
 // }
 
+char	*expander(char *env, char *ptr)
+{
+	char	*tenv;
+
+	tenv = getenv(env);
+	if (*env == '?')
+		return (strdup("STATUS!"));
+	free(ptr);
+	ptr = NULL;
+	if (tenv)
+		return (strdup(tenv));
+	return (strdup("\0"));
+}
+
+void	dollar_expand(t_token *token)
+{
+	t_token	*ptr;
+	char	*env;
+
+	ptr = token;
+	while (ptr)
+	{
+		if ((env = ft_strchr(ptr->arg, '$')))
+		{
+			++env;
+			ptr->arg = expander(env, ptr->arg);
+		}
+		ptr = ptr->next;
+	}
+}
+
 void	ft_parse(t_data *data)
 {
 	t_token	*token_list;
@@ -35,10 +66,9 @@ void	ft_parse(t_data *data)
 	if (!args)
 		error_handler("Split Args", NULL);
 	while (args[i])
-	{
 		add_token_node(&token_list, args[i++]);
-	}
 	free(args);
+	dollar_expand(token_list);
 	data->token_list = token_list;
 	if (ft_builtin(data) == 0 && token_list)
 		ft_execution(data);
