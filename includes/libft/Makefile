@@ -11,7 +11,7 @@ SRC =	ft_isalnum.c ft_split.c \
 		ft_strjoin.c ft_strlcat.c \
 		ft_strlcpy.c ft_strlen.c \
 		ft_strncmp.c ft_strcmp.c \
-		ft_bzero.c
+		ft_bzero.c ft_substr.c
 
 OBJ = $(SRC:.c=.o)
 

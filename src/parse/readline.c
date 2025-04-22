@@ -6,13 +6,12 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/19 10:43:42 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:27:54 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../../includes/minishell.h"
+#include <string.h>
 
 // void	print_list(t_token *head)
 // {
@@ -27,13 +26,20 @@ char	*expander(char *env, char *ptr)
 {
 	char	*tenv;
 
+	++env;
 	tenv = getenv(env);
 	if (*env == '?')
 		return (strdup("STATUS!"));
-	free(ptr);
-	ptr = NULL;
+	if (ptr[0] != '$')
+	{
+		if (!tenv)
+			return (ft_substr(ptr, 0, (ft_strlen(ptr) - ft_strlen(env)) - 1));
+		return (ft_strjoin(ft_substr(ptr, 0, (ft_strlen(ptr) - ft_strlen(env)) - 1), ft_strdup(tenv)));
+	}
 	if (tenv)
 		return (strdup(tenv));
+	free(ptr);
+	ptr = NULL;
 	return (strdup("\0"));
 }
 
@@ -46,10 +52,7 @@ void	dollar_expand(t_token *token)
 	while (ptr)
 	{
 		if ((env = ft_strchr(ptr->arg, '$')))
-		{
-			++env;
 			ptr->arg = expander(env, ptr->arg);
-		}
 		ptr = ptr->next;
 	}
 }
