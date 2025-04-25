@@ -6,12 +6,11 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/22 11:27:54 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:03:34 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <string.h>
 
 // void	print_list(t_token *head)
 // {
@@ -22,40 +21,27 @@
 // 	}
 // }
 
-char	*expander(char *env, char *ptr)
+void	char_remover(t_data *data, char	*str, int	character)
 {
-	char	*tenv;
+	int	i;
+	int	j;
 
-	++env;
-	tenv = getenv(env);
-	if (*env == '?')
-		return (strdup("STATUS!"));
-	if (ptr[0] != '$')
+	i = 0;
+	j = 0;
+	while (str[i])
 	{
-		if (!tenv)
-			return (ft_substr(ptr, 0, (ft_strlen(ptr) - ft_strlen(env)) - 1));
-		return (ft_strjoin(ft_substr(ptr, 0, (ft_strlen(ptr) - ft_strlen(env)) - 1), ft_strdup(tenv)));
+		if (str[i] != character)
+			str[j++] = str[i];
+		i++;
 	}
-	if (tenv)
-		return (strdup(tenv));
-	free(ptr);
-	ptr = NULL;
-	return (strdup("\0"));
+	str[j] = '\0';
+	if (character == '\"')
+		data->is_dquote = 0;
+	if (character == '\'')
+		data->is_squote = 0;
 }
 
-void	dollar_expand(t_token *token)
-{
-	t_token	*ptr;
-	char	*env;
 
-	ptr = token;
-	while (ptr)
-	{
-		if ((env = ft_strchr(ptr->arg, '$')))
-			ptr->arg = expander(env, ptr->arg);
-		ptr = ptr->next;
-	}
-}
 
 void	ft_parse(t_data *data)
 {
@@ -65,6 +51,7 @@ void	ft_parse(t_data *data)
 
 	i = 0;
 	token_list = NULL;
+	quotes_handler(data);
 	args = ft_spliter(data->readline_in);
 	if (!args)
 		error_handler("Split Args", NULL);

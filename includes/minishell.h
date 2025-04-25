@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/17 22:17:48 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:03:30 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ typedef struct s_data
 	char	*readline_in;
 	char	**env;
 
+	int		is_dquote;
+	int		is_squote;
+
 	t_token *token_list;
 }	t_data;
 
@@ -48,6 +51,8 @@ void	sigint_handler(int sig);
 
 /* Parse */
 void	ft_parse(t_data *data);
+void	dollar_expand(t_token *token);
+void	quotes_handler(t_data *data);
 
 /* error handler */
 void	error_handler(char *error_name, t_data *data);
