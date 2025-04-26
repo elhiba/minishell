@@ -6,10 +6,9 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/17 22:18:31 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:54:53 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -24,7 +23,7 @@ char	*join_path(const char *dir, const char *cmd)
 	return (full_path);
 }
 
-char	*check_in_path(t_token *list)
+char	*check_in_path(t_token *list, t_data *data)
 {
 	char	*cmd;
 	char	*full_cmd;
@@ -34,7 +33,7 @@ char	*check_in_path(t_token *list)
 	cmd = list->arg;
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
-	dirs = ft_split(getenv("PATH"), ':');
+	dirs = ft_split(ft_getenv("PATH", data), ':');
 	if (!dirs)
 		error_handler("path malloc error", NULL);
 	i = 0;
@@ -88,16 +87,24 @@ void	ft_execution(t_data *data)
 	char	*cmd;
 	char	**argv;
 
-	cmd = check_in_path(data->token_list);
+	status = 0;
+	cmd = check_in_path(data->token_list, data);
 	argv = build_argv(data, data->token_list);
 	pid_child = fork();
-	status = 0;
 	if (pid_child > 0)
 		wait(&status);
 	if (pid_child == 0)
 	{
 		if (execve(cmd, argv, data->env) == -1)
-			(free(argv), error_handler(cmd, data));
+		{
+			if (ft_strchr(cmd, '/'))
+				printf("%s: No such file or directory\n", cmd);
+			else
+				printf("%s: command not found\n", cmd);
+			free(argv);
+			error_handler(NULL, data);
+		}
+		(free(argv), error_handler(cmd, data));
 	}
 	free_token_list(&data->token_list);
 	free(argv);

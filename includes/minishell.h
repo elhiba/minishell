@@ -6,11 +6,9 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/25 18:03:30 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/26 16:56:16 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -27,11 +25,11 @@
 
 typedef struct s_token
 {
-	char *arg;
+	char			*arg;
 
-	struct s_token *next;
-	struct s_token *prev;
-} t_token;
+	struct s_token	*next;
+	struct s_token	*prev;
+}	t_token;
 
 typedef struct s_data
 {
@@ -41,9 +39,8 @@ typedef struct s_data
 	int		is_dquote;
 	int		is_squote;
 
-	t_token *token_list;
+	t_token	*token_list;
 }	t_data;
-
 
 /* Signal func */
 void	handle_signals(void);
@@ -53,6 +50,7 @@ void	sigint_handler(int sig);
 void	ft_parse(t_data *data);
 void	dollar_expand(t_token *token);
 void	quotes_handler(t_data *data);
+char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
 
 /* error handler */
 void	error_handler(char *error_name, t_data *data);
@@ -63,9 +61,15 @@ int		do_cd(t_data *data);
 int		do_echo(t_token *token_list);
 int		do_env(t_data *data);
 int		do_exit(t_data *data);
-int		do_export(void);
-int		do_pwd(void);
-int		do_unset(void);
+int		do_export(t_data *data);
+int		do_pwd(t_data *data);
+int		do_unset(t_data *data);
+
+/* env functions */
+char	**copy_env(char **env);
+void	sort_env(char **env);
+void	ft_setenv(char ***env, char *key, char *val);
+char	*ft_getenv(char *key, t_data *data);
 
 /* Excecution! */
 void	ft_execution(t_data *data);

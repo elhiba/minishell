@@ -6,36 +6,35 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:22:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/16 10:27:46 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/23 01:29:27 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <stdio.h>
 
 /*
- * It hard coded lol!, but it works as we expected it to do!
+ * updated list name
  */
 int	do_echo(t_token *tok_list)
 {
-	t_token	*ptr;
+	t_token	*cd_args;
 	int		is_n;
 
 	is_n = 0;
-	ptr = tok_list->next;
-	if (!ptr)
-		printf("\n");
-	else if (ft_strcmp(ptr->arg, "-n") == 0)
+	cd_args = tok_list->next;
+	if (!cd_args)
+		return (printf("\n"), 1);
+	else if (ft_strcmp(cd_args->arg, "-n") == 0)
 	{
 		is_n = 1;
-		ptr = ptr->next;
+		cd_args = cd_args->next;
 	}
-	while (ptr)
+	while (cd_args)
 	{
-		printf("%s", ptr->arg);
-		if (ptr->next)
+		printf("%s", cd_args->arg);
+		if (cd_args->next)
 			printf(" ");
-		ptr = ptr->next;
+		cd_args = cd_args->next;
 	}
 	if (!is_n)
 		printf("\n");

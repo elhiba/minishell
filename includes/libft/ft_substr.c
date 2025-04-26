@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 09:03:25 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/22 11:16:56 by moel-hib         ###   ########.fr       */
+/*   Created: 2025/04/20 21:51:48 by sel-maaq          #+#    #+#             */
+/*   Updated: 2025/04/26 16:57:10 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,26 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char			*src;
-	unsigned int	s_len;
+	char	*result;
+	size_t	i;
+	size_t	str_len;
 
 	if (!s)
 		return (NULL);
-	s_len = ft_strlen(s);
-	if (start >= s_len)
-	{
-		src = (char *)malloc(sizeof(char) * 1);
-		if (!src)
-			return (NULL);
-		src[0] = '\0';
-		return (src);
-	}
-	if (len > s_len - start)
-		len = s_len - start;
-	src = (char *)malloc(sizeof(char) * (len + 1));
-	if (!src)
+	i = 0;
+	str_len = ft_strlen(s);
+	if (start >= str_len)
+		return (ft_strdup(""));
+	if (len > str_len - start)
+		len = str_len - start;
+	result = malloc((len + 1) * sizeof(char));
+	if (!result)
 		return (NULL);
-	ft_strlcpy(src, s + start, len + 1);
-	return (src);
+	while (i < len)
+	{
+		result[i] = s[start + i];
+		i++;
+	}
+	result[i] = '\0';
+	return (result);
 }

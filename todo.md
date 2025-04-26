@@ -12,5 +12,40 @@
 
 ## Exec
 - handle exit status (add in struct maybe)
-- handle envirenement updates
-- complete cd(update env) - exit(args) - export - unset
+
+- complete !cd(update env) - exit(args)  - !unset 
+
+
+🧩 Core Left To-Do (Mandatory Part):
+
+🔁 1. Pipelines
+	Handle ls | grep foo (use pipe(), dup2(), fork() chains)
+
+📦 2. Redirections
+	> for output
+
+	< for input
+
+	>> for append
+
+	<< for heredoc (requires handling SIGINT differently)
+
+👻 3. Signals (advanced)
+
+	Heredoc-specific signal behavior
+
+🔚 5. Exit status
+	Update $? correctly
+
+	Return correct code on builtin/command failures
+
+🪙 Bonus Ideas (if you're going for more):
+	&&, || logic
+
+	*, ?, etc. wildcards (globbing)
+
+	Advanced quoting
+
+	Variable expansion ($HOME, $USER)
+
+	() subshell grouping

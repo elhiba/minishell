@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/17 22:19:58 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/23 23:38:23 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	handle_signals(void)
 	sigemptyset(&sa.sa_mask);
 	sigaddset(&sa.sa_mask, SIGQUIT);
 	sa.sa_flags = SA_RESTART;
-
 	sa.sa_handler = sigint_handler;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		error_handler("sigaction", NULL);

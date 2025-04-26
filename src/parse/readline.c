@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/25 18:03:34 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/26 16:59:01 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ int	ft_builtin(t_data *data)
 	else if (ft_strcmp(tok_list->arg, "exit") == 0)
 		status = do_exit(data);
 	else if (ft_strcmp(tok_list->arg, "export") == 0)
-		status = do_export();
+		status = do_export(data);
 	else if (ft_strcmp(tok_list->arg, "pwd") == 0)
-		status = do_pwd();
+		status = do_pwd(data);
 	else if (ft_strcmp(tok_list->arg, "unset") == 0)
-		status = do_unset();
+		status = do_unset(data);
 	else
 		status = 0;
 	return (status);

@@ -6,27 +6,46 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/17 19:49:58 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/26 16:39:53 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+char	*build_prompt(t_data *data)
+{
+	char	cwd[1024];
+	char	*prompt;
+
+	if (!getcwd(cwd, sizeof(cwd)))
+		ft_strlcpy(cwd, ft_getenv("PWD", data),1024);
+	prompt = malloc(1024);
+	if (!prompt)
+		return (NULL);
+	snprintf(prompt, 1024,
+		"┌──(minishell)-[%s]\n└─❯ ", cwd);
+	return (prompt);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
+	char *prompt;
 
 	(void) ac;
 	(void) av;
 	ft_bzero(&data, sizeof(data));
-	data.env = env;
+	data.env = copy_env(env);
 	handle_signals();
 	while (1)
 	{
-		data.readline_in = readline("$> ");
+		prompt = build_prompt(&data);
+		data.readline_in = readline(prompt);
+		free(prompt);
 		if (data.readline_in == NULL)
 		{
 			printf("exit\n");
+			free_d_arr(data.env);
 			exit(EXIT_SUCCESS);
 		}
 		add_history(data.readline_in);
@@ -34,3 +53,4 @@ int	main(int ac, char **av, char **env)
 	}
 	return (0);
 }
+	
