@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 # include "../../includes/minishell.h"
+#include <string.h>
 
 void	free_ptr(char	*ptr)
 {
@@ -18,7 +19,7 @@ void	free_ptr(char	*ptr)
 	ptr = NULL;
 }
 
-char	*expander(char *env, char *ptr)
+char	*expander(t_data *data, char *env, char *ptr)
 {
 	char	*tenv;
 	char	*dup;
@@ -27,7 +28,7 @@ char	*expander(char *env, char *ptr)
 	++env;
 	tenv = getenv(env);
 	if (*env == '?')
-		return (strdup("STATUS!"));
+		return (free(ptr), ft_itoa(data->last_exit_code));
 	if (ptr[0] != '$')
 	{
 		if (!tenv)
@@ -50,7 +51,7 @@ char	*expander(char *env, char *ptr)
 	return (free_ptr(ptr), strdup("\0"));
 }
 
-void	dollar_expand(t_token *token)
+void	dollar_expand(t_data *data, t_token *token)
 {
 	t_token	*ptr;
 	char	*env;
@@ -59,7 +60,7 @@ void	dollar_expand(t_token *token)
 	while (ptr)
 	{
 		if ((env = ft_strchr(ptr->arg, '$')))
-			ptr->arg = expander(env, ptr->arg);
+			ptr->arg = expander(data, env, ptr->arg);
 		ptr = ptr->next;
 	}
 }

@@ -14,15 +14,15 @@
 
 char	*build_prompt(t_data *data)
 {
-	char	cwd[1024];
+	char	cwd[1000];
 	char	*prompt;
 
 	if (!getcwd(cwd, sizeof(cwd)))
-		ft_strlcpy(cwd, ft_getenv("PWD", data),1024);
-	prompt = malloc(1024);
+		ft_strlcpy(cwd, ft_getenv("PWD", data),1000);
+	prompt = malloc(1000);
 	if (!prompt)
 		return (NULL);
-	snprintf(prompt, 1024,
+	snprintf(prompt, 10000,
 		"┌──(minishell)-[%s]\n└─❯ ", cwd);
 	return (prompt);
 }

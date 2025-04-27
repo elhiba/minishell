@@ -13,8 +13,6 @@
 ## Exec
 - handle exit status (add in struct maybe)
 
-- complete !cd(update env) - exit(args)  - !unset 
-
 
 🧩 Core Left To-Do (Mandatory Part):
 

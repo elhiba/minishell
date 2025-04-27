@@ -21,28 +21,6 @@
 // 	}
 // }
 
-void	char_remover(t_data *data, char	*str, int	character)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] != character)
-			str[j++] = str[i];
-		i++;
-	}
-	str[j] = '\0';
-	if (character == '\"')
-		data->is_dquote = 0;
-	if (character == '\'')
-		data->is_squote = 0;
-}
-
-
-
 void	ft_parse(t_data *data)
 {
 	t_token	*token_list;
@@ -58,7 +36,7 @@ void	ft_parse(t_data *data)
 	while (args[i])
 		add_token_node(&token_list, args[i++]);
 	free(args);
-	dollar_expand(token_list);
+	dollar_expand(data, token_list);
 	data->token_list = token_list;
 	if (ft_builtin(data) == 0 && token_list)
 		ft_execution(data);

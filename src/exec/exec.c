@@ -106,6 +106,7 @@ void	ft_execution(t_data *data)
 		}
 		(free(argv), error_handler(cmd, data));
 	}
+	data->last_exit_code = status;
 	free_token_list(&data->token_list);
 	free(argv);
 }
