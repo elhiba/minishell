@@ -40,6 +40,7 @@ typedef struct s_data
 	int		is_squote;
 
 	t_token	*token_list;
+	int		last_exit_code;
 }	t_data;
 
 /* Signal func */
@@ -48,7 +49,7 @@ void	sigint_handler(int sig);
 
 /* Parse */
 void	ft_parse(t_data *data);
-void	dollar_expand(t_token *token);
+void	dollar_expand(t_data *data, t_token *token);
 void	quotes_handler(t_data *data);
 char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
 
