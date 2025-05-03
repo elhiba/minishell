@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:30:22 by sel-maaq          #+#    #+#             */
-/*   Updated: 2025/04/23 18:30:26 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:00:51 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	do_unset(t_data *data)
 		}
 		args = args->next;
 	}
+	data->last_exit_code = 0;
 	return (1);
 }
 

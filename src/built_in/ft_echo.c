@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:22:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/23 01:29:27 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:44:05 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 /*
  * updated list name
  */
-int	do_echo(t_token *tok_list)
+int	do_echo(t_data *data)
 {
 	t_token	*cd_args;
 	int		is_n;
 
 	is_n = 0;
-	cd_args = tok_list->next;
+	cd_args = data->token_list->next;
 	if (!cd_args)
 		return (printf("\n"), 1);
 	else if (ft_strcmp(cd_args->arg, "-n") == 0)
@@ -38,5 +38,6 @@ int	do_echo(t_token *tok_list)
 	}
 	if (!is_n)
 		printf("\n");
+	data->last_exit_code = 0;
 	return (1);
 }

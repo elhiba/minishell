@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/26 16:56:16 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:43:25 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	error_handler(char *error_name, t_data *data);
 /* built in functions */
 int		ft_builtin(t_data *data);
 int		do_cd(t_data *data);
-int		do_echo(t_token *token_list);
+int		do_echo(t_data *data);
 int		do_env(t_data *data);
 int		do_exit(t_data *data);
 int		do_export(t_data *data);

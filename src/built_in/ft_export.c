@@ -5,19 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 15:24:26 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/23 01:31:38 by sel-maaq         ###   ########.fr       */
+/*   Created: 2025/05/02 21:37:28 by sel-maaq          #+#    #+#             */
+/*   Updated: 2025/05/02 21:53:24 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// ex a += 7 ->  a=77 || a=7 // = labouda
-
-int		is_valid_key(char *key);
+int		is_valid_key(char *key, t_data *data);
 void	print_sorted_env(char **env);
 
-// did allll of export except this (up)
 int	do_export(t_data *data)
 {
 	t_token	*args;
@@ -36,12 +33,12 @@ int	do_export(t_data *data)
 			key = ft_substr(args->arg, 0, found - args->arg);
 			value = ft_substr(args->arg, (found - args->arg) + 1,
 					ft_strlen(found + 1));
-			if (is_valid_key(key))
+			if (is_valid_key(key, data))
 				ft_setenv(&data->env, key, value);
-			else
-				printf("export: `%s': not a valid identifier\n", args->arg);
 			(free(key), free(value));
 		}
+		else
+			is_valid_key(args->arg, data);
 		args = args->next;
 	}
 	return (1);
@@ -70,17 +67,25 @@ void	print_sorted_env(char **env)
 	free_d_arr(env_cpy);
 }
 
-int	is_valid_key(char *key)
+int	is_valid_key(char *key, t_data *data)
 {
 	int	i;
 
 	if (!key || (!ft_isalpha(key[0]) && key[0] != '_'))
+	{
+		printf("export: '%s': not a valid identifier\n", key);
+		data->last_exit_code = 1;
 		return (0);
+	}
 	i = 1;
 	while (key[i])
 	{
 		if (!ft_isalnum(key[i]) && key[i] != '_')
+		{
+			printf("export: '%s': not a valid identifier\n", key);
+			data->last_exit_code = 1;
 			return (0);
+		}
 		i++;
 	}
 	return (1);

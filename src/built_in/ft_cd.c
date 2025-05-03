@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 14:59:36 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/26 02:15:31 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:02:18 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	do_cd(t_data *data)
 		ft_strlcpy(old_pwd, ft_getenv("PWD", data), 4096);
 	if (chdir(cd_arg) == -1)
 	{
+		data->last_exit_code = 1;
 		perror(cd_arg);
 		return (1);
 	}

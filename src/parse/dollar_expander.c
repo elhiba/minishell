@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_expander.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:47:04 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/24 15:02:40 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:13:25 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*expander(t_data *data, char *env, char *ptr)
 	char	*substr;
 
 	++env;
-	tenv = getenv(env);
+	tenv = ft_getenv(env, data);
 	if (*env == '?')
 		return (free(ptr), ft_itoa(data->last_exit_code));
 	if (ptr[0] != '$')

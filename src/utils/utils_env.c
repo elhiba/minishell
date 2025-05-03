@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:11:00 by sel-maaq          #+#    #+#             */
-/*   Updated: 2025/04/23 01:10:07 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/01 19:34:09 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,13 @@ void	sort_env(char **env)
 	}
 }
 
-char	*make_env_str(char *key, char *val)
-{
-	char	*tmp;
-	char	*entry;
-
-	tmp = ft_strjoin(key, "=");
-	if (!tmp)
-		return (NULL);
-	entry = ft_strjoin(tmp, val);
-	free(tmp);
-	return (entry);
-}
-
 void	ft_setenv(char ***env, char *key, char *val)
 {
 	int		i;
 	char	**new_env;
 	char	*entry;
 
-	entry = make_env_str(key, val);
+	entry = ft_strjoin3(key, "=", val);
 	if (!entry)
 		return ;
 	i = -1;

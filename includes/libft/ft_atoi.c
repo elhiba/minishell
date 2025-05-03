@@ -1,30 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/07 18:46:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/29 17:54:48 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/23 12:34:58 by sel-maaq          #+#    #+#             */
+/*   Updated: 2025/04/29 19:53:10 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-/*
- * this is probably a complete function!
- */
-int	do_env(t_data *data)
+int	ft_isdigit(int c)
 {
-	int	i;
+	if (c >= 48 && c <= 57)
+		return (1);
+	else
+		return (0);
+}
+
+int	ft_atoi(const char *str)
+{
+	int		i;
+	int		sign;
+	int		result;
 
 	i = 0;
-	while (data->env[i])
+	sign = 1;
+	result = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-')
 	{
-		printf("%s\n", data->env[i]);
+		sign = -1;
 		i++;
 	}
-	data->last_exit_code = 0;
-	return (1);
+	else if (str[i] == '+')
+		i++;
+	while (ft_isdigit(str[i]))
+	{
+		result *= 10;
+		result += str[i] - '0';
+		i++;
+	}
+	return (result * sign);
 }

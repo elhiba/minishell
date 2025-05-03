@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/26 16:39:53 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:54:57 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*build_prompt(t_data *data)
 	return (prompt);
 }
 
+volatile sig_atomic_t	g_received_signal = 0;
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -41,6 +43,11 @@ int	main(int ac, char **av, char **env)
 	{
 		prompt = build_prompt(&data);
 		data.readline_in = readline(prompt);
+		if (g_received_signal == SIGINT)
+		{
+			data.last_exit_code = 130;
+			g_received_signal = 0;
+		}
 		free(prompt);
 		if (data.readline_in == NULL)
 		{

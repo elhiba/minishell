@@ -55,7 +55,7 @@ int	ft_builtin(t_data *data)
 	if (ft_strcmp(tok_list->arg, "cd") == 0)
 		status = do_cd(data);
 	else if (ft_strcmp(tok_list->arg, "echo") == 0)
-		status = do_echo(tok_list);
+		status = do_echo(data);
 	else if (ft_strcmp(tok_list->arg, "env") == 0)
 		status = do_env(data);
 	else if (ft_strcmp(tok_list->arg, "exit") == 0)

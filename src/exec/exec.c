@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/24 10:54:53 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/04/30 16:20:08 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,16 @@ void	ft_execution(t_data *data)
 			else
 				printf("%s: command not found\n", cmd);
 			free(argv);
-			error_handler(NULL, data);
+			free_token_list(&data->token_list);
+			free_d_arr(data->env);
+			exit(127);
 		}
 		(free(argv), error_handler(cmd, data));
 	}
-	data->last_exit_code = status;
+	if (WIFEXITED(status))
+		data->last_exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		data->last_exit_code = 128 + WTERMSIG(status);
 	free_token_list(&data->token_list);
 	free(argv);
 }
