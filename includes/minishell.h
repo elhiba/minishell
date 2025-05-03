@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/29 16:43:25 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/03 15:58:24 by sel-maaq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include "../includes/libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
 # include <stdio.h>
-# include <sys/wait.h>
 
 typedef struct s_token
 {
@@ -82,7 +82,7 @@ void	free_token_list(t_token **head);
 /* New spliter function:
  * it can remove any other tabs stuff and replaced by space
  */
-char	**ft_spliter(char *args);
+char	**ft_spliter(t_data *data);
 
 /* Linked list stuff*/
 void	add_token_node(t_token **head, char *arg);

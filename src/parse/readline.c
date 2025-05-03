@@ -6,20 +6,21 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/26 16:59:01 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/02 23:05:01 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// void	print_list(t_token *head)
-// {
-// 	while (head)
-// 	{
-// 		printf("%s\n", head->arg);
-// 		head = head->next;
-// 	}
-// }
+ void	print_list(t_token *head)
+ {
+ 	while (head)
+ 	{
+ 		printf("%s\n", head->arg);
+ 		head = head->next;
+ 	}
+	printf("THIS IS JUST A DEBUG!\n\n\n\n");
+ }
 
 void	ft_parse(t_data *data)
 {
@@ -30,7 +31,7 @@ void	ft_parse(t_data *data)
 	i = 0;
 	token_list = NULL;
 	quotes_handler(data);
-	args = ft_spliter(data->readline_in);
+	args = ft_spliter(data);
 	if (!args)
 		error_handler("Split Args", NULL);
 	while (args[i])
