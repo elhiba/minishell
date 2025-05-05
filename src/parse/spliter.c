@@ -6,35 +6,11 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/02 23:11:53 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:22:41 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int		arg_counter(char *str)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if ((str[i] == '>' && str[i + 1] == '>')
-			|| (str[i] == '<' && str[i + 1] == '<')
-			|| str[i] == '|'
-			|| str[i] == ' '
-			|| str[i] == '<'
-			|| str[i] == '>')
-			count++;
-		if ((str[i] == '>' && str[i + 1] == '>')
-			|| (str[i] == '<' && str[i + 1] == '<'))
-			i++;
-		i++;
-	}
-	return (count);
-}
 
 int		operation_len(char *str)
 {
@@ -45,6 +21,34 @@ int		operation_len(char *str)
 	if (str[0] == '|' || str[0] == '<' || str[0] == '>')
 		return (1);
 	return (0);
+}
+
+int		arg_counter(char *str)
+{
+
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		while (str[i] == ' ')
+			i++;
+		if (operation_len(str + i))
+		{
+			count++;
+			i += operation_len(str + i);
+		}
+		else
+		{
+			count++;
+			while (str[i] && str[i] != ' ' && !operation_len(str + i))
+				i++;
+		}
+	}
+	return (count);
+
 }
 
 char	**ft_spliter(t_data *data)
