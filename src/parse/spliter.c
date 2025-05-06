@@ -64,7 +64,7 @@ char	**ft_spliter(t_data *data)
 	args = (char **)malloc(sizeof(char *) * (arg_counter(data->readline_in) + 1));
 	while (data->readline_in[i])
 	{
-		if (data->readline_in[i] == ' ')
+		while (data->readline_in[i] == ' ')
 			i++;
 		if (!data->readline_in[i])
 			break ;
