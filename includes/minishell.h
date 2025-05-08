@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/03 15:58:24 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/07 23:09:46 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ typedef struct s_data
 	int		last_exit_code;
 }	t_data;
 
+#define SYN_ERROR "minishell: syntax error near unexpected token "
+
 /* Signal func */
 void	handle_signals(void);
 void	sigint_handler(int sig);
 
 /* Parse */
 void	ft_parse(t_data *data);
+int		syntax_checker(t_data *data);
 void	dollar_expand(t_data *data, t_token *token);
 void	quotes_handler(t_data *data);
 char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
