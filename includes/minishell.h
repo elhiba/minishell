@@ -20,24 +20,43 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <limits.h>
 # include <stdio.h>
+
+# define RED_IN 1
+# define RED_OUT 2
+# define RED_APP 3
+# define RED_HERE 4
 
 typedef struct s_token
 {
 	char			*arg;
+	int				red_type;
 
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
+
+typedef struct s_cmd
+{
+	t_token			*list;
+
+	int				in_fd;
+	int				out_fd;
+
+	int				skip_cmd;
+
+	struct t_cmd	*next;
+	struct t_cmd	*prev;
+}	t_cmd;
 
 typedef struct s_data
 {
 	char	*readline_in;
 	char	**env;
 
-	int		is_dquote;
-	int		is_squote;
+	t_cmd	*cmd_list;
 
 	t_token	*token_list;
 	int		last_exit_code;
@@ -57,7 +76,9 @@ char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
 void	error_handler(char *error_name, t_data *data);
 
 /* built in functions */
-int		ft_builtin(t_data *data);
+int		is_builtin(t_data *data);
+void	do_builtin(t_data *data);
+
 int		do_cd(t_data *data);
 int		do_echo(t_data *data);
 int		do_env(t_data *data);
@@ -73,7 +94,7 @@ void	ft_setenv(char ***env, char *key, char *val);
 char	*ft_getenv(char *key, t_data *data);
 
 /* Excecution! */
-void	ft_execution(t_data *data);
+void	execute_cmd(t_data *data);
 
 /* clean-up functions */
 void	free_d_arr(char **arr);

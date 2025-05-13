@@ -3,7 +3,7 @@
 ## Parsing
 - new parsing letter by letter, handle pipes/redirects(dont care about space) , stops while not in quotes or when space 
 - quotes care only about space = hi"test"hi ah -> hitesthi ah  and 
-- handle errors
+- handle syntax errors =   "| |"
 - handle variable expansion while not in s quotes , wrong vars turn to ''
 - handle $? , replace it literally anywhere , while not in s quotes = test$?yes -> test127yes
 
@@ -11,9 +11,6 @@
 
 
 ## Exec
-- handle exit status (add in struct maybe)
-
-
 🧩 Core Left To-Do (Mandatory Part):
 
 🔁 1. Pipelines
@@ -31,11 +28,6 @@
 👻 3. Signals (advanced)
 
 	Heredoc-specific signal behavior
-
-🔚 5. Exit status
-	Update $? correctly
-
-	Return correct code on builtin/command failures
 
 🪙 Bonus Ideas (if you're going for more):
 	&&, || logic

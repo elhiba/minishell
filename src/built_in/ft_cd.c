@@ -64,7 +64,7 @@ static void	update_pwd(t_data *data, char *old_pwd, char *cd_arg)
 			ft_setenv(&data->env, "PWD", tmp);
 			free(tmp);
 		}
-		perror("cd: error retrieving current directory:"
+		perror("cd: error retrieving current directory: "
 			"getcwd: cannot access parent directories");
 	}
 }

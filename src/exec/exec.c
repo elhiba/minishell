@@ -80,7 +80,7 @@ char	**build_argv(t_data *data, t_token *tokens)
 	return (argv);
 }
 
-void	ft_execution(t_data *data)
+void	execute_cmd(t_data *data)
 {
 	int		status;
 	pid_t	pid_child;

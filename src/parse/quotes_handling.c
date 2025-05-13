@@ -51,7 +51,7 @@ void	quotes_handler(t_data *data)
 
 	while (data->readline_in[i])
 	{
-		if (data->readline_in[i] == '\"'&& !data->is_squote)
+		if (data->readline_in[i] == '\"' && !data->is_squote)
 			double_quotes(data, i);
 		if (data->readline_in[i] == '\'' && !data->is_dquote)
 			signle_quotes(data, i);
