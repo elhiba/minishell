@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 22:10:02 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/08 01:12:01 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:18:48 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int		check_pipe(char *str, int *i)
 			printf(SYN_ERROR);
 			if (str[*i + 1] == '\0')
 			{
-				printf("'newline'\n");
+				printf("`newline'\n");
 				return (2);
 			}
-			printf("'%c'\n", *check_op(str + (*i + 1)));
+			printf("`%c'\n", *check_op(str + (*i + 1)));
 			return (2);
 		}
 	}
@@ -60,10 +60,10 @@ int		check_redirect(char *str, int *i)
 			printf(SYN_ERROR);
 			if (str[*i + 1] == '\0')
 			{
-				printf("'newline'\n");
+				printf("`newline'\n");
 				return (2);
 			}
-			printf("'%c'\n", *check_op(str + (*i + 1)));
+			printf("`%c'\n", *check_op(str + (*i + 1)));
 			return (2);
 		}
 	}
@@ -82,10 +82,10 @@ int		check_hereappend(char *str, int *i)
 			printf(SYN_ERROR);
 			if (str[*i + 2] == '\0')
 			{
-				printf("'newline'\n");
+				printf("`newline'\n");
 				return (2);
 			}
-			printf("'%s'\n", check_op(str + (*i + 2)));
+			printf("`%s'\n", check_op(str + (*i + 2)));
 			return (2);
 		}
 	}

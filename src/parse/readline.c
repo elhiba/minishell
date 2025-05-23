@@ -6,45 +6,54 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/07 23:40:21 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/20 20:29:58 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// void	print_list(t_token *head)
-// {
-// 	while (head)
-// 	{
-// 		printf("%s\n", head->arg);
-// 		head = head->next;
-// 	}
-// 	printf("THIS IS JUST A DEBUG!\n\n\n\n");
-// }
+void	print_list(void **head)
+{
+	int		i;
+	t_token	**ptr;
+
+	i = 0;
+	ptr = (t_token **)head;
+	while (ptr[i])
+	{
+		printf("Args[%i]: ", i);
+		while (ptr[i])
+		{
+			printf("%s ", ptr[i]->arg);
+			ptr[i] = ptr[i]->next;
+		}
+		printf("\n");
+		i++;
+	}
+}
 
 void	ft_parse(t_data *data)
 {
-	t_token	*token_list;
-	char	**args;
-	int		i;
+//	t_token	*token_list;
+	void	**args;
+//	int		i;
 
-	i = 0;
-	token_list = NULL;
+//	i = 0;
+//	token_list = NULL;
 	if (!syntax_checker(data))
 	{
-		quotes_handler(data);
-		args = ft_spliter(data);
+//		quotes_handler(data);
+		args = ft_tokenizer(data);
 		if (!args)
 			error_handler("Split Args", NULL);
-		while (args[i])
-			add_token_node(&token_list, args[i++]);
+		print_list(args);
 		free(args);
-		dollar_expand(data, token_list);
-		data->token_list = token_list;
-		if (ft_builtin(data) == 0 && token_list)
-			ft_execution(data);
-		else
-			free_token_list(&token_list);
+	//	dollar_expand(data, token_list);
+	//	data->token_list = token_list;
+	//	if (ft_builtin(data) == 0 && token_list)
+	//		ft_execution(data);
+	//	else
+	//		free_token_list(&token_list);
 	}
 }
 

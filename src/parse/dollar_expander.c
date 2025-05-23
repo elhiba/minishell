@@ -6,12 +6,11 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:47:04 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/30 16:13:25 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:35:50 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/minishell.h"
-#include <string.h>
 
 void	free_ptr(char	*ptr)
 {

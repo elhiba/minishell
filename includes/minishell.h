@@ -6,7 +6,7 @@
 /*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/07 23:09:46 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/11 22:54:28 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ void	free_token_list(t_token **head);
 /* New spliter function:
  * it can remove any other tabs stuff and replaced by space
  */
-char	**ft_spliter(t_data *data);
+void	**ft_tokenizer(t_data *data);
+char	**special_split(char const *s, char c);
+void	check_quotes(char *str, int i, int *is_dquote, int *is_squote);
 
 /* Linked list stuff*/
 void	add_token_node(t_token **head, char *arg);
