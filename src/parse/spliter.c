@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/20 11:32:07 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/25 12:13:21 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		operation_len(char *str)
 		return (1);
 	return (0);
 }
+
 
 int		arg_counter(char *str)
 {
@@ -50,19 +51,46 @@ int		arg_counter(char *str)
 	return (count);
 }
 
-char	**ft_spliter(char *str)
+void	space_checker(char *str, t_token **tok, int index)
 {
-	char	**args;
+	if (str[index] == ' ' || operation_len(str + index))
+		(*tok)->is_space_next = 1;
+}
+
+void	typer(t_token **token, char *arg)
+{
+	int	i;
+
+	i = 0;
+//	while (arg[i])
+//	{
+		if (arg[i] == '>' && arg[i + 1] == '>')
+			(*token)->next->is_redirection = REDIRECTION;
+		else if (arg[i] == '<' && arg[i + 1] == '<')
+			(*token)->next->is_heredoc = HEREDOC;
+		else if (arg[i] == '>')
+			(*token)->next->is_outfile = OUTPUT_FILE;
+		else if (arg[i] == '<')
+			(*token)->next->is_infile = INPUT_FILE;
+//		i++;
+//	}
+}
+
+void	ft_spliter(t_token **token, char *str)
+{
+	//char	**args;
+	//int		index;
+	t_token	*ptr;
+	char	*arg;
 	int		op_len;
-	int		index;
 	int		i;
 	int		start;
 
 	i = 0;
-	index = 0;
-	args = (char **)malloc(sizeof(char *) * (arg_counter(str) + 1));
-	if (!args)
-		error_handler("malloc: I can't anymore!", NULL);
+	//index = 0;
+//	args = (char **)malloc(sizeof(char *) * (arg_counter(str) + 1));
+//	if (!args)
+//		error_handler("malloc", NULL);
 	while (str[i])
 	{
 		while (str[i] == ' ')
@@ -72,8 +100,11 @@ char	**ft_spliter(char *str)
 		op_len = operation_len(str + i);
 		if (op_len)
 		{
-			args[index] = ft_substr(str, i, op_len);
-			index++;
+			//args[index] = ft_substr(str, i, op_len);
+			//index++;
+			arg = ft_substr(str, i, op_len);
+			if (!arg)
+				error_handler("ft_substr", NULL);
 			i += op_len;
 		}
 		else
@@ -81,30 +112,79 @@ char	**ft_spliter(char *str)
 			start = i;
 			while (str[i] && !(str[i] == ' ') && !operation_len(str + i))
 				i++;
-			args[index] = ft_substr(str, start, i - start);
-			index++;
+			arg = ft_substr(str, start, i - start);
+			if (!arg)
+				error_handler("ft_substr", NULL);
+			//args[index] = ft_substr(str, start, i - start);
+			//index++;
 		}
+		add_token_node(token, arg);
+		ptr = *token;
+		while (ptr->next)
+			ptr = ptr->next;
+		//typer(&ptr, arg);
+		space_checker(str, &ptr, i);
 	}
-	args[index] = NULL;
-	return (args);
+	//args[index] = NULL;
+	//return (args);
+}
+
+int		operator_cleaner(char *arg)
+{
+	if (arg[0] == '>' && arg[1] == '>' && arg[2] == '\0')
+		return (2);
+	if (arg[0] == '<' && arg[1] == '<' && arg[2] == '\0')
+		return (2);
+	if ((arg[0] == '<' || arg[0] == '>') && arg[1] == '\0')
+		return (1);
+	return (0);
+}
+
+void	node_cleaner(t_token **head)
+{
+	t_token	*ptr;
+	t_token	*current;
+
+	ptr = *head;
+	while (ptr)
+	{
+		current = ptr;
+		if (operator_cleaner(ptr->arg))
+		{
+			ptr = ptr->next;
+			ptr->prev = ptr->prev;
+			ptr->prev->prev->next = ptr;
+			free(current->arg);
+			free(current);
+		}
+		ptr = ptr->next;
+	}
 }
 
 t_token	*token(char *str)
 {
-	t_token *tok;
-	char	**args;
-	int		i;
+	t_token	*tok;
+	t_token	*ptr;
+	//char	**args;
+	//int		i;
 
-	i = 0;
+	//i = 0;
 	tok = NULL;
-	args = ft_spliter(str);
-	if (!args)
-		error_handler("I can't split!", NULL);
-	while (args[i])
+	ft_spliter(&tok, str);
+	ptr = tok;
+	while (ptr)
 	{
-		add_token_node(&tok, args[i]);
-		i++;
+		typer(&ptr, ptr->arg);
+		ptr = ptr->next;
 	}
+	node_cleaner(&tok);
+	//if (!args)
+	//	error_handler("args", NULL);
+//	while (args[i])
+//	{
+//		add_token_node(&tok, args[i]);
+//		i++;
+//	}
 	return (tok);
 }
 
@@ -117,12 +197,12 @@ void	**ft_tokenizer(t_data *data)
 	i = 0;
 	ptok = special_split(data->readline_in, '|');
 	if(!ptok)
-		error_handler("I can't split pipes!", data);
+		error_handler("pipe split", data);
 	while (ptok[i])
 		i++;
 	tok = (void **)malloc(sizeof(void *) * (i + 1));
 	if (!tok)
-		error_handler("malloc: I can't fr!", data);
+		error_handler("malloc", data);
 	i = 0;
 	while (ptok[i])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:51:50 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/18 17:34:20 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/25 00:42:55 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ void	add_token_node(t_token **head, char *arg)
 		return ;
 	new = malloc(sizeof(t_token));
 	if (!new)
-		error_handler("Malloc failed", NULL);
+		error_handler("malloc", NULL);
+	ft_bzero(new, sizeof(t_token));
 	new->arg = arg;
-	new->next = NULL;
-	new->prev = NULL;
 	if (!*head)
 		*head = new;
 	else

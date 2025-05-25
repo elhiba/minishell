@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/11 22:54:28 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/25 00:07:04 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,29 @@
 # include <limits.h>
 # include <stdio.h>
 
+enum s_type
+{
+	SPACES,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	INPUT_FILE,
+	OUTPUT_FILE,
+	HEREDOC,
+	REDIRECTION
+};
+
 typedef struct s_token
 {
 	char			*arg;
+
+	int				is_squote;
+	int				is_dquote;
+	int				is_infile;
+	int				is_outfile;
+	int				is_heredoc;
+	int				is_redirection;
+
+	int				is_space_next;
 
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -35,9 +55,6 @@ typedef struct s_data
 {
 	char	*readline_in;
 	char	**env;
-
-	int		is_dquote;
-	int		is_squote;
 
 	t_token	*token_list;
 	int		last_exit_code;
