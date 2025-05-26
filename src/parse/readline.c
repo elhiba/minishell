@@ -6,12 +6,11 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/25 12:35:51 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/26 10:40:11 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <stdio.h>
 
 void	print_list(void **head)
 {
@@ -53,10 +52,10 @@ void	ft_parse(t_data *data)
 //	token_list = NULL;
 	if (!syntax_checker(data))
 	{
-//		quotes_handler(data);
+		//quotes_handler(data);
 		args = ft_tokenizer(data);
 		if (!args)
-			error_handler("split Args", NULL);
+			error_handler("split args", NULL);
 		print_list(args);
 		free(args);
 	//	dollar_expand(data, token_list);

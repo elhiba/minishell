@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/25 12:13:21 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:32:07 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,17 @@ void	node_cleaner(t_token **head)
 		current = ptr;
 		if (operator_cleaner(ptr->arg))
 		{
+			if (!ptr->prev)
+			{
+				*head = ptr->next;
+				(*head)->prev = NULL;
+			}
 			ptr = ptr->next;
-			ptr->prev = ptr->prev;
-			ptr->prev->prev->next = ptr;
+			if (ptr->prev)
+			{
+				ptr->prev = ptr->prev;
+				ptr->prev->prev->next = ptr;
+			}
 			free(current->arg);
 			free(current);
 		}
