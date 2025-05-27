@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/26 23:03:08 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:31:13 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ typedef struct s_data
 	int		last_exit_code;
 }	t_data;
 
-#define SYN_ERROR "minishell: syntax error near unexpected token "
+#define SYN_OP_ERROR "minishell: syntax error near unexpected token"
+#define SYN_Q_ERROR "minishell: unexpected EOF while looking for matching"
 
 /* Signal func */
 void	handle_signals(void);
@@ -70,7 +71,7 @@ void	sigint_handler(int sig);
 void	ft_parse(t_data *data);
 int		syntax_checker(t_data *data);
 void	dollar_expand(t_data *data, t_token *token);
-void	quotes_handler(t_token **head);
+char	*quotes_handler(char *str, int *i);
 char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
 
 /* error handler */

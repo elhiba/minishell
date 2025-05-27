@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 22:10:02 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/08 14:18:48 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:33:42 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,16 @@ int		check_pipe(char *str, int *i)
 			(*i)++;
 		if (str[*i + 1] == '|' || str[*i + 1] == '\0')
 		{
-			printf(SYN_ERROR);
 			if (str[*i + 1] == '\0')
 			{
-				printf("`newline'\n");
+				printf("%s `newline'\n", SYN_OP_ERROR);
 				return (2);
 			}
-			printf("`%c'\n", *check_op(str + (*i + 1)));
+			printf("%s `%c'\n", SYN_OP_ERROR, *check_op(str + (*i + 1)));
 			return (2);
 		}
 	}
-	return 0;
+	return (0);
 }
 
 int		check_redirect(char *str, int *i)
@@ -57,13 +56,12 @@ int		check_redirect(char *str, int *i)
 			(*i)++;
 		if (check_op(str + (*i + 1)) || str[*i + 1] == '\0')
 		{
-			printf(SYN_ERROR);
 			if (str[*i + 1] == '\0')
 			{
-				printf("`newline'\n");
+				printf("%s `newline'\n", SYN_OP_ERROR);
 				return (2);
 			}
-			printf("`%c'\n", *check_op(str + (*i + 1)));
+			printf("%s `%c'\n", SYN_OP_ERROR, *check_op(str + (*i + 1)));
 			return (2);
 		}
 	}
@@ -79,13 +77,12 @@ int		check_hereappend(char *str, int *i)
 			(*i)++;
 		if (check_op(str + (*i + 2)) || str[*i + 2] == '\0')
 		{
-			printf(SYN_ERROR);
 			if (str[*i + 2] == '\0')
 			{
-				printf("`newline'\n");
+				printf("%s `newline'\n", SYN_OP_ERROR);
 				return (2);
 			}
-			printf("`%s'\n", check_op(str + (*i + 2)));
+			printf("%s `%s'\n", SYN_OP_ERROR, check_op(str + (*i + 2)));
 			return (2);
 		}
 	}
@@ -104,17 +101,30 @@ void	check_quotes(char *str, int i, int *is_dquote, int *is_squote)
 		*is_squote = 0;
 }
 
+int	check_closed_quotes(int	s_quote, int d_quote)
+{
+	if (d_quote)
+	{
+		printf("%s `\"'\n", SYN_Q_ERROR);
+		return (2);
+	}
+	else if (s_quote)
+	{
+		printf("%s `\''\n", SYN_Q_ERROR);
+		return (2);
+	}
+	return (0);
+}
+
 int		syntax_checker(t_data *data)
 {
 	int		i;
 	int		status;
 	int		is_dquote;
 	int		is_squote;
-	
-	i = 0;
-	status = 0;
-	is_dquote = 0;
-	is_squote = 0;
+
+	(1) && (i = 0, status = 0);
+	(1) && (is_dquote = 0, is_squote = 0);
 	while (data->readline_in[i])
 	{
 		check_quotes(data->readline_in, i, &is_dquote, &is_squote);
@@ -122,13 +132,15 @@ int		syntax_checker(t_data *data)
 		{
 			if ((status = check_pipe(data->readline_in, &i)))
 				break ;
-			if ((status = check_hereappend(data->readline_in, &i)))
+			else if ((status = check_hereappend(data->readline_in, &i)))
 				break ;
 			else if ((status = check_redirect(data->readline_in, &i)))
 				break ;
 		}
 		i++;
 	}
+	if (!status)
+		status = check_closed_quotes(is_squote, is_dquote);
 	data->last_exit_code = status;
 	return (status);
 }

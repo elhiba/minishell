@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/26 23:34:17 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/27 10:25:20 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,12 @@ void	ft_spliter(t_token **token, char *str)
 		else
 		{
 			start = i;
-			while (str[i] && !(str[i] == ' ') && !operation_len(str + i))
+			while (str[i] && str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && !operation_len(str + i))
 				i++;
-			arg = ft_substr(str, start, i - start);
+			if (str[i] == '\'' || str[i] == '\"')
+				arg = quotes_handler(str, &i);
+			else
+				arg = ft_substr(str, start, i - start);
 			if (!arg)
 				error_handler("ft_substr", NULL);
 			//args[index] = ft_substr(str, start, i - start);
@@ -125,7 +128,7 @@ void	ft_spliter(t_token **token, char *str)
 		//typer(&ptr, arg);
 		space_checker(str, &ptr, i);
 	}
-	quotes_handler(token);
+	//quotes_handler(token);
 	//args[index] = NULL;
 	//return (args);
 }
