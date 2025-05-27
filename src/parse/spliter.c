@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/27 17:35:56 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/27 23:02:04 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ void	ft_spliter(t_token **token, char *str)
 		while (ptr->next)
 			ptr = ptr->next;
 		//typer(&ptr, arg);
-		if (op_len == DOUBLE_QUOTE)
+		if (op_len == 10)
 			ptr->is_dquote = 1;
-		else if (op_len == SINGLE_QUOTE)
+		else if (op_len == 11)
 			ptr->is_squote = 1;
 		space_checker(str, &ptr, i);
 	}
