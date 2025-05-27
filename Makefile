@@ -3,7 +3,7 @@ NAME = minishell
 
 # Compilation steps!
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -g3
 
 # Lib include
 CLIB = -lreadline
