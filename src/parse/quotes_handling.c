@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_handling.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:02:58 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/27 11:03:10 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:34:39 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@
 //
 //}
 
-char	*quotes_handler(char *str, int *index)
+char	*quotes_handler(char *str, int *index, int *flag)
 {
 	char	*arg;
 	int		start;
@@ -74,9 +74,9 @@ char	*quotes_handler(char *str, int *index)
 
 	(1) && (is_dquote = 0, is_squote = 0);
 	if (str[*index] == '\"')
-		is_dquote = 1;
+		(1) && (is_dquote = 1, *flag = DOUBLE_QUOTE);
 	else
-		is_squote = 1;
+		(1) && (is_squote = 1, *flag = SINGLE_QUOTE);
 	start = *index + 1;
 	while (is_dquote)
 	{

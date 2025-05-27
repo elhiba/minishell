@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/27 10:25:20 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:35:56 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		operation_len(char *str)
 
 int		arg_counter(char *str)
 {
-
 	int i;
 	int count;
 
@@ -64,15 +63,17 @@ void	typer(t_token **token, char *arg)
 	i = 0;
 //	while (arg[i])
 //	{
-		if (arg[i] == '>' && arg[i + 1] == '>')
-			(*token)->next->is_redirection = REDIRECTION;
-		else if (arg[i] == '<' && arg[i + 1] == '<')
-			(*token)->next->is_heredoc = HEREDOC;
-		else if (arg[i] == '>')
-			(*token)->next->is_outfile = OUTPUT_FILE;
-		else if (arg[i] == '<')
-			(*token)->next->is_infile = INPUT_FILE;
-//		i++;
+	if ((*token)->is_dquote || (*token)->is_squote)
+		return ;
+	if (arg[i] == '>' && arg[i + 1] == '>')
+		(*token)->next->is_redirection = REDIRECTION;
+	else if (arg[i] == '<' && arg[i + 1] == '<')
+		(*token)->next->is_heredoc = HEREDOC;
+	else if (arg[i] == '>')
+		(*token)->next->is_outfile = OUTPUT_FILE;
+	else if (arg[i] == '<')
+		(*token)->next->is_infile = INPUT_FILE;
+//	i++;
 //	}
 }
 
@@ -113,7 +114,7 @@ void	ft_spliter(t_token **token, char *str)
 			while (str[i] && str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && !operation_len(str + i))
 				i++;
 			if (str[i] == '\'' || str[i] == '\"')
-				arg = quotes_handler(str, &i);
+				arg = quotes_handler(str, &i, &op_len);
 			else
 				arg = ft_substr(str, start, i - start);
 			if (!arg)
@@ -126,8 +127,17 @@ void	ft_spliter(t_token **token, char *str)
 		while (ptr->next)
 			ptr = ptr->next;
 		//typer(&ptr, arg);
+		if (op_len == DOUBLE_QUOTE)
+			ptr->is_dquote = 1;
+		else if (op_len == SINGLE_QUOTE)
+			ptr->is_squote = 1;
 		space_checker(str, &ptr, i);
 	}
+	// hnaaaaa :)
+	/*
+	expand;
+	split white spaces;
+	*/
 	//quotes_handler(token);
 	//args[index] = NULL;
 	//return (args);

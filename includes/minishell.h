@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/27 11:31:13 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:36:15 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	sigint_handler(int sig);
 void	ft_parse(t_data *data);
 int		syntax_checker(t_data *data);
 void	dollar_expand(t_data *data, t_token *token);
-char	*quotes_handler(char *str, int *i);
+char	*quotes_handler(char *str, int *i, int *flag);
 char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
 
 /* error handler */
