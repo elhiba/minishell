@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/27 23:02:04 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/28 02:23:01 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,16 @@ void	ft_spliter(t_token **token, char *str)
 		else
 		{
 			start = i;
-			while (str[i] && str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && !operation_len(str + i))
-				i++;
-			if (str[i] == '\'' || str[i] == '\"')
+			if (str[i] == '$')
+				arg = dollar_handler(str, &i);
+			else if (str[i] == '\'' || str[i] == '\"')
 				arg = quotes_handler(str, &i, &op_len);
 			else
+			{
+				while (str[i] && str[i] != '$' && str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && !operation_len(str + i))
+					i++;
 				arg = ft_substr(str, start, i - start);
+			}
 			if (!arg)
 				error_handler("ft_substr", NULL);
 			//args[index] = ft_substr(str, start, i - start);
