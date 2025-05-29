@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/28 02:23:01 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:03:11 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	typer(t_token **token, char *arg)
 //	}
 }
 
-void	ft_spliter(t_token **token, char *str)
+void	ft_spliter(t_token **token, char *str, t_data *data)
 {
 	//char	**args;
 	//int		index;
@@ -126,17 +126,20 @@ void	ft_spliter(t_token **token, char *str)
 			//args[index] = ft_substr(str, start, i - start);
 			//index++;
 		}
+		if (check_is_expandable(arg) && op_len != SINGLE_QUOTE) // New expand :)
+			expand_variable(data->env, &arg);
 		add_token_node(token, arg);
 		ptr = *token;
 		while (ptr->next)
 			ptr = ptr->next;
 		//typer(&ptr, arg);
-		if (op_len == 10)
+		if (op_len == DOUBLE_QUOTE)
 			ptr->is_dquote = 1;
-		else if (op_len == 11)
+		else if (op_len == SINGLE_QUOTE)
 			ptr->is_squote = 1;
 		space_checker(str, &ptr, i);
 	}
+	join_tokens(token); // join tokens with is_space_next == 0;
 	// hnaaaaa :)
 	/*
 	expand;
@@ -187,7 +190,7 @@ void	node_cleaner(t_token **head)
 	}
 }
 
-t_token	*token(char *str)
+t_token	*token(char *str, t_data *data)
 {
 	t_token	*tok;
 	t_token	*ptr;
@@ -196,7 +199,7 @@ t_token	*token(char *str)
 
 	//i = 0;
 	tok = NULL;
-	ft_spliter(&tok, str);
+	ft_spliter(&tok, str, data);
 	ptr = tok;
 	while (ptr)
 	{
@@ -232,7 +235,7 @@ void	**ft_tokenizer(t_data *data)
 	i = 0;
 	while (ptok[i])
 	{
-		tok[i] = token(ptok[i]);
+		tok[i] = token(ptok[i], data);
 		i++;
 	}
 	tok[i] = NULL;

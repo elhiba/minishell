@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/28 01:51:58 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:47:19 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdio.h>
+# include <stdbool.h>
 
 enum s_type
 {
@@ -33,6 +34,14 @@ enum s_type
 	HEREDOC,
 	REDIRECTION
 };
+
+typedef struct s_env
+{
+	char	*name;
+	char	*value;
+	long	name_len;
+	long	value_len;
+}	t_env;
 
 typedef struct s_token
 {
@@ -73,6 +82,9 @@ int		syntax_checker(t_data *data);
 char	*dollar_handler(char *str, int *i);
 char	*quotes_handler(char *str, int *i, int *flag);
 char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
+void	expand_variable(char **envp, char **token);
+void	join_tokens(t_token **tokens);
+int		check_is_expandable(char *buffer);
 
 /* error handler */
 void	error_handler(char *error_name, t_data *data);
