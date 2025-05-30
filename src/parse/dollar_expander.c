@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_expander.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:47:04 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/28 02:30:04 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:19:29 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*dollar_handler(char *str, int *i)
 
 	start = *i;
 	++(*i);
-	while (str[*i] && str[*i] != '\"' && str[*i] != '\'')
+	while ((str[*i] && ft_isalnum(str[*i]) && str[*i] != '\"' && str[*i] != '\'') || str[*i] == '_')
 		(*i)++;
 	arg = ft_substr(str, start, (*i - start));
 	return (arg);

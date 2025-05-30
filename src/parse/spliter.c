@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/29 15:03:11 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/30 16:09:01 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		arg_counter(char *str)
 void	space_checker(char *str, t_token **tok, int index)
 {
 	if (str[index] == ' ' || operation_len(str + index))
-		(*tok)->is_space_next = 1;
+		(*tok)->is_space_next = 1;	
 }
 
 void	typer(t_token **token, char *arg)
@@ -126,20 +126,28 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 			//args[index] = ft_substr(str, start, i - start);
 			//index++;
 		}
-		if (check_is_expandable(arg) && op_len != SINGLE_QUOTE) // New expand :)
+		if (check_is_expandable(arg) && op_len != 11) {
+			start = 1337;
 			expand_variable(data->env, &arg);
+		}
+		//printf("%s\n", arg);
 		add_token_node(token, arg);
 		ptr = *token;
-		while (ptr->next)
+		while (ptr->next){
 			ptr = ptr->next;
+		}
+		//printf("%s %s %d\n", ptr->arg,__func__, __LINE__);
 		//typer(&ptr, arg);
-		if (op_len == DOUBLE_QUOTE)
+		if (op_len == 10)
 			ptr->is_dquote = 1;
-		else if (op_len == SINGLE_QUOTE)
+		else if (op_len == 11)
 			ptr->is_squote = 1;
+		if (start == 1337)
+			ptr->is_env_var = 1;
+		else
+			ptr->is_env_var = 0;
 		space_checker(str, &ptr, i);
-	}
-	join_tokens(token); // join tokens with is_space_next == 0;
+	}	
 	// hnaaaaa :)
 	/*
 	expand;
@@ -170,7 +178,7 @@ void	node_cleaner(t_token **head)
 	while (ptr)
 	{
 		current = ptr;
-		if (operator_cleaner(ptr->arg))
+		if ((!ptr->is_squote &&!ptr->is_dquote) && operator_cleaner(ptr->arg))
 		{
 			if (!ptr->prev)
 			{
@@ -200,6 +208,9 @@ t_token	*token(char *str, t_data *data)
 	//i = 0;
 	tok = NULL;
 	ft_spliter(&tok, str, data);
+	join_tokens(&tok); // join tokens with is_space_next == 0;
+	//printf("%s\n", tok->arg);
+	split_expanded(&tok, data);
 	ptr = tok;
 	while (ptr)
 	{

@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/29 14:47:19 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/30 02:00:52 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_token
 	int				is_heredoc;
 	int				is_redirection;
 
+	int				is_env_var;
+
 	int				is_space_next;
 
 	struct s_token	*next;
@@ -72,6 +74,9 @@ typedef struct s_data
 #define SYN_OP_ERROR "minishell: syntax error near unexpected token"
 #define SYN_Q_ERROR "minishell: unexpected EOF while looking for matching"
 
+/* debug*/
+void	print_list(void **head);
+
 /* Signal func */
 void	handle_signals(void);
 void	sigint_handler(int sig);
@@ -81,10 +86,12 @@ void	ft_parse(t_data *data);
 int		syntax_checker(t_data *data);
 char	*dollar_handler(char *str, int *i);
 char	*quotes_handler(char *str, int *i, int *flag);
+void	ft_spliter(t_token **token, char *str, t_data *data);
 char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
 void	expand_variable(char **envp, char **token);
 void	join_tokens(t_token **tokens);
 int		check_is_expandable(char *buffer);
+void	split_expanded(t_token **token, t_data *data);
 
 /* error handler */
 void	error_handler(char *error_name, t_data *data);

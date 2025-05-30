@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 23:39:47 by sel-maaq          #+#    #+#             */
-/*   Updated: 2025/04/26 16:58:56 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:19:34 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,15 @@ char	*ft_strdup(const char *s1);
 void	ft_bzero(void *s, size_t n);
 char	**ft_split(char const *s, char c);
 char	*ft_strchr(const char *str, int c);
+char	*ft_strndup(const char *s1, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strnjoin(char const *s1, char const *s2, size_t n);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+
 
 /* ---------------	NUMBERS		--------------- */
 char	*ft_itoa(int n);
