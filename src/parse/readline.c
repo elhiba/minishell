@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/29 15:01:57 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/30 01:54:36 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_list(void **head)
 		printf("Args[%i]: ", i);
 		while (ptr[i])
 		{
-			printf("%s", ptr[i]->arg);
+			printf("{%s}", ptr[i]->arg);
 			if (ptr[i]->is_space_next)
 				printf(" ");
 			if (ptr[i]->is_infile)

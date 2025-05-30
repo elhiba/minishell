@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:42:31 by slasfar           #+#    #+#             */
-/*   Updated: 2025/05/29 14:57:57 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/30 15:35:44 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,13 @@ void	join_tokens(t_token **tokens)
 		{
 			current->arg = ft_strjoin_(current->arg, save_next->arg);
 			current->next = save_next->next;
+			if (save_next->next)
+				save_next->next->prev = current;
 			if (save_next->is_space_next)
 				current->is_space_next = 1;
+			if (current->is_env_var || save_next->is_env_var)
+				current->is_env_var = 1;
+			current->is_squote = 1;
 		}
 		else
 			current = save_next;
