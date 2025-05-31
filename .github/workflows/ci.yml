@@ -1,4 +1,4 @@
-name: CI
+name: MINISHELL_TESTER
 
 on:
   push:
@@ -12,10 +12,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: install dependencies
-        run: sudo apt update; sudo apt install -y build-essential libreadline8 libreadline-dev
+        run: sudo apt update; sudo apt install -y build-essential libreadline8 libreadline-dev valgrind
 
       - name: Compile
         run: make
 
       - name: Run program
         run: ./minishell < inputs.txt
+      - name: Run with valgrind
+        run: valgrind ./minishell < inputs.txt
