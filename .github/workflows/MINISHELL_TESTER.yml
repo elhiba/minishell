@@ -19,5 +19,6 @@ jobs:
 
       - name: Run program
         run: ./minishell < inputs.txt
+
       - name: Run with valgrind
-        run: valgrind ./minishell < inputs.txt
+        run: valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp -s ./minishell < inputs.txt
