@@ -248,6 +248,68 @@
       "-g3",
       "-c",
       "-o",
+      "ft_strndup.o",
+      "ft_strndup.c"
+    ],
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strndup.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strndup.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "ft_strnjoin.o",
+      "ft_strnjoin.c"
+    ],
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strnjoin.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strnjoin.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "ft_isdigit.o",
+      "ft_isdigit.c"
+    ],
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_isdigit.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_isdigit.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "ft_memcpy.o",
+      "ft_memcpy.c"
+    ],
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_memcpy.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_memcpy.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-g3",
+      "-c",
+      "-o",
       "src/main.o",
       "src/main.c"
     ],
@@ -259,8 +321,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -275,8 +335,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -291,8 +349,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -307,8 +363,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -323,8 +377,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -339,8 +391,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -355,8 +405,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -371,8 +419,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -387,8 +433,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -403,8 +447,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -419,8 +461,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -435,8 +475,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -451,8 +489,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -467,8 +503,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -483,8 +517,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -499,8 +531,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -515,8 +545,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -531,8 +559,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -547,8 +573,6 @@
     "arguments": [
       "/usr/bin/cc",
       "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -558,5 +582,61 @@
     "directory": "/home/elhiba/Documents/code/minishell",
     "file": "/home/elhiba/Documents/code/minishell/src/parse/syntax_checker.c",
     "output": "/home/elhiba/Documents/code/minishell/src/parse/syntax_checker.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/expand.o",
+      "src/parse/expand.c"
+    ],
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/expand.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/expand.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/join_token.o",
+      "src/parse/join_token.c"
+    ],
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/join_token.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/join_token.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/split_expanded.o",
+      "src/parse/split_expanded.c"
+    ],
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/split_expanded.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/split_expanded.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-g3",
+      "-c",
+      "-o",
+      "includes/gcft/gc_collector.o",
+      "includes/gcft/gc_collector.c"
+    ],
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/includes/gcft/gc_collector.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/gcft/gc_collector.o"
   }
 ]
