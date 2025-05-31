@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:17:49 by slasfar           #+#    #+#             */
-/*   Updated: 2025/05/30 16:18:05 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/31 16:40:13 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*ft_strndup(const char *s1, size_t n)
 
 	if (!s1)
 		return (NULL);
-	str = malloc(sizeof(char) * (n + 1));
+	str = ft_collector(sizeof(char) * (n + 1), ALLOC);
 	if (!str)
-		return (NULL);
+		return (ft_collector(0, EXIT));
 	i = 0;
 	while (s1[i] && i < n)
 	{

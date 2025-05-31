@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/05/30 16:19:42 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/31 18:14:37 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 bool	is_digit_(char c)
@@ -63,7 +62,7 @@ char *ft_trim(char *str, int len)
 	char	*trimmed_str;
 
 	i = 0;
-	trimmed_str = malloc(sizeof(char) * (ft_strlen(str) - len + 1));
+	trimmed_str = ft_collector(sizeof(char) * (ft_strlen(str) - len + 1), ALLOC);
 	if (!trimmed_str)
 		return (NULL);
 	while (str[i + len])
@@ -72,7 +71,6 @@ char *ft_trim(char *str, int len)
 		i++;
 	}
 	trimmed_str[i] = '\0';
-	free(str);
 	return (trimmed_str);
 }
 
@@ -136,15 +134,11 @@ void	expand_variable(char **envp, char **token)
 {
 	t_env	*env;
 	char	*expanded_token;
-	int		i;
-	int 	j;
 
 	env = (t_env *)malloc(sizeof(t_env));
 	expanded_token = ft_strdup("");
 	if (!env)
 		return ;
-	i = 0;
-	j = 0;
 	while (**token)
 	{
 		if (**token == '$' && is_alnum_(*(*token + 1)) == true)

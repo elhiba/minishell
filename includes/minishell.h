@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/30 02:00:52 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/31 16:31:49 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-enum s_type
+typedef enum s_type
 {
 	SPACES,
 	SINGLE_QUOTE,
@@ -33,7 +33,7 @@ enum s_type
 	OUTPUT_FILE,
 	HEREDOC,
 	REDIRECTION
-};
+}	t_type;
 
 typedef struct s_env
 {

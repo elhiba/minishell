@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:51:50 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/25 00:42:55 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:02:10 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	add_token_node(t_token **head, char *arg)
 
 	if (!arg)
 		return ;
-	new = malloc(sizeof(t_token));
+	new = ft_collector(sizeof(t_token), ALLOC);
 	if (!new)
-		error_handler("malloc", NULL);
+		ft_collector(0, EXIT);
 	ft_bzero(new, sizeof(t_token));
 	new->arg = arg;
 	if (!*head)

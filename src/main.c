@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/01 17:54:57 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:03:23 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int	main(int ac, char **av, char **env)
 		if (data.readline_in == NULL)
 		{
 			printf("exit\n");
-			free_d_arr(data.env);
-			exit(EXIT_SUCCESS);
+			ft_collector(0, EXIT);
 		}
 		add_history(data.readline_in);
 		ft_parse(&data);

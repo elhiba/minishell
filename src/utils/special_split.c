@@ -6,25 +6,11 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:12:11 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/11 19:13:59 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/31 16:55:33 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static char	**free_array(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-	return (NULL);
-}
 
 static int	count_words(char const *s, char c)
 {
@@ -102,9 +88,9 @@ static char	**alloc_words(char **arr, char const *s, char c)
 			if (s[i] == c && !is_dquote && !is_squote)
 				break ;
 		}
-		arr[j] = malloc(w_len + 1);
+		arr[j] = ft_collector(w_len + 1, ALLOC);
 		if (!arr[j])
-			return (free_array(arr));
+			return (ft_collector(0, EXIT));
 		copy_word(arr[j++], s, i - w_len, c);
 	}
 	arr[j] = NULL;
@@ -119,9 +105,9 @@ char	**special_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	wrd_count = count_words(s, c);
-	arr = malloc(sizeof(char *) * (wrd_count + 1));
+	arr = ft_collector(sizeof(char *) * (wrd_count + 1), ALLOC);
 	if (!arr)
-		return (NULL);
+		return (ft_collector(0, EXIT));
 	arr = alloc_words(arr, s, c);
 	return (arr);
 }

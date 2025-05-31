@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 09:44:03 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/31 16:39:46 by moel-hib         ###   ########.fr       */
+/*   Created: 2024/10/23 10:01:56 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/05/31 16:15:50 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	char	*src;
-	int		total_len;
-	int		len_s1;
-	int		len_s2;
+	unsigned char	*d;
+	unsigned char	*s;
+	size_t			i;
 
-	if (!s1 || !s2)
+	if (!dest && !src)
 		return (NULL);
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	total_len = len_s1 + len_s2;
-	src = ft_collector(sizeof(char) * (total_len + 1), ALLOC);
-	if (!src)
-		return (ft_collector(0, EXIT));
-	ft_memcpy(src, s1, len_s1);
-	ft_memcpy(src + len_s1, s2, len_s2);
-	src[total_len] = '\0';
-	return (src);
+	i = 0;
+	d = (unsigned char *)dest;
+	s = (unsigned char *)src;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dest);
 }

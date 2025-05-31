@@ -3,55 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/26 09:56:56 by sel-maaq          #+#    #+#             */
-/*   Updated: 2024/10/26 14:57:31 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/31 09:19:46 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/05/31 16:37:05 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	int_len(long num)
+static int	count_digits(long n)
 {
-	int	len;
+	int	count;
 
-	len = 0;
-	if (num <= 0)
-		len++;
-	while (num != 0)
+	count = 0;
+	if (n < 0)
+		n *= -1;
+	while (0 < n)
 	{
-		num /= 10;
-		len++;
+		n /= 10;
+		count++;
 	}
+	return (count);
+}
+
+static unsigned int	len_counter(long n, int len)
+{
+	len = 0;
+	if (n < 0)
+	{
+		n *= -1;
+		len = count_digits(n) + 1;
+	}
+	else if (n == 0)
+		len = 1;
+	else
+		len = count_digits(n);
 	return (len);
+}
+
+static void	tmjnina(int *sign, long *number, char *num)
+{
+	*sign = 1;
+	*number *= -1;
+	num[0] = '-';
 }
 
 char	*ft_itoa(int n)
 {
-	long	num;
-	char	*arr;
 	int		len;
+	int		sign;
+	char	*num;
+	long	number;
 
-	num = n;
-	len = int_len(num);
-	arr = malloc(sizeof(char) * (len + 1));
-	if (!arr)
-		return (NULL);
-	arr[len] = '\0';
-	len--;
-	if (num < 0)
+	number = (long)n;
+	sign = 0;
+	len = 0;
+	len = len_counter(number, len);
+	num = ft_collector(sizeof(char) * (len + 1), ALLOC);
+	if (!num)
+		return (ft_collector(0, EXIT));
+	num[len] = '\0';
+	if (number < 0)
+		tmjnina(&sign, &number, num);
+	while (sign < len)
 	{
-		arr[0] = '-';
-		num = -num;
-	}
-	if (num == 0)
-		arr[0] = '0';
-	while (num > 0)
-	{
-		arr[len] = num % 10 + '0';
-		num /= 10;
+		num[len - 1] = (number % 10) + 48;
+		number /= 10;
 		len--;
 	}
-	return (arr);
+	return (num);
 }

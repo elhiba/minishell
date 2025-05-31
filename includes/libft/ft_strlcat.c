@@ -3,34 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 11:52:46 by sel-maaq          #+#    #+#             */
-/*   Updated: 2024/10/23 23:40:13 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/24 16:48:43 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/05/31 16:24:23 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t		i;
-	size_t		j;
-	size_t		dst_len;
-	size_t		src_len;
+	size_t	i;
+	size_t	lens;
+	size_t	lend;
 
-	dst_len = ft_strlen(dst);
-	src_len = ft_strlen(src);
-	j = 0;
-	i = dst_len;
-	if (dstsize <= dst_len)
-		return (dstsize + src_len);
-	while (i < (dstsize - 1) && src[j] != '\0')
+	i = 0;
+	lens = ft_strlen(src);
+	if (!dst && size == 0)
+		return (lens);
+	lend = ft_strlen(dst);
+	if ((lend) >= size)
+		return (size + lens);
+	while (src[i] && (lend + i) < size - 1)
 	{
-		dst[i] = src[j];
+		dst[lend + i] = src[i];
 		i++;
-		j++;
 	}
-	dst[i] = '\0';
-	return (dst_len + src_len);
+	dst[lend + i] = '\0';
+	return (lens + lend);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/30 16:20:08 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:06:12 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ char	*check_in_path(t_token *list, t_data *data)
 		if (access(full_cmd, X_OK) == 0)
 		{
 			list->arg = full_cmd;
-			return (free(cmd), free_d_arr(dirs), full_cmd);
+			return (full_cmd);
 		}
-		free(full_cmd);
 		i++;
 	}
-	free_d_arr(dirs);
 	return (cmd);
 }
 
@@ -101,17 +99,12 @@ void	ft_execution(t_data *data)
 				printf("%s: No such file or directory\n", cmd);
 			else
 				printf("%s: command not found\n", cmd);
-			free(argv);
-			free_token_list(&data->token_list);
-			free_d_arr(data->env);
 			exit(127);
 		}
-		(free(argv), error_handler(cmd, data));
+		(error_handler(cmd, data));
 	}
 	if (WIFEXITED(status))
 		data->last_exit_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		data->last_exit_code = 128 + WTERMSIG(status);
-	free_token_list(&data->token_list);
-	free(argv);
 }

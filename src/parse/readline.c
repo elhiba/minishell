@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/30 01:54:36 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/31 16:50:54 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	ft_parse(t_data *data)
 		if (!args)
 			error_handler("split args", NULL);
 		print_list(args);
-		free(args);
 	//	dollar_expand(data, token_list);
 	//	data->token_list = token_list;
 	//	if (ft_builtin(data) == 0 && token_list)

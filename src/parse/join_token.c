@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:42:31 by slasfar           #+#    #+#             */
-/*   Updated: 2025/05/30 15:35:44 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/31 18:13:25 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ char	*ft_strjoin_(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	str = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	str = ft_collector((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char), ALLOC);
 	if (!str)
-		return (NULL);
+		return (ft_collector(0, EXIT));
 	while (s1[i])
 	{
 		str[i] = s1[i];

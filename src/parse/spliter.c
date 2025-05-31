@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/30 16:09:01 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/05/31 18:21:14 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		arg_counter(char *str)
 void	space_checker(char *str, t_token **tok, int index)
 {
 	if (str[index] == ' ' || operation_len(str + index))
-		(*tok)->is_space_next = 1;	
+		(*tok)->is_space_next = 1;
 }
 
 void	typer(t_token **token, char *arg)
@@ -172,12 +172,12 @@ int		operator_cleaner(char *arg)
 void	node_cleaner(t_token **head)
 {
 	t_token	*ptr;
-	t_token	*current;
+	//t_token	*current;
 
 	ptr = *head;
 	while (ptr)
 	{
-		current = ptr;
+	//	current = ptr;
 		if ((!ptr->is_squote &&!ptr->is_dquote) && operator_cleaner(ptr->arg))
 		{
 			if (!ptr->prev)
@@ -191,8 +191,6 @@ void	node_cleaner(t_token **head)
 				ptr->prev = ptr->prev;
 				ptr->prev->prev->next = ptr;
 			}
-			free(current->arg);
-			free(current);
 		}
 		ptr = ptr->next;
 	}
@@ -240,9 +238,9 @@ void	**ft_tokenizer(t_data *data)
 		error_handler("pipe split", data);
 	while (ptok[i])
 		i++;
-	tok = (void **)malloc(sizeof(void *) * (i + 1));
+	tok = ft_collector(sizeof(void *) * (i + 1), ALLOC);
 	if (!tok)
-		error_handler("malloc", data);
+		ft_collector(0, EXIT);
 	i = 0;
 	while (ptok[i])
 	{

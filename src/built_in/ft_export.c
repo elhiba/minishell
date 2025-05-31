@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:37:28 by sel-maaq          #+#    #+#             */
-/*   Updated: 2025/05/02 21:53:24 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:05:10 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	print_sorted_env(char **env)
 		}
 		i++;
 	}
-	free_d_arr(env_cpy);
 }
 
 int	is_valid_key(char *key, t_data *data)

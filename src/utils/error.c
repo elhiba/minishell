@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 23:39:07 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/20 12:22:48 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:06:35 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	error_handler(char *error_name, t_data *data)
 		perror(error_name);
 	if (data)
 	{
-		free_token_list(&data->token_list);
-		free_d_arr(data->env);
+//		free_token_list(&data->token_list);
+//		free_d_arr(data->env);
 	}
 	exit(EXIT_FAILURE);
 }

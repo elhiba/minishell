@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   gc_collector.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 17:22:50 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/31 16:26:05 by moel-hib         ###   ########.fr       */
+/*   Created: 2025/05/30 01:39:51 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/05/31 16:30:40 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GC_COLLECTOR_H
+# define GC_COLLECTOR_H
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+# include "../libft/libft.h"
+# include <stddef.h>
+# include <stdlib.h>
+
+typedef struct s_collector
 {
-	size_t	i;
+	void				*addr;
 
-	if (n == 0)
-		return (0);
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n - 1)
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
+	struct s_collector	*next;
+}	t_collector;
+
+typedef enum s_flag
+{
+	ALLOC,
+	FREE,
+	EXIT
+}	t_flag;
+
+void	*ft_collector(size_t size, int flag);
+#endif

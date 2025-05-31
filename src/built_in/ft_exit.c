@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:24:56 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/01 19:09:25 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:04:36 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	do_exit(t_data *data)
 		if (!only_num(tmp->arg) && arg_count == 1)
 		{
 			printf("exit: %s: numeric argument required\n", tmp->arg);
-			free_token_list(&data->token_list);
-			free_d_arr(data->env);
 			exit(2);
 		}
 		if (arg_count > 1)
@@ -53,8 +51,6 @@ int	do_exit(t_data *data)
 		exit_status = data->last_exit_code;
 	else
 		exit_status = ft_atoi(data->token_list->next->arg);
-	free_token_list(&data->token_list);
-	free_d_arr(data->env);
 	exit(exit_status);
 	return (1);
 }

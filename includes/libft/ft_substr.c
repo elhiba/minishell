@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/20 21:51:48 by sel-maaq          #+#    #+#             */
-/*   Updated: 2025/04/26 16:57:10 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/30 09:03:25 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/05/31 16:41:34 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*result;
-	size_t	i;
-	size_t	str_len;
+	char			*src;
+	unsigned int	s_len;
 
 	if (!s)
 		return (NULL);
-	i = 0;
-	str_len = ft_strlen(s);
-	if (start >= str_len)
-		return (ft_strdup(""));
-	if (len > str_len - start)
-		len = str_len - start;
-	result = malloc((len + 1) * sizeof(char));
-	if (!result)
-		return (NULL);
-	while (i < len)
+	s_len = ft_strlen(s);
+	if (start >= s_len)
 	{
-		result[i] = s[start + i];
-		i++;
+		src = ft_collector(sizeof(char) * 1, ALLOC);
+		if (!src)
+			return (ft_collector(0, EXIT));
+		src[0] = '\0';
+		return (src);
 	}
-	result[i] = '\0';
-	return (result);
+	if (len > s_len - start)
+		len = s_len - start;
+	src = ft_collector(sizeof(char) * (len + 1), ALLOC);
+	if (!src)
+		return (ft_collector(0, EXIT));
+	ft_strlcpy(src, s + start, len + 1);
+	return (src);
 }

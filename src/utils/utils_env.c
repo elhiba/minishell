@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 21:11:00 by sel-maaq          #+#    #+#             */
-/*   Updated: 2025/05/01 19:34:09 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:11:20 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**copy_env(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	new_env = malloc(sizeof(char *) * (i + 1));
+	new_env = ft_collector(sizeof(char *) * (i + 1), ALLOC);
 	if (!new_env)
 		error_handler("env malloc error", NULL);
 	i = 0;
@@ -77,7 +77,7 @@ void	ft_setenv(char ***env, char *key, char *val)
 			return ;
 		}
 	}
-	new_env = malloc(sizeof(char *) * (i + 2));
+	new_env = ft_collector(sizeof(char *) * (i + 2), ALLOC);
 	i = -1;
 	while ((*env)[++i])
 		new_env[i] = (*env)[i];
