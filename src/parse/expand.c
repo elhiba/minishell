@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/05/31 18:14:37 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/05/31 18:48:39 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/minishell.h"
@@ -83,7 +83,7 @@ void	extract_variable_name(char *token, t_env *env)
 	(1) && (i = 0, j = 0, len = 0);
 	while (token[len] && is_alnum_(token[len]) == true)
 		len++;
-	env->name = malloc(sizeof(char) * (len + 1));
+	env->name = ft_collector(sizeof(char) * (len + 1), 1);
 	if (!env->name)
 		return ;
 	i = 0;
@@ -135,7 +135,7 @@ void	expand_variable(char **envp, char **token)
 	t_env	*env;
 	char	*expanded_token;
 
-	env = (t_env *)malloc(sizeof(t_env));
+	env = ft_collector(sizeof(t_env), ALLOC);
 	expanded_token = ft_strdup("");
 	if (!env)
 		return ;
