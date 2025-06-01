@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/31 16:50:54 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/01 22:58:58 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,63 @@
 
 void	print_list(void **head)
 {
-	int		i;
 	t_token	**ptr;
+	t_token	*current;
+	int		i;
+	int		is_newline;
 
 	i = 0;
 	ptr = (t_token **)head;
 	while (ptr[i])
 	{
+		current = ptr[i];
 		printf("Args[%i]: ", i);
-		while (ptr[i])
+		while (current)
 		{
-			printf("{%s}", ptr[i]->arg);
-			if (ptr[i]->is_space_next)
-				printf(" ");
-			if (ptr[i]->is_infile)
-				printf("\n\E[31m%s\E[0m is input file\t", ptr[i]->arg);
-			if (ptr[i]->is_outfile)
-				printf("\n\E[31m%s\E[0m is out file\t", ptr[i]->arg);
-			if (ptr[i]->is_heredoc)
-				printf("\n\E[31m%s\E[0m is here doc\t", ptr[i]->arg);
-			if (ptr[i]->is_redirection)
-				printf("\n\E[31m%s\E[0m is redirection (appending)", ptr[i]->arg);
-			ptr[i] = ptr[i]->next;
+			printf("{%s}", current->arg);
+			current = current->next;
 		}
 		printf("\n");
+		i++;
+	}
+
+	i = 0;
+	while (ptr[i])
+	{
+		is_newline = 0;
+		current = ptr[i];
+		while (current)
+		{
+			if (current->is_infile || current->is_outfile || current->is_heredoc || current->is_redirection)
+			{
+				printf("Args[-%i-]: ", i);
+				break ;
+			}
+			current = current->next;
+		}
+		current = ptr[i];
+		while (current)
+		{
+			if (current->is_infile)
+				printf("{\E[31m%s\E[0m} is input file\t", current->arg), is_newline = 1;
+			if (current->is_outfile)
+				printf("{\E[31m%s\E[0m} is out file\t", current->arg), is_newline = 1;
+			if (current->is_heredoc)
+				printf("{\E[31m%s\E[0m} is here doc\t", current->arg), is_newline = 1;
+			if (current->is_redirection)
+				printf("{\E[31m%s\E[0m} is redirection (appending)\t", current->arg), is_newline = 1;
+			current = current->next;
+		}
+		if (is_newline)
+			printf("\n");
 		i++;
 	}
 }
 
 void	ft_parse(t_data *data)
 {
-//	t_token	*token_list;
 	void	**args;
+//	t_token	*token_list;
 //	int		i;
 
 //	i = 0;
