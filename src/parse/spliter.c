@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/31 18:21:14 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/01 10:29:34 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,10 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 			//args[index] = ft_substr(str, start, i - start);
 			//index++;
 		}
-		if (check_is_expandable(arg) && op_len != 11) {
-			start = 1337;
-			expand_variable(data->env, &arg);
-		}
+		//if (check_is_expandable(arg) && op_len != 11) {
+		//	start = 1337;
+		//	expand_variable(data->env, &arg);
+		//}
 		//printf("%s\n", arg);
 		add_token_node(token, arg);
 		ptr = *token;
@@ -142,13 +142,14 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 			ptr->is_dquote = 1;
 		else if (op_len == 11)
 			ptr->is_squote = 1;
-		if (start == 1337)
-			ptr->is_env_var = 1;
-		else
-			ptr->is_env_var = 0;
+		//if (start == 1337)
+		//	ptr->is_env_var = 1;
+		//else
+		//	ptr->is_env_var = 0;
 		space_checker(str, &ptr, i);
 	}	
 	// hnaaaaa :)
+	check_and_expand(token, data->env);
 	/*
 	expand;
 	split white spaces;
@@ -178,7 +179,7 @@ void	node_cleaner(t_token **head)
 	while (ptr)
 	{
 	//	current = ptr;
-		if ((!ptr->is_squote &&!ptr->is_dquote) && operator_cleaner(ptr->arg))
+		if ((!ptr->is_squote &&!ptr->is_dquote && !ptr->is_env_var) && operator_cleaner(ptr->arg))
 		{
 			if (!ptr->prev)
 			{

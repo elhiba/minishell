@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/05/31 23:23:13 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/01 10:25:07 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 bool	is_digit_(char c)
@@ -156,4 +157,21 @@ void	expand_variable(char **envp, char **token)
 		}
 	}
 	*token = expanded_token;
+}
+
+void check_and_expand(t_token **head, char **envp)
+{
+	t_token *current;
+
+	current = *head;
+	while (current)
+	{
+		if (check_is_expandable(current->arg) && !current->is_squote)
+		{
+			expand_variable(envp, &current->arg);
+			current->is_env_var = 1;
+			current->is_squote = 1;
+		}
+		current = current->next;
+	}
 }

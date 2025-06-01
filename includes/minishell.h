@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/31 16:31:49 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/01 10:28:14 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	expand_variable(char **envp, char **token);
 void	join_tokens(t_token **tokens);
 int		check_is_expandable(char *buffer);
 void	split_expanded(t_token **token, t_data *data);
+void	check_and_expand(t_token **head, char **envp);
+int		operator_cleaner(char *arg);
 
 /* error handler */
 void	error_handler(char *error_name, t_data *data);
