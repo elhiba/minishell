@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/01 10:29:34 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/12 10:08:41 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,6 @@ t_token	*token(char *str, t_data *data)
 	tok = NULL;
 	ft_spliter(&tok, str, data);
 	join_tokens(&tok); // join tokens with is_space_next == 0;
-	//printf("%s\n", tok->arg);
 	split_expanded(&tok, data);
 	ptr = tok;
 	while (ptr)

@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/01 10:25:07 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/12 10:23:10 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void	expand_variable(char **envp, char **token)
 			get_env_value(envp, env);
 			expanded_token = ft_strnjoin(expanded_token, env->value, env->value_len);
 			*token = ft_trim(*token, env->name_len + 1);
-			//free(env->name);
 		}
 		else
 		{
@@ -162,16 +161,21 @@ void	expand_variable(char **envp, char **token)
 void check_and_expand(t_token **head, char **envp)
 {
 	t_token *current;
+	int		tmp_flag;
 
 	current = *head;
+	tmp_flag = 1;
 	while (current)
 	{
-		if (check_is_expandable(current->arg) && !current->is_squote)
+		if (current->prev && !ft_strcmp(current->prev->arg, "<<"))
+			tmp_flag = 0;
+		if (check_is_expandable(current->arg) && !current->is_squote && tmp_flag)
 		{
 			expand_variable(envp, &current->arg);
 			current->is_env_var = 1;
 			current->is_squote = 1;
 		}
+		tmp_flag = 1;
 		current = current->next;
 	}
 }
