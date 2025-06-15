@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/15 16:58:20 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 17:39:30 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,32 @@ int	check_ambiguous(t_token *token)
 	}
 	return (0);
 }
+void	expand_cleaner(t_token **head)
+{
+	t_token	*current;
+
+	current = *head;
+	while (current)
+	{
+		if (!current->prev && current->is_env_var && !strcmp(current->value, ""))
+		{
+			*head = current->next;
+			if (*head)
+				(*head)->prev = NULL;
+		}
+		else if (current->is_env_var && !strcmp(current->value, ""))
+		{
+			if (current->next)
+			{
+				current->prev->next = current->next;
+				current->next->prev = current->prev;
+			}
+			else
+				current->prev->next = NULL;
+		}
+		current = current->next;
+	}
+}
 
 t_token	*token(char *str, t_data *data)
 {
@@ -239,9 +265,14 @@ t_token	*token(char *str, t_data *data)
 	}
 	if(check_ambiguous(tok) == -1)
 		return (NULL);
+	node_cleaner(&tok);
+	if (!tok)
+		return (NULL);
 	join_tokens(&tok); // join tokens with is_space_next == 0;
 	split_expanded(&tok, data);
-	node_cleaner(&tok);
+	expand_cleaner(&tok);
+	if (!tok)
+		return (NULL);
 	//if (!args)
 	//	error_handler("args", NULL);
 //	while (args[i])
