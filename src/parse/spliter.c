@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/12 16:36:29 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:58:20 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,23 @@ void	node_cleaner(t_token **head)
 	}
 }
 
+int	check_ambiguous(t_token *token)
+{
+	t_token	*current;
+
+	current = token;
+	while (current)
+	{
+		if (current->is_env_var && (current->is_infile || current->is_outfile || current->is_append))
+		{
+			if (!strcmp(current->value, "") || there_is_space(current->value))
+				return(printf("minishell: '%s': ambiguous redirect\n", current->key), -1);
+		}
+		current = current->next;
+	}
+	return (0);
+}
+
 t_token	*token(char *str, t_data *data)
 {
 	t_token	*tok;
@@ -210,14 +227,20 @@ t_token	*token(char *str, t_data *data)
 	//i = 0;
 	tok = NULL;
 	ft_spliter(&tok, str, data);
-	join_tokens(&tok); // join tokens with is_space_next == 0;
-	split_expanded(&tok, data);
+	//check_ambiguous(tok);
+	//if (fail)
+	//	reuturn NULL;
+	
 	ptr = tok;
 	while (ptr)
 	{
 		typer(&ptr, ptr->arg);
 		ptr = ptr->next;
 	}
+	if(check_ambiguous(tok) == -1)
+		return (NULL);
+	join_tokens(&tok); // join tokens with is_space_next == 0;
+	split_expanded(&tok, data);
 	node_cleaner(&tok);
 	//if (!args)
 	//	error_handler("args", NULL);
@@ -248,6 +271,8 @@ void	**ft_tokenizer(t_data *data)
 	while (ptok[i])
 	{
 		tok[i] = token(ptok[i], data);
+		if (!tok[i])
+			return (NULL);
 		i++;
 	}
 	tok[i] = NULL;

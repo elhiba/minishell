@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:04:23 by slasfar           #+#    #+#             */
-/*   Updated: 2025/05/30 16:17:43 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 17:00:31 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,54 @@ void	extract_word(char **buffer, t_token **head)
 	t_token	*tmp;
 
 	len = 0;
-	tmp = *head;
 	while ((*buffer)[len] != '\0' && !is_space((*buffer)[len]))
 		len++;
 	token = ft_strndup(*buffer, len);
 	*(buffer) += len;
 	add_token_node(head, token);
+	tmp = *head;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->is_squote = 1;
 }
 
+int	all_spaces(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (!is_space(s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	split_into_nodes(t_token **head, char *buffer)
 {
+	t_token	*tmp;
+
+	
 	while (*buffer)
 	{
-		if (is_space(*buffer))
+		if (all_spaces(buffer))
+		{
+			add_token_node(head, ft_strdup(""));
+			buffer += ft_strlen(buffer);
+			tmp = *head;
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->is_squote = 1;
+			tmp->is_env_var = 1;
+		}
+		else if (is_space(*buffer))
 			buffer++;
 		else
 			extract_word(&buffer, head);
 	}
 }
-
 
 void	split_expanded(t_token **token, t_data *data)
 {
@@ -76,7 +102,7 @@ void	split_expanded(t_token **token, t_data *data)
 	{
 		next = current->next;
 		prev = current->prev; // NULL
-		if (current->is_env_var && there_is_space(current->arg) && current->is_dquote != 1)
+		if (current->is_env_var && !current->is_dquote && there_is_space(current->arg) && current->is_dquote != 1)
 		{
 			if (prev)
 				(1) && (prev->next = NULL, prev_was_null = false);

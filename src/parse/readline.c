@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/15 11:20:43 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:58:46 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,16 @@ void	ft_parse(t_data *data)
 
 //	i = 0;
 //	token_list = NULL;
+	list = NULL;
 	if (!syntax_checker(data))
 	{
 		//quotes_handler(data);
 		args = ft_tokenizer(data);
-		if (!args)
-			error_handler("split args", NULL);
-		//print_list(args);
+		if (args)
+			list = exec_setup(args, data);
+		//if (args)
+		//	print_list(args);
 		//printf("\nEXEC LIST:\n\n");
-		list = exec_setup(args, data);
 		//if (list)
 		//	pretty_print_cmd_list(list);
 		if (list)

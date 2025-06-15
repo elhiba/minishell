@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/12 10:23:10 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:53:15 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ use trim to remove the parts that you already added to the expanded token
 it could be more than one variable in the token
 so we need to loop over the token
 */
-void	expand_variable(char **envp, char **token)
+void	expand_variable(t_token *current, char **envp, char **token)
 {
 	t_env	*env;
 	char	*expanded_token;
@@ -140,6 +140,7 @@ void	expand_variable(char **envp, char **token)
 	expanded_token = ft_strdup("");
 	if (!env)
 		return ;
+	current->key = ft_strdup(current->arg);
 	while (**token)
 	{
 		if (**token == '$' && is_alnum_(*(*token + 1)) == true)
@@ -155,6 +156,7 @@ void	expand_variable(char **envp, char **token)
 			*token = ft_trim(*token, 1);
 		}
 	}
+	current->value = ft_strdup(expanded_token);
 	*token = expanded_token;
 }
 
@@ -171,9 +173,10 @@ void check_and_expand(t_token **head, char **envp)
 			tmp_flag = 0;
 		if (check_is_expandable(current->arg) && !current->is_squote && tmp_flag)
 		{
-			expand_variable(envp, &current->arg);
+			expand_variable(current, envp, &current->arg);
 			current->is_env_var = 1;
-			current->is_squote = 1;
+			if (!current->is_dquote)
+				current->is_squote = 1;
 		}
 		tmp_flag = 1;
 		current = current->next;

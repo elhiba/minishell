@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/14 15:36:11 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 16:50:05 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ typedef struct s_token
 	int				is_env_var;
 	int				is_space_next;
 
+	char			*key;
+	char			*value;
+	//t_env			*_env;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -108,13 +111,13 @@ char	*dollar_handler(char *str, int *i);
 char	*quotes_handler(char *str, int *i, int *flag);
 void	ft_spliter(t_token **token, char *str, t_data *data);
 char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
-void	expand_variable(char **envp, char **token);
+void	expand_variable(t_token*current, char **envp, char **token);
 void	join_tokens(t_token **tokens);
 int		check_is_expandable(char *buffer);
 void	split_expanded(t_token **token, t_data *data);
 void	check_and_expand(t_token **head, char **envp);
 int		operator_cleaner(char *arg);
-
+int	there_is_space(char *s);
 
 t_cmd	*exec_setup(void	**stock, t_data *data);
 void    pretty_print_cmd_list(t_cmd *cmd_list);
