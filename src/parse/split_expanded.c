@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:04:23 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/15 17:00:31 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 18:30:59 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ int	all_spaces(char *s)
 void	split_into_nodes(t_token **head, char *buffer)
 {
 	t_token	*tmp;
+	int		flag;
 
-	
+	flag  = 0;
 	while (*buffer)
 	{
-		if (all_spaces(buffer))
+		if (!flag && all_spaces(buffer))
 		{
 			add_token_node(head, ft_strdup(""));
 			buffer += ft_strlen(buffer);
@@ -85,7 +86,10 @@ void	split_into_nodes(t_token **head, char *buffer)
 		else if (is_space(*buffer))
 			buffer++;
 		else
+		{
 			extract_word(&buffer, head);
+			flag = 1;
+		}
 	}
 }
 
@@ -102,7 +106,7 @@ void	split_expanded(t_token **token, t_data *data)
 	{
 		next = current->next;
 		prev = current->prev; // NULL
-		if (current->is_env_var && !current->is_dquote && there_is_space(current->arg) && current->is_dquote != 1)
+		if (current->is_env_var && !current->is_dquote && !current->is_squote && there_is_space(current->arg) && current->is_dquote != 1)
 		{
 			if (prev)
 				(1) && (prev->next = NULL, prev_was_null = false);

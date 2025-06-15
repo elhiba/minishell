@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/15 11:29:42 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 18:33:00 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,7 +310,8 @@ int	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 		}
 		else if(flag && (current->is_dquote
 				|| current->is_word
-				|| current->is_squote))
+				|| current->is_squote
+				|| current->is_env_var))
 		{
 			flag = 0;
 			if (set_cmd_name(node, current, data) == -1)

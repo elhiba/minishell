@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/15 16:53:15 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 18:33:19 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,6 @@ void check_and_expand(t_token **head, char **envp)
 		{
 			expand_variable(current, envp, &current->arg);
 			current->is_env_var = 1;
-			if (!current->is_dquote)
-				current->is_squote = 1;
 		}
 		tmp_flag = 1;
 		current = current->next;
