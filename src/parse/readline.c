@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/15 10:02:15 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 10:44:31 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void	multiple_pipes(t_cmd *cmd_list, char **env)
 	while (current)
 	{
 		pipe(fd);
-		pid = fork();
+		if (current->cmd)
+			pid = fork();
 		if (pid == 0) {
 			if (current->next)
 				dup2(fd[1], STDOUT_FILENO);
@@ -98,8 +99,7 @@ void	multiple_pipes(t_cmd *cmd_list, char **env)
 		close(fd[1]);
 		current = current->next;
 	}
-    while ((pid = wait(&status)) > 0)
-        usleep(500);
+	while ((pid = wait(&status)) > 0);
 }
 
 void	ft_parse(t_data *data)

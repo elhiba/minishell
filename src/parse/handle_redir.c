@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/15 09:39:19 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/15 10:46:10 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int	is_a_directory(char *cmd)
 {
 	struct stat statbuf;
 
+	ft_bzero(&statbuf, sizeof(statbuf));
 	stat(cmd, &statbuf);
 	if (S_ISDIR(statbuf.st_mode))
 		return (1);
