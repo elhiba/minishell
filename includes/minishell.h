@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/01 10:28:14 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/14 15:36:11 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <limits.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <fcntl.h>
+# include <sys/stat.h>
 
 typedef enum s_type
 {
@@ -32,7 +34,7 @@ typedef enum s_type
 	INPUT_FILE,
 	OUTPUT_FILE,
 	HEREDOC,
-	REDIRECTION
+	APPEND
 }	t_type;
 
 typedef struct s_env
@@ -47,20 +49,39 @@ typedef struct s_token
 {
 	char			*arg;
 
+	int				is_word;
 	int				is_squote;
 	int				is_dquote;
 	int				is_infile;
 	int				is_outfile;
 	int				is_heredoc;
-	int				is_redirection;
-
+	int				is_append;
 	int				is_env_var;
-
 	int				is_space_next;
 
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
+
+typedef struct s_heredoc
+{
+	char	*heredoc_file;
+	char	*heredoc_del;
+	int		fd;
+	struct s_heredoc *next;
+} t_heredoc;
+
+
+typedef struct s_cmd
+{
+	char	*cmd; // usr/bin/ls
+	char	**argv; // {"ls", "-l"}
+	t_heredoc	*heredcs; // linked list of heredocs
+	int		STDIN; // stdin rah bayna 
+	int		STDOUT; // ta hade bayna asahbe
+	struct s_cmd *next;
+}	t_cmd;
+
 
 typedef struct s_data
 {
@@ -73,7 +94,6 @@ typedef struct s_data
 
 #define SYN_OP_ERROR "minishell: syntax error near unexpected token"
 #define SYN_Q_ERROR "minishell: unexpected EOF while looking for matching"
-
 /* debug*/
 void	print_list(void **head);
 
@@ -95,6 +115,10 @@ void	split_expanded(t_token **token, t_data *data);
 void	check_and_expand(t_token **head, char **envp);
 int		operator_cleaner(char *arg);
 
+
+t_cmd	*exec_setup(void	**stock, t_data *data);
+void    pretty_print_cmd_list(t_cmd *cmd_list);
+
 /* error handler */
 void	error_handler(char *error_name, t_data *data);
 
@@ -113,6 +137,7 @@ char	**copy_env(char **env);
 void	sort_env(char **env);
 void	ft_setenv(char ***env, char *key, char *val);
 char	*ft_getenv(char *key, t_data *data);
+void	get_env_value(char **envp, t_env *env);
 
 /* Excecution! */
 void	ft_execution(t_data *data);

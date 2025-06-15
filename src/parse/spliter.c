@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/12 10:08:41 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/12 16:36:29 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	typer(t_token **token, char *arg)
 	if ((*token)->is_dquote || (*token)->is_squote)
 		return ;
 	if (arg[i] == '>' && arg[i + 1] == '>')
-		(*token)->next->is_redirection = REDIRECTION;
+		(*token)->next->is_append = APPEND;
 	else if (arg[i] == '<' && arg[i + 1] == '<')
 		(*token)->next->is_heredoc = HEREDOC;
 	else if (arg[i] == '>')
@@ -120,6 +120,7 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 				while (str[i] && str[i] != '$' && str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && !operation_len(str + i))
 					i++;
 				arg = ft_substr(str, start, i - start);
+				op_len = 1337;
 			}
 			if (!arg)
 				error_handler("ft_substr", NULL);
@@ -142,6 +143,8 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 			ptr->is_dquote = 1;
 		else if (op_len == 11)
 			ptr->is_squote = 1;
+		else if (op_len == 1337)
+			ptr->is_word = 1;
 		//if (start == 1337)
 		//	ptr->is_env_var = 1;
 		//else

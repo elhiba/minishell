@@ -29,7 +29,7 @@ FILES = $(addprefix $(SRC), main.c) \
 		$(addprefix $(BUITIN), ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c) \
 		$(addprefix $(EXEC), exec.c) \
 		$(addprefix $(UTILS), signals.c error.c utils.c linked_list.c utils_env.c special_split.c) \
-		$(addprefix $(PARSE), readline.c spliter.c dollar_expander.c quotes_handling.c syntax_checker.c expand.c join_token.c split_expanded.c) \
+		$(addprefix $(PARSE), readline.c spliter.c dollar_expander.c quotes_handling.c syntax_checker.c expand.c join_token.c split_expanded.c handle_redir.c) \
 		$(GCFT)
 
 OBJ = $(FILES:.c=.o)
@@ -45,7 +45,7 @@ all: $(NAME)
 # make features
 
 val: fresh
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --suppressions=readline.supp ./minishell
 
 run: fresh
 	./$(NAME)

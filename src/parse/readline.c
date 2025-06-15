@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/01 22:58:58 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/15 10:02:15 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_list(void **head)
 		current = ptr[i];
 		while (current)
 		{
-			if (current->is_infile || current->is_outfile || current->is_heredoc || current->is_redirection)
+			if (current->is_infile || current->is_outfile || current->is_heredoc || current->is_append)
 			{
 				printf("Args[-%i-]: ", i);
 				break ;
@@ -57,7 +57,7 @@ void	print_list(void **head)
 				printf("{\E[31m%s\E[0m} is out file\t", current->arg), is_newline = 1;
 			if (current->is_heredoc)
 				printf("{\E[31m%s\E[0m} is here doc\t", current->arg), is_newline = 1;
-			if (current->is_redirection)
+			if (current->is_append)
 				printf("{\E[31m%s\E[0m} is redirection (appending)\t", current->arg), is_newline = 1;
 			current = current->next;
 		}
@@ -67,9 +67,46 @@ void	print_list(void **head)
 	}
 }
 
+void	multiple_pipes(t_cmd *cmd_list, char **env)
+{
+	t_cmd *current = cmd_list;
+	int	fd[2];
+	pid_t pid;
+	int status = 0;
+	int	flag = 1;
+	while (current)
+	{
+		pipe(fd);
+		pid = fork();
+		if (pid == 0) {
+			if (current->next)
+				dup2(fd[1], STDOUT_FILENO);
+			if (current->STDIN != 0)
+				dup2(current->STDIN, STDIN_FILENO);
+			if (current->STDOUT != 1)
+				dup2(current->STDOUT, STDOUT_FILENO);
+			close(fd[0]);
+			close(fd[1]);
+			execve(current->cmd, current->argv, env);
+			printf("minishell: %s: command not found!\n", current->cmd);
+		}
+		if (pid == 0)
+			exit(-1);
+		flag = 0;
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+		current = current->next;
+	}
+    while ((pid = wait(&status)) > 0)
+        usleep(500);
+}
+
 void	ft_parse(t_data *data)
 {
 	void	**args;
+	t_cmd	*list;
+	int saved_stdin = dup(STDIN_FILENO);
 //	t_token	*token_list;
 //	int		i;
 
@@ -81,11 +118,18 @@ void	ft_parse(t_data *data)
 		args = ft_tokenizer(data);
 		if (!args)
 			error_handler("split args", NULL);
-		print_list(args);
+		//print_list(args);
+		//printf("\nEXEC LIST:\n\n");
+		list = exec_setup(args, data);
+		//if (list)
+		//	pretty_print_cmd_list(list);
+		if (list)
+			multiple_pipes(list, data->env);
+		dup2(saved_stdin, STDIN_FILENO);
 	//	dollar_expand(data, token_list);
 	//	data->token_list = token_list;
 	//	if (ft_builtin(data) == 0 && token_list)
-	//		ft_execution(data);
+	//		ft_executioakn(data);
 	//	else
 	//		free_token_list(&token_list);
 	}
