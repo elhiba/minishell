@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/15 18:16:44 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/16 13:30:23 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,49 +200,6 @@ void	node_cleaner(t_token **head)
 	}
 }
 
-int	check_ambiguous(t_token *token)
-{
-	t_token	*current;
-
-	current = token;
-	while (current)
-	{
-		if (current->is_env_var && (current->is_infile || current->is_outfile || current->is_append))
-		{
-			if (!strcmp(current->value, "") || there_is_space(current->value))
-				return(printf("minishell: '%s': ambiguous redirect\n", current->key), -1);
-		}
-		current = current->next;
-	}
-	return (0);
-}
-void	expand_cleaner(t_token **head)
-{
-	t_token	*current;
-
-	current = *head;
-	while (current)
-	{
-		if (!current->prev && current->is_env_var && !strcmp(current->value, ""))
-		{
-			*head = current->next;
-			if (*head)
-				(*head)->prev = NULL;
-		}
-		else if (current->is_env_var && !ft_strcmp(current->value, ""))
-		{
-			if (current->next)
-			{
-				current->prev->next = current->next;
-				current->next->prev = current->prev;
-			}
-			else
-				current->prev->next = NULL;
-		}
-		current = current->next;
-	}
-}
-
 t_token	*token(char *str, t_data *data)
 {
 	t_token	*tok;
@@ -253,6 +210,8 @@ t_token	*token(char *str, t_data *data)
 	//i = 0;
 	tok = NULL;
 	ft_spliter(&tok, str, data);
+	split_expanded(&tok, data);
+	join_tokens(&tok); // join tokens with is_space_next == 0;
 	//check_ambiguous(tok);
 	//if (fail)
 	//	reuturn NULL;
@@ -266,11 +225,6 @@ t_token	*token(char *str, t_data *data)
 	//if(check_ambiguous(tok) == -1)
 	//	return (NULL);
 	node_cleaner(&tok);
-	expand_cleaner(&tok);
-	if (!tok)
-		return (NULL);
-	join_tokens(&tok); // join tokens with is_space_next == 0;
-	split_expanded(&tok, data);
 	//if (!args)
 	//	error_handler("args", NULL);
 //	while (args[i])

@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/15 18:25:49 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/16 13:55:25 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,14 +119,13 @@ void	ft_parse(t_data *data)
 		args = ft_tokenizer(data);
 		if (args)
 			list = exec_setup(args, data);
-		if (list)
-				pretty_print_cmd_list(list);
-		printf("\n\n\n");
+		//if (list)
+		//		pretty_print_cmd_list(list);
+		//if (args)
+		//	print_list(args);
 		if (list)
 			multiple_pipes(list, data->env);
 		dup2(saved_stdin, STDIN_FILENO);
-		//if (args)
-		//	print_list(args);
 		//printf("\nEXEC LIST:\n\n");
 	//	dollar_expand(data, token_list);
 	//	data->token_list = token_list;

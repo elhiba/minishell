@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:04:23 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/15 18:30:59 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/16 13:24:30 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	extract_word(char **buffer, t_token **head)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->is_squote = 1;
+	if (is_space(**buffer))
+		tmp->is_space_next = 1;	
 }
 
 int	all_spaces(char *s)
@@ -68,12 +70,19 @@ int	all_spaces(char *s)
 void	split_into_nodes(t_token **head, char *buffer)
 {
 	t_token	*tmp;
-	int		flag;
+	int		first_index_flag;
+	int		space_flag;
 
-	flag  = 0;
+	first_index_flag  = 0;
+	space_flag = 0;
 	while (*buffer)
 	{
-		if (!flag && all_spaces(buffer))
+		if (*head && !first_index_flag && is_space(*buffer))
+		{
+			(*head)->is_space_next = 1;
+			first_index_flag = 1;
+		}
+		if (!space_flag && all_spaces(buffer))
 		{
 			add_token_node(head, ft_strdup(""));
 			buffer += ft_strlen(buffer);
@@ -82,13 +91,15 @@ void	split_into_nodes(t_token **head, char *buffer)
 				tmp = tmp->next;
 			tmp->is_squote = 1;
 			tmp->is_env_var = 1;
+			tmp->is_space_next = 0;
 		}
 		else if (is_space(*buffer))
 			buffer++;
 		else
 		{
 			extract_word(&buffer, head);
-			flag = 1;
+			space_flag = 1;
+			first_index_flag = 1;
 		}
 	}
 }
@@ -105,7 +116,7 @@ void	split_expanded(t_token **token, t_data *data)
 	while (current)
 	{
 		next = current->next;
-		prev = current->prev; // NULL
+		prev = current->prev;
 		if (current->is_env_var && !current->is_dquote && !current->is_squote && there_is_space(current->arg) && current->is_dquote != 1)
 		{
 			if (prev)
@@ -116,6 +127,8 @@ void	split_expanded(t_token **token, t_data *data)
 			while (prev->next)
 				prev = prev->next;
 			prev->next = next;
+			if (next)
+				next->prev = prev;
 		}
 		current = current->next;
 	}
