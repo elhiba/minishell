@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/16 14:05:53 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/17 14:36:37 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,29 @@ void	node_cleaner(t_token **head)
 	}
 }
 
+void	remove_empty_env(t_token **head)
+{
+	t_token	*current;
+
+	current = *head;
+	while (current)
+	{
+		if (!current->prev && current->is_env_var &&ft_strcmp(current->arg, "") == 0 && !current->is_dquote)
+		{
+			*head = current->next;
+			if (current->next)
+				current->next->prev = *head;
+		}
+		else if (current->is_env_var &&ft_strcmp(current->arg, "") == 0 && !current->is_dquote)
+		{
+			current->prev->next = current->next;
+			if (current->next)
+				current->next->prev = current->prev;
+		}
+		current = current->next;
+	}
+}
+
 t_token	*token(char *str, t_data *data)
 {
 	t_token	*tok;
@@ -210,6 +233,9 @@ t_token	*token(char *str, t_data *data)
 	//i = 0;
 	tok = NULL;
 	ft_spliter(&tok, str, data);
+	remove_empty_env(&tok);
+	if (!tok)
+		return (NULL);
 	split_expanded(&tok, data);
 	join_tokens(&tok); // join tokens with is_space_next == 0;
 	//check_ambiguous(tok);
