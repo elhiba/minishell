@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/16 13:55:25 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/17 13:58:27 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	multiple_pipes(t_cmd *cmd_list, char **env)
 		if (current->cmd)
 			pid = fork();
 		if (pid == 0) {
-			if (current->next)
+			if (current->next && !current->cmd_not_found)
 				dup2(fd[1], STDOUT_FILENO);
 			if (current->STDIN != 0)
 				dup2(current->STDIN, STDIN_FILENO);
@@ -92,13 +92,17 @@ void	multiple_pipes(t_cmd *cmd_list, char **env)
 			printf("minishell: %s: command not found!\n", current->cmd);
 		}
 		if (pid == 0)
-			exit(-1);
+			exit(1);
 		flag = 0;
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		close(fd[1]);
+		//printf("%d\n", current->cmd_not_found);
+		if (current->cmd_not_found)
+			break;
 		current = current->next;
 	}
+	waitpid(pid, &status, 0);
 	while ((pid = wait(&status)) > 0);
 }
 
@@ -117,16 +121,17 @@ void	ft_parse(t_data *data)
 	{
 		//quotes_handler(data);
 		args = ft_tokenizer(data);
+		//if (args)
+		//	print_list(args);
+		//printf("\nEXEC LIST:\n\n");
 		if (args)
 			list = exec_setup(args, data);
 		//if (list)
 		//		pretty_print_cmd_list(list);
-		//if (args)
-		//	print_list(args);
 		if (list)
 			multiple_pipes(list, data->env);
 		dup2(saved_stdin, STDIN_FILENO);
-		//printf("\nEXEC LIST:\n\n");
+		close(saved_stdin);
 	//	dollar_expand(data, token_list);
 	//	data->token_list = token_list;
 	//	if (ft_builtin(data) == 0 && token_list)

@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/15 16:50:05 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:23:13 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ typedef struct s_token
 	int				is_squote;
 	int				is_dquote;
 	int				is_infile;
+	int				is_append;
 	int				is_outfile;
 	int				is_heredoc;
-	int				is_append;
 	int				is_env_var;
+	int				is_ambiguous;
 	int				is_space_next;
 
 	char			*key;
 	char			*value;
-	//t_env			*_env;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -80,6 +80,7 @@ typedef struct s_cmd
 	char	*cmd; // usr/bin/ls
 	char	**argv; // {"ls", "-l"}
 	t_heredoc	*heredcs; // linked list of heredocs
+	int		cmd_not_found; // flag to handle cmd not found
 	int		STDIN; // stdin rah bayna 
 	int		STDOUT; // ta hade bayna asahbe
 	struct s_cmd *next;

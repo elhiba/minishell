@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/15 18:33:00 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/17 10:29:34 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	count_argv(t_token *head)
 }
 
 
-char *get_full_path(char **path_stock, char *cmd_name)
+char *get_full_path(char **path_stock, char *cmd_name, int *not_found)
 {
 	int		i;
 	int		len;
@@ -99,6 +99,7 @@ char *get_full_path(char **path_stock, char *cmd_name)
 			return (tmp_stock[i]);
 		i++;
 	}
+	*not_found = 1;
 	return (cmd_name);
 }
 
@@ -162,7 +163,7 @@ int	set_cmd_name(t_cmd *cmd, t_token *token, t_data *data)
 		return(printf("minishell: '%s': command not found!\n", token->arg), -1);
 	if (*token->arg && check_absolute_path(token->arg))
 	{
-		cmd->cmd = get_full_path(stock, token->arg);
+		cmd->cmd = get_full_path(stock, token->arg, &cmd->cmd_not_found);
 	}
 	else if (*token->arg)
 	{
@@ -306,7 +307,8 @@ int	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 		{
 			if (check_redir_err(current) == -1)
 				return (-1);
-			set_fd(node, current, data);
+			if (set_fd(node, current, data) == -1)
+				return (-1);
 		}
 		else if(flag && (current->is_dquote
 				|| current->is_word
