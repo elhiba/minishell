@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/17 14:36:37 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/17 15:37:29 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		arg_counter(char *str)
 
 void	space_checker(char *str, t_token **tok, int index)
 {
-	if (str[index] == ' ' || operation_len(str + index))
+	if (!str[index] || str[index] == ' ' || operation_len(str + index))
 		(*tok)->is_space_next = 1;
 }
 

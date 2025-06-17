@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/15 18:33:19 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/17 15:46:15 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,16 @@ bool	is_white_space(char c)
 }
 
 
-int	check_is_expandable(char *buffer)
+int	check_is_expandable(t_token *current)
 {
 	int i;
+	char *buffer;
 
 	i = 0;
+	buffer = current->arg;
 	while (buffer[i])
 	{
-		if (buffer[i] == '$' && !is_white_space(buffer[i + 1]))
+		if ((buffer[i] == '$' && !is_white_space(buffer[i + 1])))
 			return (1);
 		i++;
 	}
@@ -135,15 +137,23 @@ void	expand_variable(t_token *current, char **envp, char **token)
 {
 	t_env	*env;
 	char	*expanded_token;
+	int		flag;
 
+	flag = 1;
 	env = ft_collector(sizeof(t_env), ALLOC);
 	expanded_token = ft_strdup("");
 	if (!env)
 		return ;
 	current->key = ft_strdup(current->arg);
+	if (flag && (!ft_strcmp(*token, "$") && !current->is_dquote && !current->is_space_next))
+	{
+		expanded_token = ft_strdup("");
+		*token = expanded_token;
+		return ;
+	}
 	while (**token)
 	{
-		if (**token == '$' && is_alnum_(*(*token + 1)) == true)
+		if ((**token == '$' && is_alnum_(*(*token + 1)) == true))
 		{
 			extract_variable_name(*token + 1, env);
 			get_env_value(envp, env);
@@ -171,7 +181,7 @@ void check_and_expand(t_token **head, char **envp)
 	{
 		if (current->prev && !ft_strcmp(current->prev->arg, "<<"))
 			tmp_flag = 0;
-		if (check_is_expandable(current->arg) && !current->is_squote && tmp_flag)
+		if (check_is_expandable(current) && !current->is_squote && tmp_flag)
 		{
 			expand_variable(current, envp, &current->arg);
 			current->is_env_var = 1;
