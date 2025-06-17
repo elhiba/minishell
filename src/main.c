@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/15 17:10:43 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/17 15:53:21 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*build_prompt(t_data *data)
 
 	if (!getcwd(cwd, sizeof(cwd)))
 		ft_strlcpy(cwd, ft_getenv("PWD", data),1000);
-	prompt = malloc(1000);
+	prompt = ft_collector(1000, ALLOC);
 	if (!prompt)
 		return (NULL);
 	snprintf(prompt, 10000,
