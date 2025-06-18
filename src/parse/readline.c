@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/18 11:03:38 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/18 11:57:46 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print_list(void **head)
 	}
 }
 
-void	multiple_pipes(t_cmd *cmd_list, char **env)
+void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 {
 	t_cmd *current = cmd_list;
 	int	fd[2];
@@ -98,8 +98,8 @@ void	multiple_pipes(t_cmd *cmd_list, char **env)
 		close(fd[0]);
 		close(fd[1]);
 		//printf("%d\n", current->cmd_not_found);
-		if (current->cmd_not_found)
-			break;
+		//if (current->cmd_not_found)
+		//	break;
 		current = current->next;
 	}
 	waitpid(pid, &status, 0);
@@ -129,7 +129,7 @@ void	ft_parse(t_data *data)
 		//if (list)
 		//		pretty_print_cmd_list(list);
 		if (list)
-			multiple_pipes(list, data->env);
+			multiple_pipes(data, list, data->env);
 		dup2(saved_stdin, STDIN_FILENO);
 		close(saved_stdin);
 	//	dollar_expand(data, token_list);
