@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:42:31 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/16 11:23:22 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:29:13 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	join_tokens(t_token **tokens)
 	save_next = current->next;
 	while (save_next)
 	{
-		if (!current->is_space_next && !operator_cleaner(current->arg))
+		if (!current->is_space_next && !(current->next && current->next->is_env_var && current->next->arg[0] == ' ') && !operator_cleaner(current->arg))
 		{
 			current->arg = ft_strjoin_(current->arg, save_next->arg);
 			current->next = save_next->next;

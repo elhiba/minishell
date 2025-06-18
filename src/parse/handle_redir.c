@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/18 11:18:30 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:47:39 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,11 +137,11 @@ int	is_a_directory(char *cmd)
 
 int	check_for_err(t_cmd *cmd)
 {
-	if (access(cmd->cmd, F_OK) != 0)
-		return (printf("minishell: %s: No such file or directory\n", cmd->cmd), -1);
+	//if (access(cmd->cmd, F_OK) != 0)
+	//	return (printf("minishell: %s: No such file or directory\n", cmd->cmd), -1);
 	if (is_a_directory(cmd->cmd))
-		return (printf("minishell: %s: is a directory\n", cmd->cmd), -1);
-	else
+		return (printf("minishell: %s: Is a directory\n", cmd->cmd), -1);
+	else if (access(cmd->cmd, F_OK) == 0)
 	{
 		if (access(cmd->cmd, X_OK) != 0)
 			return (printf("minishell: %s: Permission denied\n", cmd->cmd), -1);
@@ -164,6 +164,8 @@ int	set_cmd_name(t_cmd *cmd, t_token *token, t_data *data)
 	if (*token->arg && check_absolute_path(token->arg))
 	{
 		cmd->cmd = get_full_path(stock, token->arg, &cmd->cmd_not_found);
+		if (cmd->cmd_not_found)
+			printf("minishell: %s: command not found!\n", cmd->cmd);
 	}
 	else if (*token->arg)
 	{
@@ -385,6 +387,7 @@ void	pretty_print_cmd_list(t_cmd *cmd_list)
 
 		printf("| %-12s: %d\n", "STDIN", cmd_list->STDIN);
 		printf("| %-12s: %d\n", "STDOUT", cmd_list->STDOUT);
+		printf("| %-12s: %d\n", "NOT FOUND", cmd_list->cmd_not_found);
 		printf(":---------------------------------------:\n");
 
 		t_heredoc *current_heredoc = cmd_list->heredcs;

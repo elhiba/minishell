@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/18 11:57:46 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:54:48 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,25 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 	while (current)
 	{
 		pipe(fd);
-		if (current->cmd && !current->should_not_execute)
+		if (current->cmd && !current->should_not_execute && !current->cmd_not_found)
+		{
 			pid = fork();
-		if (pid == 0) {
-			if (current->next && !current->cmd_not_found)
-				dup2(fd[1], STDOUT_FILENO);
-			if (current->STDIN != 0)
-				dup2(current->STDIN, STDIN_FILENO);
-			if (current->STDOUT != 1)
-				dup2(current->STDOUT, STDOUT_FILENO);
-			close(fd[0]);
-			close(fd[1]);
-			execve(current->cmd, current->argv, env);
-			printf("minishell: %s: command not found!\n", current->cmd);
+			if (pid == 0)
+			{
+				if (current->next && !current->cmd_not_found)
+					dup2(fd[1], STDOUT_FILENO);
+				if (current->STDIN != 0)
+					dup2(current->STDIN, STDIN_FILENO);
+				if (current->STDOUT != 1)
+					dup2(current->STDOUT, STDOUT_FILENO);
+				close(fd[0]);
+				close(fd[1]);
+				execve(current->cmd, current->argv, env);
+				perror(current->cmd);
+			}
+			if (pid == 0)
+				exit(1);
 		}
-		if (pid == 0)
-			exit(1);
 		flag = 0;
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);

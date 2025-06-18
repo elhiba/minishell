@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/18 11:00:56 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:05:20 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	split_expanded(t_token **token, t_data *data);
 void	check_and_expand(t_token **head, char **envp);
 int		operator_cleaner(char *arg);
 int	there_is_space(char *s);
+int	all_spaces(char *s);
 
 t_cmd	*exec_setup(void	**stock, t_data *data);
 void    pretty_print_cmd_list(t_cmd *cmd_list);
