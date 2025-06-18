@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/17 15:37:29 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/18 09:49:19 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ t_token	*token(char *str, t_data *data)
 	//i = 0;
 	tok = NULL;
 	ft_spliter(&tok, str, data);
-	remove_empty_env(&tok);
+	//remove_empty_env(&tok);
 	if (!tok)
 		return (NULL);
 	split_expanded(&tok, data);
