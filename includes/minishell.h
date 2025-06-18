@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/04/09 15:50:53 by sel-maaq         ###   ########.fr       */
-=======
-/*   Updated: 2025/04/10 12:07:14 by moel-hib         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/06/18 16:27:02 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,61 +16,66 @@
 # include "../includes/libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
 # include <stdio.h>
+# include <stdbool.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+
+#define SYN_OP_ERROR "minishell: syntax error near unexpected token"
+#define SYN_Q_ERROR "minishell: unexpected EOF while looking for matching"
+
+typedef enum s_type
+{
+	SPACES,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	INPUT_FILE,
+	OUTPUT_FILE,
+	HEREDOC,
+	APPEND
+}	t_type;
 
 typedef struct s_token
 {
-	char *arg;
+	char			*arg;
 
-	struct s_token *next;
-	struct s_token *prev;
-} t_token;
+	int				is_word;
+	int				is_squote;
+	int				is_dquote;
+	int				is_infile;
+	int				is_append;
+	int				is_outfile;
+	int				is_heredoc;
+	int				is_env_var;
+	int				is_ambiguous;
+	int				is_space_next;
 
-typedef struct s_input
+	char			*key;
+	char			*value;
+	struct s_token	*next;
+	struct s_token	*prev;
+}	t_token;
+
+typedef struct s_data
 {
-	char	*readline_in;
-
-	char	*args;
+	char	*line_read;
 	char	**env;
 
-	t_token token;
-	//char	*cmd;
-	//char	*flags;
-}	t_input;
+//	t_token	*token_list;
+	int		exit_status;
+}	t_data;
 
+/* Parsing */
+void	**ft_tokenizer(t_data *data);
 
-/* Signal func */
-void	handle_signals(void);
-void	sigint_handler(int sig);
-
-/* Parse */
-void	ft_parse(t_input *input);
-
-/* error handler */
-void	error_handler(char *error_name);
-
-/* built in functions */
-void	ft_builtin(t_token *input);
-int		do_cd(char *path);
-int		do_echo(t_token *input);
-void	do_env(void);
-int		do_exit(void);
-int		do_export(void);
-int		do_pwd(void);
-int		do_unset(void);
-
-/* cleaner functions */
-void	free_d_arr(char **arr);
-
-/* New split functions*/
-char	**ft_splits(char *arg, char *delimits);
-
-/* Linked list stuff*/
-t_token	*create_node(char *arg);
-void	add_list(t_token **head, t_token *node);
+/* Tools */
+int		syntax_checker(t_data *data);
+char	**pipe_split(char const *s);
+void	check_quotes(char *str, int i, int *is_dquote, int *is_squote);
 
 #endif

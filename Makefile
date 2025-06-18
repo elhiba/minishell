@@ -22,7 +22,8 @@ UTILS = $(SRC)utils/
 PARSE = $(SRC)parse/
 
 # C files
-FILES =	$(addprefix $(SRC), main.c) \
+FILES =	$(wildcard src/*.c src/parsing/*.c src/execution/*.c includes/gcft/gc_collector.c)
+#$(addprefix $(SRC), main.c) \
 		$(addprefix $(BUITIN), ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c) \
 		$(addprefix $(EXEC), exec.c) \
 		$(addprefix $(UTILS), signals.c error.c utils.c linked_list.c) \

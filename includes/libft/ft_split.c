@@ -3,102 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 16:27:41 by sel-maaq          #+#    #+#             */
-/*   Updated: 2024/10/30 18:21:50 by sel-maaq         ###   ########.fr       */
+/*   Created: 2024/10/31 09:07:08 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/05/31 16:38:38 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	**free_array(char **arr)
+static int	count_words(char *str, char d)
 {
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-	return (NULL);
-}
-
-static int	count_words(char const *s, char c)
-{
-	int	i;
 	int	count;
 
 	count = 0;
-	i = 0;
-	while (s[i])
+	while (*str)
 	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (s[i])
+		while (*str == d)
+			str++;
+		if (*str != d && *str != '\0')
+		{
 			count++;
-		while (s[i] && s[i] != c)
-			i++;
+			while (*str != d && *str != '\0')
+				str++;
+		}
 	}
 	return (count);
 }
 
-static void	copy_word(char *arr, char const *s, int start, char c)
+static void	sus(char *str, char c, int *start, int *end)
 {
-	int	i;
-
-	i = 0;
-	while (s[start] && s[start] != c)
-	{
-		arr[i] = s[start];
-		start++;
-		i++;
-	}
-	arr[i] = '\0';
+	while (str[*start] && str[*start] == c)
+		(*start)++;
+	*end = *start;
+	while (str[*end] && str[*end] != c)
+		(*end)++;
 }
 
-static char	**alloc_words(char **arr, char const *s, char c)
+static char	*malloki(char *src, int start, int end)
 {
-	int	i;
-	int	j;
-	int	w_len;
+	char	*dest;
 
-	i = 0;
-	j = 0;
-	while (s[i])
+	dest = ft_collector(sizeof(char) * ((end - start) + 1), ALLOC);
+	if (!dest)
+		return (ft_collector(0, EXIT));
+	ft_memcpy(dest, src + start, (end - start));
+	dest[(end - start)] = '\0';
+	return (dest);
+}
+
+static char	**ft_free(char **words, int index)
+{
+	while (index >= 0)
 	{
-		while (s[i] == c)
-			i++;
-		if (s[i] == '\0')
-			break ;
-		w_len = 0;
-		while (s[i] && s[i] != c)
-		{
-			i++;
-			w_len++;
-		}
-		arr[j] = malloc(w_len + 1);
-		if (!arr[j])
-			return (free_array(arr));
-		copy_word(arr[j++], s, i - w_len, c);
+		free(words[index]);
+		index--;
 	}
-	arr[j] = NULL;
-	return (arr);
+	free(words);
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**arr;
-	int		wrd_count;
+	int		i;
+	int		start;
+	int		end;
+	char	**words;
 
 	if (!s)
 		return (NULL);
-	wrd_count = count_words(s, c);
-	arr = malloc(sizeof(char *) * (wrd_count + 1));
-	if (!arr)
-		return (NULL);
-	arr = alloc_words(arr, s, c);
-	return (arr);
+	i = 0;
+	start = 0;
+	words = ft_collector(sizeof(char *) * (count_words((char *)s, c) + 1), ALLOC);
+	if (!words)
+		return (ft_collector(0, EXIT));
+	while (s[start])
+	{
+		sus((char *)s, c, &start, &end);
+		if (s[start] == '\0')
+			break ;
+		words[i] = malloki((char *)s, start, end);
+		if (!words[i])
+			ft_free(words, i);
+		i++;
+		start = end;
+	}
+	words[i] = NULL;
+	return (words);
 }

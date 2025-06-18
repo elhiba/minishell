@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   gc_collector.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 15:24:07 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/07 19:04:25 by moel-hib         ###   ########.fr       */
+/*   Created: 2025/05/30 01:39:51 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/05/31 16:30:40 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#ifndef GC_COLLECTOR_H
+# define GC_COLLECTOR_H
 
-/*
- * we should use (getcwd) function!
- * */
-int	do_pwd(void)
+# include "../libft/libft.h"
+# include <stddef.h>
+# include <stdlib.h>
+
+typedef struct s_collector
 {
-	char	cwd[PATH_MAX];
-	
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
-		error_handler("getcwd");
-	printf("%s\n", cwd);
-	return (0);
-}
+	void				*addr;
+
+	struct s_collector	*next;
+}	t_collector;
+
+typedef enum s_flag
+{
+	ALLOC,
+	FREE,
+	EXIT
+}	t_flag;
+
+void	*ft_collector(size_t size, int flag);
+#endif

@@ -1,44 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
+/*   ft_strnjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 16:51:50 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/10 11:17:49 by moel-hib         ###   ########.fr       */
+/*   Created: 2025/05/30 16:19:05 by slasfar           #+#    #+#             */
+/*   Updated: 2025/05/31 16:40:34 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-t_token	*create_node(char *arg)
+char	*ft_strnjoin(char const *s1, char const *s2, size_t n)
 {
-	t_token	*node;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-	node = malloc(sizeof(t_token));
-
-	node->arg = ft_strdup(arg);
-	node->next = NULL;
-	node->prev = NULL;
-
-	return (node);
-}
-
-void	add_list(t_token **head, t_token *node)
-{
-	t_token	*ptr;
-
-	ptr = *head;
-	if (!node)
-		return ;
-
-	else if (!*head)
-		*head = node;
-	else
+	i = 0;
+	j = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	str = ft_collector((ft_strlen(s1) + n + 1) * sizeof(char), ALLOC);
+	if (!str)
+		return (ft_collector(0, EXIT));
+	while (s1[i])
 	{
-		while (ptr->next)
-			ptr = ptr->next;
-		ptr->next = node;
+		str[i] = s1[i];
+		i++;
 	}
+	while (s2[j] && j < n)
+	{
+		str[i++] = s2[j];
+		j++;
+	}
+	str[i] = '\0';
+	return (str);
 }

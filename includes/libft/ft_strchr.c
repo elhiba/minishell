@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 23:11:11 by sel-maaq          #+#    #+#             */
-/*   Updated: 2025/04/07 22:53:43 by moel-hib         ###   ########.fr       */
+/*   Created: 2024/10/25 11:09:15 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/05/31 16:23:45 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,18 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	int	i;
+	int		i;
+	char	*src;
 
 	i = 0;
-	if (!s)
-		return (NULL);
-	if (c == '\0')
+	src = (char *)s;
+	while (src[i])
 	{
-		i = ft_strlen(s);
-		return ((char *)s + i);
-	}
-	while (s[i])
-	{
-		if (s[i] == (char)c)
-			return ((char *)s + i);
+		if (src[i] == (char)c)
+			return (src + i);
 		i++;
 	}
+	if ((char)c == '\0')
+		return (&src[i]);
 	return (NULL);
 }

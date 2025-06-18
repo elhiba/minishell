@@ -3,48 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/04/09 20:34:39 by sel-maaq         ###   ########.fr       */
-=======
-/*   Updated: 2025/04/09 15:59:32 by moel-hib         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Created: 2025/06/18 15:38:47 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/06/18 15:53:58 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-execut
+volatile sig_atomic_t	g_received_signal = 0;
 
 int	main(int ac, char **av, char **env)
 {
-	t_input	input;
+	t_data	data;
+	//char *prompt;
 
 	(void) ac;
 	(void) av;
-<<<<<<< Updated upstream
-	ft_bzero(&input, sizeof(input));
-=======
-
-	bzero(&input, sizeof(input));
->>>>>>> Stashed changes
-	input.env = env;
-	handle_signals();
+	ft_bzero(&data, sizeof(data));
+	data.env = env; // copy_env(env);
+	// handle_signals(); handle signals!
 	while (1)
 	{
-		input.readline_in = readline("$> ");
-		if (input.readline_in == NULL)
+		//prompt = build_prompt(&data);
+		data.line_read = readline("-> " /* prompt */);
+		if (g_received_signal == SIGINT)
+		{
+			data.exit_status = 130;
+			g_received_signal = 0;
+		}
+		if (data.line_read == NULL)
 		{
 			printf("exit\n");
-			exit(EXIT_SUCCESS);
+			ft_collector(0, EXIT);
 		}
-		add_history(input.readline_in);
-		ft_parse(&input);
-		ft_builtin(&input);
-		execute_cmd(input);
-		free(input.readline_in);
+		if (data.line_read && *data.line_read)
+			add_history(data.line_read);
+		//ft_parse(&data);
 	}
 	return (0);
 }

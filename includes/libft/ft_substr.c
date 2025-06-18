@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 09:44:03 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/31 16:39:46 by moel-hib         ###   ########.fr       */
+/*   Created: 2024/10/30 09:03:25 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/05/31 16:41:34 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*src;
-	int		total_len;
-	int		len_s1;
-	int		len_s2;
+	char			*src;
+	unsigned int	s_len;
 
-	if (!s1 || !s2)
+	if (!s)
 		return (NULL);
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	total_len = len_s1 + len_s2;
-	src = ft_collector(sizeof(char) * (total_len + 1), ALLOC);
+	s_len = ft_strlen(s);
+	if (start >= s_len)
+	{
+		src = ft_collector(sizeof(char) * 1, ALLOC);
+		if (!src)
+			return (ft_collector(0, EXIT));
+		src[0] = '\0';
+		return (src);
+	}
+	if (len > s_len - start)
+		len = s_len - start;
+	src = ft_collector(sizeof(char) * (len + 1), ALLOC);
 	if (!src)
 		return (ft_collector(0, EXIT));
-	ft_memcpy(src, s1, len_s1);
-	ft_memcpy(src + len_s1, s2, len_s2);
-	src[total_len] = '\0';
+	ft_strlcpy(src, s + start, len + 1);
 	return (src);
 }

@@ -9,9 +9,11 @@ ARFLAGS = crs
 SRC =	ft_isalnum.c ft_split.c \
 		ft_strchr.c ft_strdup.c \
 		ft_strjoin.c ft_strlcat.c \
-		ft_strlcpy.c ft_strlen.c \
-		ft_strncmp.c ft_strcmp.c \
-		ft_bzero.c
+		ft_strlcpy.c ft_strlen.c  ft_atoi.c \
+		ft_strncmp.c ft_strcmp.c  ft_itoa.c \
+		ft_bzero.c	 ft_substr.c ft_isalpha.c \
+		ft_strndup.c ft_strnjoin.c \
+		ft_isdigit.c ft_memcpy.c
 
 OBJ = $(SRC:.c=.o)
 

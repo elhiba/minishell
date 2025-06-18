@@ -1,18 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/05 15:24:26 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/07 18:49:10 by moel-hib         ###   ########.fr       */
+/*   Created: 2024/10/23 10:01:56 by moel-hib          #+#    #+#             */
+/*   Updated: 2025/05/31 16:15:50 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	do_export(void)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	return 0;
+	unsigned char	*d;
+	unsigned char	*s;
+	size_t			i;
+
+	if (!dest && !src)
+		return (NULL);
+	i = 0;
+	d = (unsigned char *)dest;
+	s = (unsigned char *)src;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dest);
 }
