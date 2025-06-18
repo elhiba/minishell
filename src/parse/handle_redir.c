@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/18 09:54:36 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/18 11:18:30 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,9 +306,9 @@ int	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 		if (is_redir(current))
 		{
 			if (check_redir_err(current) == -1)
-				return (-1);
-			if (set_fd(node, current, data) == -1)
-				return (-1);
+				node->should_not_execute = 1;
+			else if (set_fd(node, current, data) == -1)
+				node->should_not_execute = 1;
 		}
 		else if(flag && (current->is_dquote
 				|| current->is_word
@@ -317,7 +317,7 @@ int	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 		{
 			flag = 0;
 			if (set_cmd_name(node, current, data) == -1)
-				return (-1);
+				node->should_not_execute = 1;
 		}
 		else if (!(current->is_env_var && !current->arg[0] && !current->is_dquote))
 			add_to_argv(node, current);
@@ -336,7 +336,7 @@ t_cmd	*exec_setup(void	**stock, t_data *data)
 	cmd_list = NULL;
 	while (stock[i])
 	{
-		if (cmd_builder(&cmd_list, (t_token *)stock[i], data) != 0)
+		if (cmd_builder(&cmd_list, (t_token *)stock[i], data) == -1)
 			return (NULL);
 		i++;
 	}

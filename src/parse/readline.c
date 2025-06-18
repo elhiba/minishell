@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/18 09:53:48 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/18 11:03:38 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	multiple_pipes(t_cmd *cmd_list, char **env)
 	while (current)
 	{
 		pipe(fd);
-		if (current->cmd)
+		if (current->cmd && !current->should_not_execute)
 			pid = fork();
 		if (pid == 0) {
 			if (current->next && !current->cmd_not_found)

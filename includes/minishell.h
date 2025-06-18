@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/17 15:19:48 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/18 11:00:56 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_cmd
 	char	**argv; // {"ls", "-l"}
 	t_heredoc	*heredcs; // linked list of heredocs
 	int		cmd_not_found; // flag to handle cmd not found
+	int		should_not_execute;
 	int		STDIN; // stdin rah bayna 
 	int		STDOUT; // ta hade bayna asahbe
 	struct s_cmd *next;
