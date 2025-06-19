@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/19 11:29:42 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/19 15:31:32 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,31 @@ void	typer(t_token **token, char *arg)
 //	}
 }
 
+/*
+ * Ambiguous redirect
+ * *here some cases where we have some issues!*
+ * --------------------------------------------
+ *  export a="ls -l"
+ * --------------------------------------------
+ *  echo hello > $a
+ *  expected output:
+ *  minishell: $a: ambiguous redirect
+ * */
+// still maintaining
+void	ambiguous_redirect(t_token **token)
+{
+	t_token	*ptr;
+
+	ptr = *token;
+	while (ptr)
+	{
+		if (ptr->is_dollar && ptr->prev && ft_strchr(ptr->arg, ' '))
+			ptr->is_ambiguous = 1;
+		else
+			ptr->is_ambiguous = 0;
+	}
+}
+
 void	ft_spliter(t_token **token, char *str, t_data *data)
 {
 	//char	**args;
@@ -103,9 +128,9 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 		{
 			//args[index] = ft_substr(str, i, op_len);
 			//index++;
-			arg = ft_substr(str, i, op_len);
-			if (!arg)
-				error_handler("ft_substr", NULL);
+			add_token_node(token, ft_substr(str, i, op_len));
+			//if (!arg)
+			//	error_handler("ft_substr", NULL);
 			i += op_len;
 		}
 		else
@@ -114,16 +139,16 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 			//if (str[i] == '$')
 			//	arg = dollar_handler(str, &i);
 			if (str[i] == '\'' || str[i] == '\"')
-				arg = quotes_handler(str, &i, &op_len);
+				add_token_node(token, quotes_handler(str, &i, &op_len)) ;
 			else
 			{
 				while (str[i] && str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && !operation_len(str + i))
 					i++;
-				arg = ft_substr(str, start, i - start);
+				add_token_node(token, ft_substr(str, start, i - start));
 				op_len = 1337;
 			}
-			if (!arg)
-				error_handler("ft_substr", NULL);
+			//if (!arg)
+			//	error_handler("ft_substr", NULL);
 			//args[index] = ft_substr(str, start, i - start);
 			//index++;
 		}
@@ -132,7 +157,7 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 		//	expand_variable(data->env, &arg);
 		//}
 		//printf("%s\n", arg);
-		add_token_node(token, arg);
+		//add_token_node(token, arg);
 		ptr = *token;
 		while (ptr->next){
 			ptr = ptr->next;
@@ -151,7 +176,7 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 		//	ptr->is_env_var = 0;
 		space_checker(str, &ptr, i);
 	}	
-	// hnaaaaa :)
+	//ambiguous_redirect(token);
 	check_and_expand(token, data->env);
 	/*
 	expand;
@@ -200,6 +225,7 @@ void	node_cleaner(t_token **head)
 	}
 }
 
+
 void	remove_empty_env(t_token **head)
 {
 	t_token	*current;
@@ -222,6 +248,7 @@ void	remove_empty_env(t_token **head)
 		current = current->next;
 	}
 }
+
 
 t_token	*token(char *str, t_data *data)
 {

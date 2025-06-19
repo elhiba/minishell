@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_handling.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:02:58 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/29 16:22:56 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/19 13:49:40 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <readline/history.h>
 
 //void	double_quotes(t_data *data, int index)
 //{
