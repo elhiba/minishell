@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/18 18:33:53 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/19 11:03:31 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_token
 	int				is_heredoc;
 	int				is_env_var;
 	int				is_ambiguous;
+	int				is_not_splittable;
 	int				is_space_next;
 
 	char			*key;

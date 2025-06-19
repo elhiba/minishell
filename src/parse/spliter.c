@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/18 14:06:36 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/19 11:29:42 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,13 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 		else
 		{
 			start = i;
-			if (str[i] == '$')
-				arg = dollar_handler(str, &i);
-			else if (str[i] == '\'' || str[i] == '\"')
+			//if (str[i] == '$')
+			//	arg = dollar_handler(str, &i);
+			if (str[i] == '\'' || str[i] == '\"')
 				arg = quotes_handler(str, &i, &op_len);
 			else
 			{
-				while (str[i] && str[i] != '$' && str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && !operation_len(str + i))
+				while (str[i] && str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && !operation_len(str + i))
 					i++;
 				arg = ft_substr(str, start, i - start);
 				op_len = 1337;
@@ -234,8 +234,6 @@ t_token	*token(char *str, t_data *data)
 	tok = NULL;
 	ft_spliter(&tok, str, data);
 	//remove_empty_env(&tok);
-	if (!tok)
-		return (NULL);
 	split_expanded(&tok, data);
 	join_tokens(&tok); // join tokens with is_space_next == 0;
 	//check_ambiguous(tok);

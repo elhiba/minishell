@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/17 15:46:15 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/19 11:28:03 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,24 @@ void	get_env_value(char **envp, t_env *env)
 	env->value_len = 0;
 }
 
+void	check_prev(t_token *current)
+{
+	t_token *prev;
+
+	prev = current->prev;
+	while (prev)
+	{
+		if (prev->is_not_splittable && !prev->is_space_next)
+			current->is_not_splittable = 1;
+		else if (current->is_not_splittable && !prev->is_space_next)
+		{
+			prev->is_not_splittable = 1;
+		}
+		prev = prev->prev;
+	}
+}
+
+
 // This function will expand the variable in the token for eg:
 //"Hello $USER World" to "Hello slasfar World"
 
@@ -153,6 +171,10 @@ void	expand_variable(t_token *current, char **envp, char **token)
 	}
 	while (**token)
 	{
+		if ((**token == '$' && !is_alnum_(*(*token + 1))))
+		{
+			current->is_not_splittable = 1;
+		}
 		if ((**token == '$' && is_alnum_(*(*token + 1)) == true))
 		{
 			extract_variable_name(*token + 1, env);
@@ -166,6 +188,7 @@ void	expand_variable(t_token *current, char **envp, char **token)
 			*token = ft_trim(*token, 1);
 		}
 	}
+	check_prev(current);
 	current->value = ft_strdup(expanded_token);
 	*token = expanded_token;
 }

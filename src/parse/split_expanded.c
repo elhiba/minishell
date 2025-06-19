@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:04:23 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/16 13:24:30 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/19 11:30:02 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	split_expanded(t_token **token, t_data *data)
 	{
 		next = current->next;
 		prev = current->prev;
-		if (current->is_env_var && !current->is_dquote && !current->is_squote && there_is_space(current->arg) && current->is_dquote != 1)
+		if (current->is_env_var && !current->is_not_splittable && !current->is_dquote && !current->is_squote && there_is_space(current->arg) && current->is_dquote != 1)
 		{
 			if (prev)
 				(1) && (prev->next = NULL, prev_was_null = false);
