@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/18 14:47:39 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/18 18:33:10 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ int	set_cmd_name(t_cmd *cmd, t_token *token, t_data *data)
 	if (*token->arg && check_absolute_path(token->arg))
 	{
 		cmd->cmd = get_full_path(stock, token->arg, &cmd->cmd_not_found);
+	
 		if (cmd->cmd_not_found)
 			printf("minishell: %s: command not found!\n", cmd->cmd);
 	}
