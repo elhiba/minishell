@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 14:59:36 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/30 16:02:18 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:51:30 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,9 @@ static void	update_pwd(t_data *data, char *old_pwd, char *cd_arg)
 	}
 }
 
-int	do_cd(t_data *data)
+int	do_cd(t_cmd *data)
 {
-	char	old_pwd[4096];
-	char	*cd_arg;
 
-	if (count_args(data->token_list) > 1)
-		return (printf("cd: too many arguments\n"), 1);
-	cd_arg = get_cd_target(data);
-	if (!cd_arg)
-		return (1);
-	if (!getcwd(old_pwd, sizeof(old_pwd)))
-		ft_strlcpy(old_pwd, ft_getenv("PWD", data), 4096);
-	if (chdir(cd_arg) == -1)
-	{
-		data->last_exit_code = 1;
-		perror(cd_arg);
-		return (1);
-	}
-	update_pwd(data, old_pwd, cd_arg);
+
 	return (1);
 }

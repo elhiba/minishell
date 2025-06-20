@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:30:22 by sel-maaq          #+#    #+#             */
-/*   Updated: 2025/04/30 15:00:51 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:41:49 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 char	**remove_var(char **env, char *key);
 
-int	do_unset(t_data *data)
+int	do_unset(t_cmd *data)
 {
-	t_token	*args;
-
-	args = data->token_list->next;
-	while (args)
-	{
-		if (ft_getenv(args->arg, data))
-		{
-			data->env = remove_var(data->env, args->arg);
-			if (!data->env)
-				error_handler("unset malloc error", data);
-		}
-		args = args->next;
-	}
-	data->last_exit_code = 0;
-	return (1);
+//	t_token	*args;
+//
+//	args = data->token_list->next;
+//	while (args)
+//	{
+//		if (ft_getenv(args->arg, data))
+//		{
+//			data->env = remove_var(data->env, args->arg);
+//			if (!data->env)
+//				error_handler("unset malloc error", data);
+//		}
+//		args = args->next;
+//	}
+//	data->last_exit_code = 0;
+//	return (1);
 }
 
 char	**remove_var(char **env, char *key)

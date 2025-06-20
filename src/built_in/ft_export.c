@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 21:37:28 by sel-maaq          #+#    #+#             */
-/*   Updated: 2025/06/18 18:32:32 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/20 17:41:30 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,33 @@
 int		is_valid_key(char *key, t_data *data);
 void	print_sorted_env(char **env);
 
-int	do_export(t_data *data)
+int	do_export(t_cmd *data)
 {
-	t_token	*args;
-	char	*found;
-	char	*key;
-	char	*value;
-
-	args = data->token_list->next;
-	if (!args)
-		return (print_sorted_env(data->env), 1);
-	while (args)
-	{
-		found = ft_strchr(args->arg, '=');
-		if (found)
-		{
-			key = ft_substr(args->arg, 0, found - args->arg);
-			value = ft_substr(args->arg, (found - args->arg) + 1,
-					ft_strlen(found + 1));
-			if (is_valid_key(key, data))
-				ft_setenv(&data->env, key, value);
-			(free(key), free(value));
-		}
-		else
-			is_valid_key(args->arg, data);
-		args = args->next;
-	}
-	return (1);
+//	t_token	*args;
+//	char	*found;
+//	char	*key;
+//	char	*value;
+//
+//	args = data->token_list->next;
+//	if (!args)
+//		return (print_sorted_env(data->env), 1);
+//	while (args)
+//	{
+//		found = ft_strchr(args->arg, '=');
+//		if (found)
+//		{
+//			key = ft_substr(args->arg, 0, found - args->arg);
+//			value = ft_substr(args->arg, (found - args->arg) + 1,
+//					ft_strlen(found + 1));
+//			if (is_valid_key(key, data))
+//				ft_setenv(&data->env, key, value);
+//			(free(key), free(value));
+//		}
+//		else
+//			is_valid_key(args->arg, data);
+//		args = args->next;
+//	}
+//	return (1);
 }
 
 void	print_sorted_env(char **env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/20 10:31:06 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/21 00:51:52 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_heredoc
 	struct s_heredoc *next;
 } t_heredoc;
 
+typedef struct 	s_data t_data;
 
 typedef struct s_cmd
 {
@@ -84,6 +85,7 @@ typedef struct s_cmd
 	t_heredoc	*heredcs; // linked list of heredocs
 	int		cmd_not_found; // flag to handle cmd not found
 	int		should_not_execute;
+	t_data	*data;
 	int		STDIN; // stdin rah bayna 
 	int		STDOUT; // ta hade bayna asahbe
 	struct s_cmd *next;
@@ -131,14 +133,14 @@ void    pretty_print_cmd_list(t_cmd *cmd_list);
 void	error_handler(char *error_name, t_data *data);
 
 /* built in functions */
-int		ft_builtin(t_data *data);
-int		do_cd(t_data *data);
-int		do_echo(t_data *data);
-int		do_env(t_data *data);
-int		do_exit(t_data *data);
-int		do_export(t_data *data);
-int		do_pwd(t_data *data);
-int		do_unset(t_data *data);
+int		ft_builtin(t_cmd *data);
+int		do_cd(t_cmd *data);
+int		do_echo(t_cmd *data);
+int		do_env(t_cmd *data);
+int		do_exit(t_cmd *data);
+int		do_export(t_cmd *data);
+int		do_pwd(t_cmd *data);
+int		do_unset(t_cmd *data);
 
 /* env functions */
 char	**copy_env(char **env);

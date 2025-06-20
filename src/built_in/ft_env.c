@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:46:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/29 17:54:48 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:57:06 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 /*
  * this is probably a complete function!
  */
-int	do_env(t_data *data)
+int	do_env(t_cmd *data)
 {
 	int	i;
+	int	fd;
 
 	i = 0;
-	while (data->env[i])
+	fd = 1;
+	while (data->data->env[i])
 	{
-		printf("%s\n", data->env[i]);
+		write(fd, data->data->env[i], ft_strlen(data->data->env[i]));
+		write(fd, "\n", 1);
 		i++;
 	}
-	data->last_exit_code = 0;
 	return (1);
 }

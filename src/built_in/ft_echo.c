@@ -3,41 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sel-maaq <sel-maaq@student.42.fr>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:22:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/04/29 16:44:05 by sel-maaq         ###   ########.fr       */
+/*   Updated: 2025/06/20 22:49:59 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /*
- * updated list name
+ * echo is a builtin function (simple), we can use printf,
+ * but we prefer using write function to manupulate file descriptors if we use pipes
  */
-int	do_echo(t_data *data)
+int	do_echo(t_cmd *data)
 {
-	t_token	*cd_args;
-	int		is_n;
+	char	**ptr;
+	int		i;
+	int		fd;
+	int		is_newline;
 
-	is_n = 0;
-	cd_args = data->token_list->next;
-	if (!cd_args)
-		return (printf("\n"), 1);
-	else if (ft_strcmp(cd_args->arg, "-n") == 0)
+	i = 0;
+	fd = 1;
+	is_newline = 1;
+	ptr = ++data->argv;
+	if (ptr[0][0] == '-' && ptr[0][1] == 'n')
 	{
-		is_n = 1;
-		cd_args = cd_args->next;
+		i++;
+		is_newline = 0;
 	}
-	while (cd_args)
+	while (ptr[i])
 	{
-		printf("%s", cd_args->arg);
-		if (cd_args->next)
-			printf(" ");
-		cd_args = cd_args->next;
+		write(fd, ptr[i], ft_strlen(ptr[i]));
+		write(fd, " ", 1);
+		i++;
 	}
-	if (!is_n)
-		printf("\n");
-	data->last_exit_code = 0;
+	if (is_newline)
+		write(fd, "\n", 1);
 	return (1);
 }

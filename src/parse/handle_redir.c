@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/20 16:39:41 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/21 00:51:08 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,7 @@ int	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 	flag = 1;
 	node = ft_collector(sizeof(t_cmd), ALLOC);
 	init_stuff(head, node);
+	node->data = data;
 	current = head;
 	while (current)
 	{

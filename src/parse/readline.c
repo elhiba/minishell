@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/19 11:30:50 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/20 22:26:18 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,16 @@ void	ft_parse(t_data *data)
 		//printf("\nEXEC LIST:\n\n");
 		if (args)
 			list = exec_setup(args, data);
-		//if (list)
-		//		pretty_print_cmd_list(list);
-		if (list)
-			multiple_pipes(data, list, data->env);
-		dup2(saved_stdin, STDIN_FILENO);
-		close(saved_stdin);
+		if (ft_builtin(list) == 0)
+		{
+			//if (list)
+			//		pretty_print_cmd_list(list);
+			if (list)
+				multiple_pipes(data, list, data->env);
+			dup2(saved_stdin, STDIN_FILENO);
+			close(saved_stdin);
+		}
+
 	//	dollar_expand(data, token_list);
 	//	data->token_list = token_list;
 	//	if (ft_builtin(data) == 0 && token_list)
@@ -144,27 +148,27 @@ void	ft_parse(t_data *data)
 	}
 }
 
-int	ft_builtin(t_data *data)
+int	ft_builtin(t_cmd *data)
 {
-	t_token	*tok_list;
+	t_cmd	*ptr;
 	int		status;
 
-	if (!data || !data->token_list || !data->token_list->arg)
+	if (!data || !data->argv)
 		return (0);
-	tok_list = data->token_list;
-	if (ft_strcmp(tok_list->arg, "cd") == 0)
+	ptr = data;
+	if (ft_strcmp(*ptr->argv, "cd") == 0)
 		status = do_cd(data);
-	else if (ft_strcmp(tok_list->arg, "echo") == 0)
+	else if (ft_strcmp(*ptr->argv, "echo") == 0)
 		status = do_echo(data);
-	else if (ft_strcmp(tok_list->arg, "env") == 0)
+	else if (ft_strcmp(*ptr->argv, "env") == 0)
 		status = do_env(data);
-	else if (ft_strcmp(tok_list->arg, "exit") == 0)
+	else if (ft_strcmp(*ptr->argv, "exit") == 0)
 		status = do_exit(data);
-	//else if (ft_strcmp(tok_list->arg, "export") == 0)
+	//else if (ft_strcmp(ptr->cmd, "export") == 0)
 	//	status = do_export(data);
-	else if (ft_strcmp(tok_list->arg, "pwd") == 0)
+	else if (ft_strcmp(*ptr->argv, "pwd") == 0)
 		status = do_pwd(data);
-	else if (ft_strcmp(tok_list->arg, "unset") == 0)
+	else if (ft_strcmp(*ptr->argv, "unset") == 0)
 		status = do_unset(data);
 	else
 		status = 0;
