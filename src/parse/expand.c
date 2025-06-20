@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/19 11:28:03 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/20 10:00:35 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_is_expandable(t_token *current)
 	buffer = current->arg;
 	while (buffer[i])
 	{
-		if ((buffer[i] == '$' && !is_white_space(buffer[i + 1])))
+		if ((buffer[i] == '$' && !is_digit_(buffer[i + 1]) && !is_white_space(buffer[i + 1])))
 			return (1);
 		i++;
 	}
@@ -171,7 +171,7 @@ void	expand_variable(t_token *current, char **envp, char **token)
 	}
 	while (**token)
 	{
-		if ((**token == '$' && !is_alnum_(*(*token + 1))))
+		if ((**token == '$' && !current->is_dquote &&!is_alnum_(*(*token + 1))))
 		{
 			current->is_not_splittable = 1;
 		}
@@ -181,6 +181,7 @@ void	expand_variable(t_token *current, char **envp, char **token)
 			get_env_value(envp, env);
 			expanded_token = ft_strnjoin(expanded_token, env->value, env->value_len);
 			*token = ft_trim(*token, env->name_len + 1);
+			current->is_not_splittable = 0;
 		}
 		else
 		{
@@ -188,7 +189,8 @@ void	expand_variable(t_token *current, char **envp, char **token)
 			*token = ft_trim(*token, 1);
 		}
 	}
-	check_prev(current);
+	if (!current->is_dquote)
+		check_prev(current);
 	current->value = ft_strdup(expanded_token);
 	*token = expanded_token;
 }
