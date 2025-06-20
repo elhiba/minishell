@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:22:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/20 22:49:59 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:57:51 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,19 @@ int	do_echo(t_cmd *data)
 	fd = 1;
 	is_newline = 1;
 	ptr = ++data->argv;
-	if (ptr[0][0] == '-' && ptr[0][1] == 'n')
+	if (*ptr)
 	{
-		i++;
-		is_newline = 0;
-	}
-	while (ptr[i])
-	{
-		write(fd, ptr[i], ft_strlen(ptr[i]));
-		write(fd, " ", 1);
-		i++;
+		if (ptr[0][0] == '-' && ptr[0][1] == 'n')
+		{
+			i++;
+			is_newline = 0;
+		}
+		while (ptr[i])
+		{
+			write(fd, ptr[i], ft_strlen(ptr[i]));
+			write(fd, " ", 1);
+			i++;
+		}
 	}
 	if (is_newline)
 		write(fd, "\n", 1);
