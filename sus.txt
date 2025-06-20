@@ -1,0 +1,42 @@
+/*
+ * Ambiguous redirect
+ * *here some cases where we have some issues!*
+ * --------------------------------------------
+ *  export t="  ls  -l " l="   " ll="  l  " k="ok   " kk="   ok"
+ * --------------------------------------------
+ *   ~$ < $lsdds
+ *   ~$ < $l
+ *   ~$ < ss$l""
+ *   ~$ < $ll$l
+ *   ~$ < $ll''
+ *   ~$ < ""$t$$..
+ *   ~$ < $kk$kk
+ * --------------------------------------------
+ *  expected output:
+ *  minishell: $a: ambiguous redirect
+ *
+ *  -------------------------------------------
+ *
+ *   ~$ < $l''
+ *   ~$ < ""$t$$$..
+ *   ~$ < $ll
+ *   ~$ < $kk
+ *   ~$ < $ll$l
+ * --------------------------------------------
+ *  expected output:
+ *  minishell: it should work as expected :lol:!
+ * */
+// still maintaining
+void	ambiguous_redirect(t_token **token)
+{
+	t_token	*ptr;
+
+	ptr = *token;
+	while (ptr)
+	{
+		if (ptr->is_dollar && ptr->prev && ft_strchr(ptr->arg, ' '))
+			ptr->is_ambiguous = 1;
+		else
+			ptr->is_ambiguous = 0;
+	}
+}
