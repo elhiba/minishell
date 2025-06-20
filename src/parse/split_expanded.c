@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:04:23 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/19 11:30:02 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/20 16:35:28 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	split_into_nodes(t_token **head, char *buffer)
 			tmp = *head;
 			while (tmp->next)
 				tmp = tmp->next;
-			tmp->is_squote = 1;
+			tmp->is_word = 1;
 			tmp->is_env_var = 1;
 			tmp->is_space_next = 0;
 		}

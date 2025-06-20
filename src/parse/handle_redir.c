@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/18 18:33:10 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/20 16:39:41 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,9 @@ int	set_cmd_name(t_cmd *cmd, t_token *token, t_data *data)
 	envp->name_len = 4;
 	get_env_value(data->env, envp);
 	stock = ft_split(envp->value, ':');
-	if (!*token->arg && (token->is_dquote || token->is_squote))
+	if (!*token->arg && token->is_env_var && token->is_word)
+		return (-1);
+	else if (!*token->arg && (token->is_dquote || token->is_squote))
 		return(printf("minishell: '%s': command not found!\n", token->arg), -1);
 	if (*token->arg && check_absolute_path(token->arg))
 	{

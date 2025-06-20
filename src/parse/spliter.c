@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/19 15:31:32 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/20 17:11:37 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	ambiguous_redirect(t_token **token)
 	}
 }
 
+//void	set_ambigous(t_token *head);
+
 void	ft_spliter(t_token **token, char *str, t_data *data)
 {
 	//char	**args;
@@ -178,6 +180,7 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 	}	
 	//ambiguous_redirect(token);
 	check_and_expand(token, data->env);
+	//set_ambigous(*token);
 	/*
 	expand;
 	split white spaces;
@@ -249,6 +252,116 @@ void	remove_empty_env(t_token **head)
 	}
 }
 
+//int	is_redirect(t_token *current, char *arg)
+//{
+//	int	i;
+
+//	i = 0;
+//	if (current->is_dquote || current->is_squote)
+//		return (0);
+//	if (arg[i] == '>' && arg[i + 1] == '>')
+//		return (1);
+//	else if (arg[i] == '>')
+//		return (1);
+//	else if (arg[i] == '<')
+//		return (1);
+//	return (0);
+//}
+//bool	is_space_(char c)
+//{
+//	if (c == 32 || (c >= 9 && c <= 13))
+//		return (true);
+//	return (false);
+//}
+
+//int	last_index_isspace(char	*str)
+//{
+//	int	i;
+
+//	i = 0;
+//	while (str[i])
+//		i++;
+//	if (str[0] && is_space_(str[i - 1]))
+//		return (1);
+//	return (0);
+//}
+
+//int	space_in_middle(char *str)
+//{
+//	int	i;
+
+//	i = 1;
+//	if (!str[0])
+//		return (0);
+//	if (!is_space_(str[0]) && !last_index_isspace(str))
+//	{
+//		while (str[i])
+//		{
+//			if (is_space_(str[i]))
+//				return (1);
+//			i++;
+//		}
+//	}
+//	return (0);
+//}
+
+//static int	ft_counter(char *str)
+//{
+//	int	i;
+//	int	counter;
+
+//	i = 0;
+//	counter = 0;
+//	while (str[i])
+//	{
+//		while (is_space_(str[i]))
+//			i++;
+//		if (str[i])
+//			counter++;
+//		while (!is_space_(str[i]) && str[i])
+//			i++;
+//	}
+//	return (counter);
+//}
+
+//void	set_ambigous(t_token *head)
+//{
+//	t_token	*current;
+//	t_token	*next;
+
+//	current = head;
+//	next = current->next;
+//	while (current)
+//	{
+//		if (is_redirect(current, current->arg) && current->next &&!current->next->is_not_splittable)
+//		{
+//			next = current->next;
+//			current = current->next;
+//			while (current && !is_redirect(current, current->arg) && !current->is_ambiguous)
+//			{
+//				if (current->is_env_var && !current->is_dquote && is_space_(current->arg[0]) && !current->prev->is_dquote && !current->prev->is_space_next)
+//				{
+//					next->is_ambiguous = 1;
+//				}
+//				else if (current->is_env_var && !current->is_dquote && last_index_isspace(current->arg) && !current->is_space_next && current->next && !current->is_space_next)
+//				{	
+//					next->is_ambiguous = 1;
+//				}
+//				else if (current->is_env_var && !current->is_dquote && all_spaces(current->arg) && current->is_space_next)
+//					next->is_ambiguous = 1;
+//				else if (current->is_env_var && !current->is_dquote && ft_counter(current->arg) > 1)
+//				{
+//					next->is_ambiguous = 1;
+//				}
+//				current = current->next;
+//			}
+//		}
+//		if (next && next->is_ambiguous)
+//			printf("sus\n");
+//		if (current)
+//			current = current->next;
+//	}
+//}
 
 t_token	*token(char *str, t_data *data)
 {

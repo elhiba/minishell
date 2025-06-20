@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/20 10:00:35 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/20 15:25:53 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,13 +129,23 @@ void	check_prev(t_token *current)
 	prev = current->prev;
 	while (prev)
 	{
-		if (prev->is_not_splittable && !prev->is_space_next)
+		if (!current->is_not_splittable && prev->is_not_splittable && !prev->is_space_next)
+			prev->is_not_splittable = 0;
+		else if (prev->is_not_splittable && !prev->is_space_next)
 			current->is_not_splittable = 1;
 		else if (current->is_not_splittable && !prev->is_space_next)
 		{
 			prev->is_not_splittable = 1;
 		}
 		prev = prev->prev;
+	}
+	while (current)
+	{
+		if (current->is_not_splittable && current->next && !current->is_space_next)
+			current->next->is_not_splittable = 1;
+		else if (!current->is_not_splittable && current->next && !current->is_space_next)
+			current->next->is_not_splittable = 0;
+		current = current->next;
 	}
 }
 
@@ -171,17 +181,17 @@ void	expand_variable(t_token *current, char **envp, char **token)
 	}
 	while (**token)
 	{
-		if ((**token == '$' && !current->is_dquote &&!is_alnum_(*(*token + 1))))
+		if ((**token == '$' && !current->is_dquote && !is_alnum_(*(*token + 1))))
 		{
 			current->is_not_splittable = 1;
 		}
 		if ((**token == '$' && is_alnum_(*(*token + 1)) == true))
 		{
+			current->is_not_splittable = 0;
 			extract_variable_name(*token + 1, env);
 			get_env_value(envp, env);
 			expanded_token = ft_strnjoin(expanded_token, env->value, env->value_len);
 			*token = ft_trim(*token, env->name_len + 1);
-			current->is_not_splittable = 0;
 		}
 		else
 		{

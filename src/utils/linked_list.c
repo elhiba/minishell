@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:51:50 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/31 18:02:10 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/20 11:27:12 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	add_token_node(t_token **head, char *arg)
 		ft_collector(0, EXIT);
 	ft_bzero(new, sizeof(t_token));
 	new->arg = arg;
+	new->is_not_splittable = 1;
 	if (!*head)
 		*head = new;
 	else
