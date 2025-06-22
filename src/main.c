@@ -59,37 +59,20 @@ int	main(int ac, char **av, char **env)
 			exit(EXIT_SUCCESS);
 		}
 		add_history(data.readline_in);
-		ft_parse(&data);
-		if (!is_builtin(&data) && data.token_list)
-			execute_cmd(&data);
-		else
-			free_token_list(&(data.token_list));
+		// ft_parse(&data);
+		full_execution(&data);
 	}
 	return (0);
 }
 
 // grep -> hi ->  infile -> outfile -> null
+	
+// int	handle_heredoc(char *delim)
+// {
 
-int	handle_heredoc(char *delim)
-{
+// }
 
-}
-
-void	remove_token(t_token **head, t_token *node)
-{
-	if (!node)
-		return ;
-	if (node->prev)
-		node->prev->next = node->next;
-	else
-		*head = node->next;
-	if (node->next)
-		node->next->prev = node->prev;
-	free(node->arg);
-	free(node);
-}
-
-int	resolve_redirections(t_cmd *cmd)
+int	resolve_redirections(t_data *data, t_cmd *cmd)
 {
 	t_token	*tmp;
 
@@ -104,83 +87,94 @@ int	resolve_redirections(t_cmd *cmd)
 				cmd->out_fd = open(tmp->arg, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (tmp->red_type == RED_APP)
 				cmd->out_fd = open(tmp->arg, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (tmp->red_type == RED_HERE)
-				cmd->in_fd = handle_heredoc(tmp->arg);
-			if (tmp->red_type != 0 && (cmd->in_fd == -1 || cmd->out_fd == -1))
-				return (perror(tmp->arg), cmd->skip_cmd = 1);
+			// if (tmp->red_type == RED_HERE)
+			// 	cmd->in_fd = handle_heredoc(tmp->arg);
+			if (cmd->in_fd == -1 || cmd->out_fd == -1)
+				return (perror(tmp->arg), cmd->skip_cmd = 1, data->last_exit_code = 1);
 			if (tmp->red_type != 0)
 				remove_token(&cmd->list, tmp);
 			tmp = tmp->next;
 		}
 		cmd = cmd->next;
 	}
+	return (1);
 }
 
-void	full_exec(t_data *data)
+void	exec_single_builtin(t_data *data, t_cmd *cmd)
+{
+	int	in_save;
+	int	out_save;
+
+	in_save = dup(0);
+	out_save = dup(1);
+	if (cmd->in_fd != 0)
+		dup2(cmd->in_fd, 0);
+	if (cmd->out_fd != 1)
+		dup2(cmd->out_fd, 1);
+	do_builtin(data, cmd->list, 0);
+	dup2(in_save, 0);
+	dup2(out_save, 1);
+	close(in_save);
+	close(out_save);
+}
+
+void	full_execution(t_data *data)
 {
 	int		last_pid;
-	int		i;
+	t_cmd	*cmd;
 
-	i = 0;
-	resolve_redirections(data->cmd_list);
-	if (data->cmd_list->list == NULL && is_builtin(data))
-		do_builtin(data);	
+	cmd = data->cmd_list;
+	resolve_redirections(data, cmd);
+	if (is_builtin(cmd->list) && !cmd->next && !cmd->skip_cmd)
+		exec_single_builtin(data, cmd);
 	else
 	{
-		while (data->cmd_list)
+		while (cmd)
 		{
-			if (data->cmd_list->skip_cmd == 1)
+			if (cmd->skip_cmd)
+			{
+				cmd = cmd->next;
 				continue ;
+			}
 			last_pid = fork();
 			if (last_pid == 0)
 			{
-				dup2(data->cmd_list->in_fd, 0);
-				dup2(data->cmd_list->out_fd, 1);
-				if (is_builtin(data))
-					do_builtin
+				dup2(cmd->in_fd, 0);
+				dup2(cmd->out_fd, 1);
+				if (is_builtin(cmd->list))
+					do_builtin(data, cmd->list, 1);
 				else
-					execute_cmd(data);
+					execute_cmd(data, cmd->list);
 			}
 			if (last_pid > 0)
 				wait(&data->last_exit_code);
-			i++;
+			cmd = cmd->next;
 		}
 		while (wait(NULL) > 0)
 			;
+		// if (WIFEXITED(status))
+		// 	data->last_exit_code = WEXITSTATUS(status);
+		// else if (WIFSIGNALED(status))
+		// 	data->last_exit_code = 128 + WTERMSIG(status);
 	}
+	free_cmd_list(&data->cmd_list);
 }
-void	execute_cmd(t_data *data)
-{
-	int		status;
-	pid_t	pid_child;
-	char	*cmd;
-	char	**argv;
 
-	status = 0;
-	cmd = check_in_path(data->token_list, data);
-	argv = build_argv(data, data->token_list);
-	pid_child = fork();
-	if (pid_child > 0)
-		wait(&status);
-	if (pid_child == 0)
-	{
-		if (execve(cmd, argv, data->env) == -1)
-		{
-			if (ft_strchr(cmd, '/'))
-				printf("%s: No such file or directory\n", cmd);
-			else
-				printf("%s: command not found\n", cmd);
-			free(argv);
-			free_token_list(&data->token_list);
-			free_d_arr(data->env);
-			exit(127);
-		}
-		(free(argv), error_handler(cmd, data));
-	}
-	if (WIFEXITED(status))
-		data->last_exit_code = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		data->last_exit_code = 128 + WTERMSIG(status);
-	free_token_list(&data->token_list);
-	free(argv);
-}
+// void	execute_cmd(t_data *data, t_token *list)
+// {
+// 	char	*cmd;
+// 	char	**argv;		
+
+// 	cmd = check_in_path(list, data);
+// 	argv = build_argv(data, list);
+// 	if (execve(cmd, argv, data->env) == -1)
+// 	{
+// 		if (ft_strchr(cmd, '/'))
+// 			printf("%s: No such file or directory\n", cmd);
+// 		else
+// 			printf("%s: command not found\n", cmd);
+// 		free(argv);
+// 		full_cleanup(data);
+// 		exit(127);
+// 	}	
+// }

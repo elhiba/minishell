@@ -15,13 +15,13 @@
 /*
  * updated list name
  */
-int	do_echo(t_data *data)
+int	do_echo(t_data *data, t_token *list)
 {
 	t_token	*cd_args;
 	int		is_n;
 
 	is_n = 0;
-	cd_args = data->token_list->next;
+	cd_args = list->next;
 	if (!cd_args)
 		return (printf("\n"), 1);
 	else if (ft_strcmp(cd_args->arg, "-n") == 0)

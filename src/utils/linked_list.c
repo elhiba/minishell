@@ -36,3 +36,17 @@ void	add_token_node(t_token **head, char *arg)
 		new->prev = curr;
 	}
 }
+
+void	remove_token(t_token **head, t_token *node)
+{
+	if (!node)
+		return ;
+	if (node->prev)
+		node->prev->next = node->next;
+	else
+		*head = node->next;
+	if (node->next)
+		node->next->prev = node->prev;
+	free(node->arg);
+	free(node);
+}

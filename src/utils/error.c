@@ -21,10 +21,6 @@ void	error_handler(char *error_name, t_data *data)
 {
 	if (error_name)
 		perror(error_name);
-	if (data)
-	{
-		free_token_list(&data->token_list);
-		free_d_arr(data->env);
-	}
+	full_cleanup(data);
 	exit(EXIT_FAILURE);
 }

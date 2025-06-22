@@ -52,7 +52,7 @@ char	*check_in_path(t_token *list, t_data *data)
 	return (cmd);
 }
 
-char	**build_argv(t_data *data, t_token *tokens)
+char	**build_argv(t_data *data, t_token *list)
 {
 	char	**argv;
 	int		count;
@@ -60,7 +60,7 @@ char	**build_argv(t_data *data, t_token *tokens)
 	t_token	*tmp;
 
 	count = 0;
-	tmp = tokens;
+	tmp = list;
 	while (tmp)
 	{
 		count++;
@@ -70,48 +70,66 @@ char	**build_argv(t_data *data, t_token *tokens)
 	if (!argv)
 		error_handler("Malloc failed", data);
 	i = 0;
-	while (tokens)
+	while (list)
 	{
-		argv[i] = tokens->arg;
-		tokens = tokens->next;
+		argv[i] = list->arg;
+		list = list->next;
 		i++;
 	}
 	argv[i] = NULL;
 	return (argv);
 }
 
-void	execute_cmd(t_data *data)
+void	execute_cmd(t_data *data, t_token *list)
 {
-	int		status;
-	pid_t	pid_child;
 	char	*cmd;
 	char	**argv;
 
-	status = 0;
-	cmd = check_in_path(data->token_list, data);
-	argv = build_argv(data, data->token_list);
-	pid_child = fork();
-	if (pid_child > 0)
-		wait(&status);
-	if (pid_child == 0)
+	cmd = check_in_path(list, data);
+	argv = build_argv(data, list);
+	if (execve(cmd, argv, data->env) == -1)
 	{
-		if (execve(cmd, argv, data->env) == -1)
-		{
-			if (ft_strchr(cmd, '/'))
-				printf("%s: No such file or directory\n", cmd);
-			else
-				printf("%s: command not found\n", cmd);
-			free(argv);
-			free_token_list(&data->token_list);
-			free_d_arr(data->env);
-			exit(127);
-		}
-		(free(argv), error_handler(cmd, data));
-	}
-	if (WIFEXITED(status))
-		data->last_exit_code = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		data->last_exit_code = 128 + WTERMSIG(status);
-	free_token_list(&data->token_list);
-	free(argv);
+		if (ft_strchr(cmd, '/'))
+			printf("%s: No such file or directory\n", cmd);
+		else
+			printf("%s: command not found\n", cmd);
+		free(argv);
+		full_cleanup(data);
+		exit(127);
+	}	
 }
+// void	execute_cmd(t_data *data)
+// {
+// 	int		status;
+// 	pid_t	pid_child;
+// 	char	*cmd;
+// 	char	**argv;
+
+// 	status = 0;
+// 	cmd = check_in_path(data->token_list, data);
+// 	argv = build_argv(data, data->token_list);
+// 	pid_child = fork();
+// 	if (pid_child > 0)
+// 		wait(&status);
+// 	if (pid_child == 0)
+// 	{
+// 		if (execve(cmd, argv, data->env) == -1)
+// 		{
+// 			if (ft_strchr(cmd, '/'))
+// 				printf("%s: No such file or directory\n", cmd);
+// 			else
+// 				printf("%s: command not found\n", cmd);
+// 			free(argv);
+// 			free_token_list(&data->token_list);
+// 			free_d_arr(data->env);
+// 			exit(127);
+// 		}
+// 		(free(argv), error_handler(cmd, data));
+// 	}
+// 	if (WIFEXITED(status))
+// 		data->last_exit_code = WEXITSTATUS(status);
+// 	else if (WIFSIGNALED(status))
+// 		data->last_exit_code = 128 + WTERMSIG(status);
+// 	free_token_list(&data->token_list);
+// 	free(argv);
+// }

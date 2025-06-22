@@ -1,0 +1,5 @@
+- export var="a   b" => when expanded raw(no quotes) , it counts as 2 nodes/args
+
+- learn how marcos of exit status works
+
+- echo hi | "" | cat ----  echo hi | $fueru | cat

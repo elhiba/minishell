@@ -28,7 +28,7 @@
 # define RED_OUT 2
 # define RED_APP 3
 # define RED_HERE 4
-
+			
 typedef struct s_token
 {
 	char			*arg;
@@ -47,8 +47,8 @@ typedef struct s_cmd
 
 	int				skip_cmd;
 
-	struct t_cmd	*next;
-	struct t_cmd	*prev;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
 }	t_cmd;
 
 typedef struct s_data
@@ -58,7 +58,6 @@ typedef struct s_data
 
 	t_cmd	*cmd_list;
 
-	t_token	*token_list;
 	int		last_exit_code;
 }	t_data;
 
@@ -76,16 +75,16 @@ char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
 void	error_handler(char *error_name, t_data *data);
 
 /* built in functions */
-int		is_builtin(t_data *data);
-void	do_builtin(t_data *data);
+int		is_builtin(t_token *token);
+void	do_builtin(t_data *data, t_token *list, int exit_or_not);
 
-int		do_cd(t_data *data);
-int		do_echo(t_data *data);
+int		do_cd(t_data *data, t_token *list);
+int		do_echo(t_data *data, t_token *list);
 int		do_env(t_data *data);
-int		do_exit(t_data *data);
-int		do_export(t_data *data);
+int		do_exit(t_data *data, t_token *list);
+int		do_export(t_data *data, t_token *list);
 int		do_pwd(t_data *data);
-int		do_unset(t_data *data);
+int		do_unset(t_data *data, t_token *list);
 
 /* env functions */
 char	**copy_env(char **env);
@@ -94,18 +93,20 @@ void	ft_setenv(char ***env, char *key, char *val);
 char	*ft_getenv(char *key, t_data *data);
 
 /* Excecution! */
-void	execute_cmd(t_data *data);
+void	full_execution(t_data *data);
+void	execute_cmd(t_data *data, t_token *list);
 
 /* clean-up functions */
 void	free_d_arr(char **arr);
 void	free_token_list(t_token **head);
+void	free_cmd_list(t_cmd **head);
+void	full_cleanup(t_data *data);
 
-/* New spliter function:
- * it can remove any other tabs stuff and replaced by space
- */
+
 char	**ft_spliter(t_data *data);
 
 /* Linked list stuff*/
 void	add_token_node(t_token **head, char *arg);
+void	remove_token(t_token **head, t_token *node);
 
 #endif

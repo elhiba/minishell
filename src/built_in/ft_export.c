@@ -15,14 +15,14 @@
 int		is_valid_key(char *key, t_data *data);
 void	print_sorted_env(char **env);
 
-int	do_export(t_data *data)
+int	do_export(t_data *data, t_token *list)
 {
 	t_token	*args;
 	char	*found;
 	char	*key;
 	char	*value;
 
-	args = data->token_list->next;
+	args = list->next;
 	if (!args)
 		return (print_sorted_env(data->env), 1);
 	while (args)

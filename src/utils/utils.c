@@ -23,40 +23,6 @@ char	*ft_strjoin3(const char *str1, const char *middle, const char *str2)
 	return (full_result);
 }
 
-void	free_token_list(t_token **head)
-{
-	t_token	*tmp;
-	t_token	*next;
-
-	if (!head || !*head)
-		return ;
-	tmp = *head;
-	while (tmp)
-	{
-		next = tmp->next;
-		if (tmp->arg)
-			free(tmp->arg);
-		free(tmp);
-		tmp = next;
-	}
-	*head = NULL;
-}
-
-void	free_d_arr(char **arr)
-{
-	char	**ptr;
-	int		i;
-
-	ptr = arr;
-	i = 0;
-	while (arr[i])
-	{
-		free(ptr[i]);
-		i++;
-	}
-	free(ptr);
-}
-
 char	**ft_splits(char *arg, char *delimits)
 {
 	int		i;

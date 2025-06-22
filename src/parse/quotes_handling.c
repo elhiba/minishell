@@ -12,49 +12,49 @@
 
 #include "../../includes/minishell.h"
 
-void	double_quotes(t_data *data, int index)
-{
-	if (!data->is_dquote)
-	{
-		data->is_dquote = 1;
-		if (data->readline_in)
-			data->readline_in[index] = ' ';
-	}
-	else if (data->is_dquote)
-	{
-		data->readline_in[index] = ' ';
-		data->is_dquote = 0;
-	}
+// void	double_quotes(t_data *data, int index)
+// {
+// 	if (!data->is_dquote)
+// 	{
+// 		data->is_dquote = 1;
+// 		if (data->readline_in)
+// 			data->readline_in[index] = ' ';
+// 	}
+// 	else if (data->is_dquote)
+// 	{
+// 		data->readline_in[index] = ' ';
+// 		data->is_dquote = 0;
+// 	}
 
-}
+// }
 
-void	signle_quotes(t_data *data, int index)
-{
-	if (!data->is_squote)
-	{
-		data->is_squote = 1;
-		if (data->readline_in)
-			data->readline_in[index] = ' ';
-	}
-	else
-	{
-		data->readline_in[index] = ' ';
-		data->is_squote = 0;
-	}
-}
+// void	signle_quotes(t_data *data, int index)
+// {
+// 	if (!data->is_squote)
+// 	{
+// 		data->is_squote = 1;
+// 		if (data->readline_in)
+// 			data->readline_in[index] = ' ';
+// 	}
+// 	else
+// 	{
+// 		data->readline_in[index] = ' ';
+// 		data->is_squote = 0;
+// 	}
+// }
 
-void	quotes_handler(t_data *data)
-{
-	int	i;
+// void	quotes_handler(t_data *data)
+// {
+// 	int	i;
 
-	i = 0;
+// 	i = 0;
 
-	while (data->readline_in[i])
-	{
-		if (data->readline_in[i] == '\"' && !data->is_squote)
-			double_quotes(data, i);
-		if (data->readline_in[i] == '\'' && !data->is_dquote)
-			signle_quotes(data, i);
-		i++;
-	}
-}
+// 	while (data->readline_in[i])
+// 	{
+// 		if (data->readline_in[i] == '\"' && !data->is_squote)
+// 			double_quotes(data, i);
+// 		if (data->readline_in[i] == '\'' && !data->is_dquote)
+// 			signle_quotes(data, i);
+// 		i++;
+// 	}
+// }

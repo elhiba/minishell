@@ -25,7 +25,7 @@ PARSE = $(SRC)parse/
 FILES = $(addprefix $(SRC), main.c) \
 		$(addprefix $(BUITIN), ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c) \
 		$(addprefix $(EXEC), exec.c) \
-		$(addprefix $(UTILS), signals.c error.c utils.c linked_list.c utils_env.c) \
+		$(addprefix $(UTILS), signals.c error.c utils.c linked_list.c utils_env.c clean_up.c) \
 		$(addprefix $(PARSE), parser.c spliter.c dollar_expander.c quotes_handling.c)
 
 OBJ = $(FILES:.c=.o)

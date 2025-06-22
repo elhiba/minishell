@@ -41,92 +41,40 @@ void	ft_parse(t_data *data)
 	data->token_list = token_list;
 }
 
-int	is_builtin(t_data *data)
+int	is_builtin(t_token *token)
 {
-	t_token	*tok_list;
-
-	if (!data || !data->token_list || !data->token_list->arg)
+	if (!token || !token->arg)
 		return (0);
-	tok_list = data->token_list;
-	if (!ft_strcmp(tok_list->arg, "cd") || !ft_strcmp(tok_list->arg, "export")
-		|| !ft_strcmp(tok_list->arg, "env") || !ft_strcmp(tok_list->arg, "exit")
-		|| !ft_strcmp(tok_list->arg, "echo") || !ft_strcmp(tok_list->arg, "pwd")
-		|| !ft_strcmp(tok_list->arg, "unset"))
+	if (!ft_strcmp(token->arg, "cd") || !ft_strcmp(token->arg, "export")
+		|| !ft_strcmp(token->arg, "env") || !ft_strcmp(token->arg, "exit")
+		|| !ft_strcmp(token->arg, "echo") || !ft_strcmp(token->arg, "pwd")
+		|| !ft_strcmp(token->arg, "unset"))
 		return (1);
 	else
 		return (0);
 }
 
-void	do_builtin(t_data *data)
+void	do_builtin(t_data *data, t_token *list, int exit_or_not)
 {
-	t_token	*tok_list;
-
-	if (!data || !data->token_list || !data->token_list->arg)
-		return (0);
-	tok_list = data->token_list;
-	if (ft_strcmp(tok_list->arg, "cd") == 0)
-		do_cd(data);
-	else if (ft_strcmp(tok_list->arg, "echo") == 0)
-		do_echo(data);
-	else if (ft_strcmp(tok_list->arg, "env") == 0)
+	if (!data || !list || !list->arg)
+		return ;
+	if (ft_strcmp(list->arg, "cd") == 0)
+		do_cd(data, list);
+	else if (ft_strcmp(list->arg, "echo") == 0)
+		do_echo(data, list);
+	else if (ft_strcmp(list->arg, "env") == 0)
 		do_env(data);
-	else if (ft_strcmp(tok_list->arg, "exit") == 0)
-		do_exit(data);
-	else if (ft_strcmp(tok_list->arg, "export") == 0)
-		do_export(data);
-	else if (ft_strcmp(tok_list->arg, "pwd") == 0)
+	else if (ft_strcmp(list->arg, "exit") == 0)
+		do_exit(data, list);
+	else if (ft_strcmp(list->arg, "export") == 0)
+		do_export(data, list);
+	else if (ft_strcmp(list->arg, "pwd") == 0)
 		do_pwd(data);
-	else if (ft_strcmp(tok_list->arg, "unset") == 0)
-		do_unset(data);
+	else if (ft_strcmp(list->arg, "unset") == 0)
+		do_unset(data, list);
+	if (exit_or_not)
+	{
+		full_cleanup(data);
+		exit(data->last_exit_code);
+	}
 }
-
-void	do_builtin_fork(t_data *data)
-{
-	t_token	*tok_list;
-
-	if (!data || !data->token_list || !data->token_list->arg)
-		return (0);
-	tok_list = data->token_list;
-	if (ft_strcmp(tok_list->arg, "cd") == 0)
-		do_cd(data);
-	else if (ft_strcmp(tok_list->arg, "echo") == 0)
-		do_echo(data);
-	else if (ft_strcmp(tok_list->arg, "env") == 0)
-		do_env(data);
-	else if (ft_strcmp(tok_list->arg, "exit") == 0)
-		do_exit(data);
-	else if (ft_strcmp(tok_list->arg, "export") == 0)
-		do_export(data);
-	else if (ft_strcmp(tok_list->arg, "pwd") == 0)
-		do_pwd(data);
-	else if (ft_strcmp(tok_list->arg, "unset") == 0)
-		do_unset(data);
-	exit(data->last_exit_code);
-}
-
-// int	do_builtin(t_data *data)
-// {
-// 	t_token	*tok_list;
-// 	int		status;
-
-// 	if (!data || !data->token_list || !data->token_list->arg)
-// 		return (0);
-// 	tok_list = data->token_list;
-// 	if (ft_strcmp(tok_list->arg, "cd") == 0)
-// 		status = do_cd(data);
-// 	else if (ft_strcmp(tok_list->arg, "echo") == 0)
-// 		status = do_echo(data);
-// 	else if (ft_strcmp(tok_list->arg, "env") == 0)
-// 		status = do_env(data);
-// 	else if (ft_strcmp(tok_list->arg, "exit") == 0)
-// 		status = do_exit(data);
-// 	else if (ft_strcmp(tok_list->arg, "export") == 0)
-// 		status = do_export(data);
-// 	else if (ft_strcmp(tok_list->arg, "pwd") == 0)
-// 		status = do_pwd(data);
-// 	else if (ft_strcmp(tok_list->arg, "unset") == 0)
-// 		status = do_unset(data);
-// 	else
-// 		status = 0;
-// 	return (status);
-// }

@@ -25,12 +25,12 @@ int	count_args(t_token *token_list)
 	return (i - 1);
 }
 
-static char	*get_cd_target(t_data *data)
+static char	*get_cd_target(t_data *data, t_token *list)
 {
 	char	*arg;
 
-	if (data->token_list->next)
-		arg = data->token_list->next->arg;
+	if (list->next)
+		arg = list->next->arg;
 	else
 		arg = NULL;
 	if (!arg)
@@ -38,12 +38,14 @@ static char	*get_cd_target(t_data *data)
 		arg = ft_getenv("HOME", data);
 		if (!arg)
 			printf("cd: HOME not set\n");
+		data->last_exit_code = 1;
 	}
 	else if (!ft_strcmp(arg, "-"))
 	{
 		arg = ft_getenv("OLDPWD", data);
 		if (!arg)
 			printf("cd: OLDPWD not set\n");
+		data->last_exit_code = 1;
 	}
 	return (arg);
 }
@@ -69,16 +71,17 @@ static void	update_pwd(t_data *data, char *old_pwd, char *cd_arg)
 	}
 }
 
-int	do_cd(t_data *data)
+int	do_cd(t_data *data, t_token *list)
 {
 	char	old_pwd[4096];
 	char	*cd_arg;
 
-	if (count_args(data->token_list) > 1)
-		return (printf("cd: too many arguments\n"), 1);
-	cd_arg = get_cd_target(data);
+	if (count_args(list) > 1)
+		return (printf("cd: too many arguments\n"),
+			data->last_exit_code = 1, 1);
+	cd_arg = get_cd_target(data, list);
 	if (!cd_arg)
-		return (1);
+		return (data->last_exit_code = 1, 1);
 	if (!getcwd(old_pwd, sizeof(old_pwd)))
 		ft_strlcpy(old_pwd, ft_getenv("PWD", data), 4096);
 	if (chdir(cd_arg) == -1)

@@ -12,49 +12,73 @@
 
 #include "../../includes/minishell.h"
 
-int	only_num(char *arg)
+static int	is_strict_num(char *str)
 {
 	int	i;
 
+	if (!str || !str[0])
+		return (0);
+	if (str[0] == '+' || str[0] == '-')
+		str++;
 	i = 0;
-	while (arg[i])
+	while (str[i])
 	{
-		if (arg[i] < '0' || arg[i] > '9')
+		if (str[i] < '0' || str[i] > '9')
 			return (0);
 		i++;
 	}
+	return (i > 0);
+}
+
+static int	parse_exit_code(char *str, long long *result)
+{
+	int			sign;
+	long long	num;
+
+	sign = 1;
+	num = 0;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		num = num * 10 + (*str - '0');
+		if ((sign == 1 && num > LLONG_MAX) || (sign == -1 && -num < LLONG_MIN))
+			return (0);
+		str++;
+	}
+	*result = num * sign;
 	return (1);
 }
 
-int	do_exit(t_data *data)
+int	do_exit(t_data *data, t_token *list)
 {
-	int		arg_count;
-	int		exit_status;
-	t_token	*tmp;
+	t_token		*arg;
+	long long	exit_status;
 
-	tmp = data->token_list->next;
 	printf("exit\n");
-	arg_count = 0;
-	while (tmp)
+	arg = list->next;
+	if (arg)
 	{
-		arg_count++;
-		if (!only_num(tmp->arg) && arg_count == 1)
+		if (!is_strict_num(arg->arg)
+			|| !parse_exit_code(arg->arg, &exit_status))
 		{
-			printf("exit: %s: numeric argument required\n", tmp->arg);
-			free_token_list(&data->token_list);
-			free_d_arr(data->env);
+			printf("exit: %s: numeric argument required\n", arg->arg);
+			full_cleanup(data);
 			exit(2);
 		}
-		if (arg_count > 1)
-			return (printf("exit: too many arguments\n"), data->last_exit_code = 1, 1);
-		tmp = tmp->next;
+		if (arg->next)
+			return (printf("exit: too many arguments\n"),
+				data->last_exit_code = 1, 1);
 	}
-	if (arg_count == 0)
-		exit_status = data->last_exit_code;
 	else
-		exit_status = ft_atoi(data->token_list->next->arg);
-	free_token_list(&data->token_list);
-	free_d_arr(data->env);
-	exit(exit_status);
+		exit_status = data->last_exit_code;
+	full_cleanup(data);
+	exit((unsigned char)exit_status);
 	return (1);
 }

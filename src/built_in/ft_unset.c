@@ -14,11 +14,11 @@
 
 char	**remove_var(char **env, char *key);
 
-int	do_unset(t_data *data)
+int	do_unset(t_data *data, t_token *list)
 {
 	t_token	*args;
 
-	args = data->token_list->next;
+	args = list->next;
 	while (args)
 	{
 		if (ft_getenv(args->arg, data))
