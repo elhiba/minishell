@@ -6,26 +6,11 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/24 16:01:16 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/25 17:45:24 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-char	*build_prompt(t_data *data)
-{
-	char	cwd[1000];
-	char	*prompt;
-
-	if (!getcwd(cwd, sizeof(cwd)))
-		ft_strlcpy(cwd, ft_getenv("PWD", data),1000);
-	prompt = ft_collector(1000, ALLOC);
-	if (!prompt)
-		return (NULL);
-	snprintf(prompt, 10000,
-		"┌──(minishell)-[%s]\n└─❯ ", cwd);
-	return (prompt);
-}
 
 volatile sig_atomic_t	g_received_signal = 0;
 
