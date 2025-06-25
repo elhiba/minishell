@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/24 18:01:52 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:12:53 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,22 +213,29 @@ void	expand_variable(t_token *current, char **envp, char **token)
 void check_and_expand(t_token **head, char **envp)
 {
 	t_token *current;
-	int		tmp_flag;
+	t_token *tmp;
 
 	current = *head;
-	tmp_flag = 1;
 	while (current)
 	{
 		if (current->prev && !ft_strcmp(current->prev->arg, "<<"))
-			tmp_flag = 0;
-		if (check_is_expandable(current) && !current->is_squote && tmp_flag)
+		{
+			tmp = current;
+			while (tmp)
+			{
+				tmp->not_expandable = 1;
+				if (tmp->is_space_next)
+					break ;
+				tmp = tmp->next;
+			}
+		}
+		if (check_is_expandable(current) && !current->is_squote && !current->not_expandable)
 		{
 			expand_variable(current, envp, &current->arg);
 			current->is_env_var = 1;
 		}
 		if (current->is_word && !current->is_space_next && current->arg[ft_strlen(current->arg) - 1] == '$')
 			current->arg = ft_strnjoin("", current->arg, ft_strlen(current->arg) - 1);
-		tmp_flag = 1;
 		current = current->next;
 	}
 }

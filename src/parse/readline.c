@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/25 14:30:30 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:36:47 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	heredoc(t_cmd *cmd_list)
 					buffer = readline("> ");
 					if (!ft_strcmp(buffer, current->heredoc_del))
 						break ;
-					if (is_it_expandable(buffer))
+					if (is_it_expandable(buffer) && current->expand)
 						expand_variable_heredoc(cmd->data->env,&buffer);
 					ft_putendl_fd(buffer, current->fd);
 				}

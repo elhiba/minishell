@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:04:23 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/25 14:08:34 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:13:30 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	extract_word(char **buffer, t_token **head, t_token *save)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->is_squote = 1;
-	tmp->result_of_spliting = 1;
 	if (save && save->is_ambiguous)
 	{
 		tmp->is_ambiguous = 1;

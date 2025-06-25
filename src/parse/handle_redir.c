@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/25 14:13:24 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:36:32 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,9 @@ void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data)
 	heredoc_name = ft_strjoin("/tmp/", heredoc_name);
 	heredoc_node->heredoc_file = heredoc_name;
 	heredoc_node->fd = open(heredoc_name, O_CREAT | O_WRONLY, 0644);
+	heredoc_node->expand = 1;
+	if (token->is_dquote || token->is_squote)
+		heredoc_node->expand = 0;
 		//return (perror("minishell"), -1);
 	add_heredoc(&cmd->heredcs, heredoc_node);
 }

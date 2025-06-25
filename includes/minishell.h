@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/25 14:12:49 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:34:34 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_token
 	int				is_heredoc;
 	int				is_env_var;
 	int				is_ambiguous;
-	int				result_of_spliting;
+	int				not_expandable;
 	int				is_not_splittable;
 	int				is_space_next;
 
@@ -75,6 +75,7 @@ typedef struct s_heredoc
 	char	*heredoc_file;
 	char	*heredoc_del;
 	int		fd;
+	int		expand;
 	struct s_heredoc *next;
 } t_heredoc;
 

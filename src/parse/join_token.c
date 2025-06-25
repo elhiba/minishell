@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:42:31 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/25 10:23:12 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/25 15:45:16 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,17 @@ void	join_tokens(t_token **tokens)
 			current->next = save_next->next;
 			if (save_next->next)
 				save_next->next->prev = current;
-			update_flags(current, save_next);
+			if (current->prev && !ft_strcmp(current->prev->arg, "<<")
+				&& save_next->arg[0] && (save_next->is_dquote
+				|| save_next->is_squote))
+			{
+				if (save_next->is_dquote)
+					current->is_dquote = 1;
+				else if (save_next->is_squote)
+					current->is_squote = 1;
+			}
+			else
+				update_flags(current, save_next);
 		}
 		else
 			current = save_next;
