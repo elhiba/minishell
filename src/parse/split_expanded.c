@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:04:23 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/20 16:35:28 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:08:34 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	there_is_space(char *s)
 	return (0);
 }
 
-void	extract_word(char **buffer, t_token **head)
+void	extract_word(char **buffer, t_token **head, t_token *save)
 {
 	char	*token;
 	int		len;
@@ -49,8 +49,14 @@ void	extract_word(char **buffer, t_token **head)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->is_squote = 1;
+	tmp->result_of_spliting = 1;
+	if (save && save->is_ambiguous)
+	{
+		tmp->is_ambiguous = 1;
+		tmp->ambiguous_name = save->ambiguous_name;
+	}
 	if (is_space(**buffer))
-		tmp->is_space_next = 1;	
+		tmp->is_space_next = 1;
 }
 
 int	all_spaces(char *s)
@@ -67,7 +73,7 @@ int	all_spaces(char *s)
 	return (1);
 }
 
-void	split_into_nodes(t_token **head, char *buffer)
+void	split_into_nodes(t_token **head, t_token *save, char *buffer)
 {
 	t_token	*tmp;
 	int		first_index_flag;
@@ -77,7 +83,7 @@ void	split_into_nodes(t_token **head, char *buffer)
 	space_flag = 0;
 	while (*buffer)
 	{
-		if (*head && !first_index_flag && is_space(*buffer))
+		if (*head && !first_index_flag && is_space(*buffer) && !all_spaces(buffer))
 		{
 			(*head)->is_space_next = 1;
 			first_index_flag = 1;
@@ -91,13 +97,20 @@ void	split_into_nodes(t_token **head, char *buffer)
 				tmp = tmp->next;
 			tmp->is_word = 1;
 			tmp->is_env_var = 1;
-			tmp->is_space_next = 0;
+			tmp->is_space_next = 1;
+			if (save && !save->is_space_next)
+				tmp->is_space_next = 0;
+			if (save && save->is_ambiguous)
+			{
+				tmp->ambiguous_name = save->ambiguous_name;
+				tmp->is_ambiguous = 1;
+			}
 		}
 		else if (is_space(*buffer))
 			buffer++;
 		else
 		{
-			extract_word(&buffer, head);
+			extract_word(&buffer, head, save);
 			space_flag = 1;
 			first_index_flag = 1;
 		}
@@ -109,10 +122,12 @@ void	split_expanded(t_token **token, t_data *data)
 	t_token	*prev;
 	t_token	*current;
 	t_token	*next;
+	t_token	*save;
 	bool	prev_was_null;
 
 	current = *token; 
 	prev_was_null = true;
+	save = NULL;
 	while (current)
 	{
 		next = current->next;
@@ -120,12 +135,16 @@ void	split_expanded(t_token **token, t_data *data)
 		if (current->is_env_var && !current->is_not_splittable && !current->is_dquote && !current->is_squote && there_is_space(current->arg) && current->is_dquote != 1)
 		{
 			if (prev)
-				(1) && (prev->next = NULL, prev_was_null = false);
-			split_into_nodes(&prev, current->arg);
+				(1) && (save = prev->next, prev->next = NULL, prev_was_null = false);
+			else
+				save = current;
+			split_into_nodes(&prev, save, current->arg);
 			if (prev_was_null)
 				*token = prev;
 			while (prev->next)
 				prev = prev->next;
+			if (save && save->is_space_next)
+				prev->is_space_next = 1;
 			prev->next = next;
 			if (next)
 				next->prev = prev;

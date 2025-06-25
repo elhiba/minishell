@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/21 00:51:08 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:13:24 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ char *ft_random(char **env)
 	close(fd[1]);
 	read(fd[0], buffer, 16);
 	return (ft_strjoin("_", buffer));
-}
-
-bool	is_redir(t_token *current)
-{
-	if (current->is_infile || current->is_outfile
-		|| current->is_heredoc || current->is_append)
-		return (true);
-	return (false);
 }
 
 int	count_heredoc(t_token *head)
@@ -124,30 +116,6 @@ char	*check_if_correct(char *path)
 	return (path);
 }
 
-int	is_a_directory(char *cmd)
-{
-	struct stat statbuf;
-
-	ft_bzero(&statbuf, sizeof(statbuf));
-	stat(cmd, &statbuf);
-	if (S_ISDIR(statbuf.st_mode))
-		return (1);
-	return (0);
-}
-
-int	check_for_err(t_cmd *cmd)
-{
-	//if (access(cmd->cmd, F_OK) != 0)
-	//	return (printf("minishell: %s: No such file or directory\n", cmd->cmd), -1);
-	if (is_a_directory(cmd->cmd))
-		return (printf("minishell: %s: Is a directory\n", cmd->cmd), -1);
-	else if (access(cmd->cmd, F_OK) == 0)
-	{
-		if (access(cmd->cmd, X_OK) != 0)
-			return (printf("minishell: %s: Permission denied\n", cmd->cmd), -1);
-	}
-	return (0);
-}
 
 int	set_cmd_name(t_cmd *cmd, t_token *token, t_data *data)
 {
@@ -159,23 +127,26 @@ int	set_cmd_name(t_cmd *cmd, t_token *token, t_data *data)
 	envp->name_len = 4;
 	get_env_value(data->env, envp);
 	stock = ft_split(envp->value, ':');
-	if (!*token->arg && token->is_env_var && token->is_word)
-		return (-1);
-	else if (!*token->arg && (token->is_dquote || token->is_squote))
-		return(printf("minishell: '%s': command not found!\n", token->arg), -1);
-	if (*token->arg && check_absolute_path(token->arg))
+	if (*token->arg && check_absolute_path(token->arg)) 
 	{
+		/*
+		 if the user did not give the absolute path add it.
+		 in case of cmd not found it will return the same name without path and change the flag to cmd not found
+		*/
 		cmd->cmd = get_full_path(stock, token->arg, &cmd->cmd_not_found);
-	
-		if (cmd->cmd_not_found)
-			printf("minishell: %s: command not found!\n", cmd->cmd);
 	}
-	else if (*token->arg)
+	else
 	{
+		/*
+		 the user entred a cmd wih the absolute path.
+		*/
 		cmd->cmd = token->arg;
-		if (check_for_err(cmd) == -1)
-			return (-1);
+		//if (check_for_err(cmd) == -1)
+		//	return (-1);
 	}
+	// this condition handle enmpty strings as cmd: "" or ''
+	if (!*token->arg && (token->is_dquote || token->is_squote))
+			cmd->cmd_not_found = 1;
 	cmd->argv[0] = ft_strdup(token->arg);
 	cmd->argv[1] = NULL;
 	return (0);
@@ -211,42 +182,11 @@ void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data)
 	heredoc_name = ft_strjoin("heredoc", ft_random(data->env));
 	heredoc_name = ft_strjoin("/tmp/", heredoc_name);
 	heredoc_node->heredoc_file = heredoc_name;
-	cmd->STDIN = open(heredoc_name, O_CREAT | O_WRONLY | O_RDONLY, 0644);
+	heredoc_node->fd = open(heredoc_name, O_CREAT | O_WRONLY, 0644);
 		//return (perror("minishell"), -1);
-	heredoc_node->fd = cmd->STDIN;
 	add_heredoc(&cmd->heredcs, heredoc_node);
 }
 
-int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
-{
-	if (token->is_heredoc == HEREDOC)
-		handle_heredoc(cmd, token, data);
-	if (token->is_outfile == OUTPUT_FILE)
-	{
-		if (cmd->STDOUT != 1)
-			close(cmd->STDOUT);
-		cmd->STDOUT = open(token->arg, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (cmd->STDOUT == -1)
-			return (perror("minishell"), -1);
-	}
-	else if (token->is_append == APPEND)
-	{
-		if (cmd->STDOUT != 1)
-			close(cmd->STDOUT);
-		cmd->STDOUT = open(token->arg, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		if (cmd->STDOUT == -1)
-			return (perror("minishell"), -1);
-	}
-	else if (token->is_infile == INPUT_FILE)
-	{
-		if (cmd->STDIN != 0)
-			close(cmd->STDIN);
-		cmd->STDIN = open(token->arg, O_RDONLY, 0644);
-		if (cmd->STDIN == -1)
-			return (perror("minishell"), -1);
-	}
-	return (0);
-}
 
 
 void	add_to_argv(t_cmd *cmd, t_token *token)
@@ -287,16 +227,7 @@ void	init_stuff(t_token *head, t_cmd *node)
 	node->next = NULL;
 }
 
-int	check_redir_err(t_token *current)
-{
-	if (is_a_directory(current->arg))
-		return (printf("minishell: %s: is a directory\n", current->arg), -1);
-	if (current->is_infile && access(current->arg, F_OK) != 0)
-		return (printf("minishell: %s: No such file or directory\n", current->arg), -1);
-	return (0);
-}
-
-int	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
+void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 {
 	t_token	*current;
 	t_cmd	*node;
@@ -309,28 +240,43 @@ int	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 	current = head;
 	while (current)
 	{
-		if (is_redir(current))
-		{
-			if (check_redir_err(current) == -1)
-				node->should_not_execute = 1;
-			else if (set_fd(node, current, data) == -1)
-				node->should_not_execute = 1;
-		}
+		if (current->is_heredoc == HEREDOC)
+			handle_heredoc(node, current, data);
+		//else if (is_redir(current) && !node->should_not_execute)
+		//{
+		//	if (check_redir_err(current) == -1)
+		//	{
+		//		node->should_not_execute = 1;
+		//	}
+		//	else if (set_fd(node, current, data) == -1)
+		//		node->should_not_execute = 1;
+		//}
 		else if(flag && (current->is_dquote
 				|| current->is_word
 				|| current->is_squote
-				|| current->is_env_var))
+				|| current->is_env_var)
+				&& !(current->is_env_var
+				&& !current->is_dquote
+				&& !current->arg[0]
+				&& current->next)
+				&& !is_redir(current)
+				&& !current->is_ambiguous)
 		{
 			flag = 0;
 			if (set_cmd_name(node, current, data) == -1)
 				node->should_not_execute = 1;
 		}
-		else if (!(current->is_env_var && !current->arg[0] && !current->is_dquote))
+		else if (!(current->is_env_var && !current->arg[0] && !current->is_dquote)
+				&& !current->is_ambiguous
+				&& !is_redir(current))
 			add_to_argv(node, current);
+		if (current->is_env_var && !is_redir(current) && !current->prev && !current->next && !current->is_dquote && !current->arg[0]) // to prevent epty var from executing;
+			node->should_not_execute = 1;
 		current = current->next;
 	}
+	//if (node->cmd_not_found && !node->should_not_execute)
+	//	printf("minishell: %s: command not found!\n", node->cmd);
 	add_cmd(cmd_list, node);
-	return (0);
 }
 
 t_cmd	*exec_setup(void	**stock, t_data *data)
@@ -342,83 +288,94 @@ t_cmd	*exec_setup(void	**stock, t_data *data)
 	cmd_list = NULL;
 	while (stock[i])
 	{
-		if (cmd_builder(&cmd_list, (t_token *)stock[i], data) == -1)
-			return (NULL);
+		cmd_builder(&cmd_list, (t_token *)stock[i], data);
 		i++;
 	}
 	return (cmd_list);
 }
 
 
-void	pretty_print_cmd_list(t_cmd *cmd_list)
+void    pretty_print_cmd_list(t_cmd *cmd_list)
 {
-	int i;
-	int cmd_num = 1;
+    int i;
+    int cmd_num = 1;
 
-	if (!cmd_list)
-	{
-		printf("----------------------------------------\n");
-		printf("|           Command List is Empty      |\n");
-		printf("----------------------------------------\n");
-		return;
-	}
+    if (!cmd_list)
+    {
+        printf("----------------------------------------\n");
+        printf("|           Command List is Empty      |\n");
+        printf("----------------------------------------\n");
+        return;
+    }
 
-	while (cmd_list)
-	{
-		printf("\n.---------------------------------------.\n");
-		printf("|               COMMAND %-3d             |\n", cmd_num++);
-		printf(":---------------------------------------:\n");
+    // Traverse the linked list of commands
+    while (cmd_list)
+    {
+        printf("\n.---------------------------------------.\n");
+        printf("|               COMMAND %-3d             |\n", cmd_num++);
+        printf(":---------------------------------------:\n");
 
-		printf("| %-12s: %s\n", "Command", cmd_list->cmd ? cmd_list->cmd : "(null)");
-		printf(":---------------------------------------:\n");
+        // Print the full command path
+        printf("| %-12s: %s\n", "Command", cmd_list->cmd ? cmd_list->cmd : "(null)");
+        printf(":---------------------------------------:\n");
+
+        // Print the arguments (argv)
+        if (cmd_list->argv && cmd_list->argv[0])
+        {
+            printf("| %-12s: [%s]\n", "argv[0]", cmd_list->argv[0]);
+            i = 1;
+            while (cmd_list->argv[i])
+            {
+                printf("| %-12s  [%s]\n", "", cmd_list->argv[i]);
+                i++;
+            }
+        }
+        else
+        {
+            printf("| %-12s: (empty)\n", "argv");
+        }
+        printf(":---------------------------------------:\n");
+
+        // Print I/O file descriptors
+        printf("| %-12s: %d\n", "STDIN", cmd_list->STDIN);
+        printf("| %-12s: %d\n", "STDOUT", cmd_list->STDOUT);
+        printf(":---------------------------------------:\n");
+        
+        // --- NEW SECTION for flags ---
+        printf("| %-19s: %d\n", "Cmd Not Found Flag", cmd_list->cmd_not_found);
+        printf("| %-19s: %d\n", "Should Not Execute Flag", cmd_list->should_not_execute); // Print as a positive condition
+        printf(":---------------------------------------:\n");
 
 
-		if (cmd_list->argv && cmd_list->argv[0])
-		{
-			printf("| %-12s: [%s]\n", "argv[0]", cmd_list->argv[0]);
-			i = 1;
-			while (cmd_list->argv[i])
-			{
-				printf("| %-12s  [%s]\n", "", cmd_list->argv[i]);
-				i++;
-			}
-		}
-		else
-		{
-			printf("| %-12s: (empty)\n", "argv");
-		}
-		printf(":---------------------------------------:\n");
+        // Print heredoc list
+        t_heredoc *current_heredoc = cmd_list->heredcs;
+        if (current_heredoc)
+        {
+            int heredoc_num = 1;
+            // Loop through each heredoc associated with this command
+            while (current_heredoc)
+            {
+                printf("| Heredoc #%-2d\n", heredoc_num++);
+                printf("|   %-10s: [%s]\n", "Delimiter", current_heredoc->heredoc_del ? current_heredoc->heredoc_del : "(null)");
+                printf("|   %-10s: [%s]\n", "File", current_heredoc->heredoc_file ? current_heredoc->heredoc_file : "(null)");
+                printf("|   %-10s: %d\n", "FD", current_heredoc->fd);
+                
+                current_heredoc = current_heredoc->next;
+                // Add a sub-divider if there is another heredoc to print
+                if (current_heredoc)
+                {
+                    printf(":.......................................:\n");
+                }
+            }
+        }
+        else
+        {
+            printf("| %-12s: (none)\n", "Heredocs");
+        }
 
-		printf("| %-12s: %d\n", "STDIN", cmd_list->STDIN);
-		printf("| %-12s: %d\n", "STDOUT", cmd_list->STDOUT);
-		printf("| %-12s: %d\n", "NOT FOUND", cmd_list->cmd_not_found);
-		printf(":---------------------------------------:\n");
+        printf("'---------------------------------------'\n");
 
-		t_heredoc *current_heredoc = cmd_list->heredcs;
-		if (current_heredoc)
-		{
-			int heredoc_num = 1;
-			while (current_heredoc)
-			{
-				printf("| Heredoc #%-2d\n", heredoc_num++);
-				printf("|   %-10s: [%s]\n", "Delimiter", current_heredoc->heredoc_del ? current_heredoc->heredoc_del : "(null)");
-				printf("|   %-10s: [%s]\n", "File", current_heredoc->heredoc_file ? current_heredoc->heredoc_file : "(null)");
-				printf("|   %-10s: %d\n", "FD", current_heredoc->fd);
-
-				current_heredoc = current_heredoc->next;
-				if (current_heredoc)
-				{
-				    printf(":.......................................:\n");
-				}
-			}
-		}
-		else
-		{
-			printf("| %-12s: (none)\n", "Heredocs");
-		}
-
-		printf("'---------------------------------------'\n");
-
-		cmd_list = cmd_list->next;
-	}
+        // Move to the next command in the list
+        cmd_list = cmd_list->next;
+    }
 }

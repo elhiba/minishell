@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/21 00:51:52 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/25 14:12:49 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ typedef struct s_token
 	int				is_heredoc;
 	int				is_env_var;
 	int				is_ambiguous;
+	int				result_of_spliting;
 	int				is_not_splittable;
 	int				is_space_next;
 
 	char			*key;
 	char			*value;
+	char			*ambiguous_name;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -123,8 +125,23 @@ int		check_is_expandable(t_token *current);
 void	split_expanded(t_token **token, t_data *data);
 void	check_and_expand(t_token **head, char **envp);
 int		operator_cleaner(char *arg);
-int	there_is_space(char *s);
-int	all_spaces(char *s);
+int		there_is_space(char *s);
+int		all_spaces(char *s);
+bool	is_white_space(char c);
+bool	is_alnum_(char c);
+bool	is_alpha_(char c);
+bool	is_digit_(char c);
+void	expand_variable_heredoc( char **envp, char **token);
+int		is_it_expandable(char *buffer);
+void	get_env_value(char **envp, t_env *env);
+void	extract_variable_name(char *token, t_env *env);
+char	*ft_trim(char *str, int len);
+char	*prompt_builder();
+void	cp_flag(t_token *dest, t_token *src);
+void	check_errors(t_cmd *cmd_list, t_token **token_list);
+bool	is_redir(t_token *current);
+
+
 
 t_cmd	*exec_setup(void	**stock, t_data *data);
 void    pretty_print_cmd_list(t_cmd *cmd_list);

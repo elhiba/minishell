@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/20 17:14:29 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:07:29 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,22 +87,166 @@ void	typer(t_token **token, char *arg)
  *  expected output:
  *  minishell: $a: ambiguous redirect
  * */
-// still maintaining
-void	ambiguous_redirect(t_token **token)
-{
-	t_token	*ptr;
 
-	ptr = *token;
-	while (ptr)
+ bool	is_space_(char c)
+ {
+	 if (c == 32 || (c >= 9 && c <= 13))
+		 return (true);
+	 return (false);
+ }
+
+ static int	ft_counter(char *str)
+{
+	int	i;
+	int	counter;
+
+	i = 0;
+	counter = 0;
+	while (str[i])
 	{
-		if (ptr->is_dollar && ptr->prev && ft_strchr(ptr->arg, ' '))
-			ptr->is_ambiguous = 1;
-		else
-			ptr->is_ambiguous = 0;
+		while (is_space_(str[i]))
+			i++;
+		if (str[i])
+			counter++;
+		while (str[i] && !is_space_(str[i]))
+			i++;
+	}
+	return (counter);
+}
+
+void	add_tmp(t_token **head,t_token *new)
+{
+	t_token	*curr;
+
+	if (!*head)
+		*head = new;
+	else
+	{
+		curr = *head;
+		while (curr->next)
+			curr = curr->next;
+		curr->next = new;
+		new->prev = curr;
 	}
 }
 
-//void	set_ambigous(t_token *head);
+void	cp_flag(t_token *dest, t_token *src)
+{
+	dest->is_dquote = src->is_dquote;
+	dest->is_env_var = src->is_env_var;
+	dest->is_squote = src->is_squote;
+	dest->is_word = src->is_word;
+	dest->is_space_next = src->is_space_next;
+	dest->is_not_splittable = src->is_not_splittable;
+	dest->is_heredoc = src->is_heredoc;
+	dest->is_append = src->is_append;
+	dest->is_outfile = src->is_outfile;
+	dest->is_infile = src->is_infile;
+}
+
+int	joining_result(t_token	*token, t_data *data)
+{
+	t_token	*tmp_list;
+	t_token	*current;
+	int		i;
+
+	i = 0;
+	tmp_list = NULL;
+	while (token)
+	{
+		current = ft_collector(sizeof(t_token), ALLOC);
+		current->arg = ft_strdup(token->arg);
+		cp_flag(current, token);
+		add_tmp(&tmp_list, current);
+		if (token->is_space_next)
+			break ;
+		token = token->next;
+	}
+	split_expanded(&tmp_list, data);
+	join_tokens(&tmp_list);
+	current = tmp_list;
+	while (current)
+	{
+		i++;
+		current = current->next;
+	}
+	return (i);
+}
+
+int	additional_check(t_token *token)
+{
+	t_token	*current;
+
+	current = token;
+	while (current && !current->is_env_var)
+		current = current->next;
+	if (current->arg[0] && all_spaces(current->arg) && (!current->prev->is_space_next && !current->is_space_next))
+		return (1);
+	return (0);	
+}
+
+void	build_error_name(t_token *token)
+{
+	char	*error_name;
+	t_token	*current;
+
+	current = token;
+	error_name = ft_strdup("");
+	while (current)
+	{
+		if (current->is_env_var && current->is_word)
+			error_name = ft_strjoin(error_name, current->key);
+		else if (current->is_env_var && current->is_dquote)
+			error_name = ft_strjoin(error_name, ft_strjoin("\"", ft_strjoin(current->key, "\"")));
+		else if (current->is_word)
+			error_name = ft_strjoin(error_name, current->arg);
+		else if (current->is_dquote)
+			error_name = ft_strjoin(error_name, ft_strjoin("\"", ft_strjoin(current->arg, "\"")));
+		else if (current->is_squote)
+			error_name = ft_strjoin(error_name, ft_strjoin("\'", ft_strjoin(current->arg, "\'")));
+		if (current->is_space_next)
+			break ;
+		current = current->next;
+	}
+	token->ambiguous_name = error_name;
+}
+
+void	set_ambiguous(t_token *token, t_data *data)
+{
+	t_token *current;
+	t_token	*next;
+	t_token	*tmp;
+
+	current = token;
+	next = current->next;
+	while (current)
+	{
+		if (is_redirect(current, current->arg) && !current->next->is_not_splittable)
+		{
+			next = current->next;
+			if (!next->is_dquote && (!ft_strcmp(next->arg, "") || all_spaces(next->arg)) && (!next->next || (next->is_space_next)))
+				next->is_ambiguous = 1;
+			if (joining_result(next, data) > 1)
+				next->is_ambiguous = 1;
+			if (additional_check(next))
+				next->is_ambiguous = 1;
+			if (next && next->is_ambiguous)
+			{
+				build_error_name(next);
+				tmp = next;
+				while (tmp)
+				{
+					tmp->is_ambiguous = 1;
+					if (tmp->is_space_next)
+						break;
+					tmp = tmp->next;
+				}
+				//printf("%s is sus\n", next->ambiguous_name);
+			}
+		}
+		current = current->next;
+	}
+}
 
 void	ft_spliter(t_token **token, char *str, t_data *data)
 {
@@ -180,7 +324,7 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 	}	
 	//ambiguous_redirect(token);
 	check_and_expand(token, data->env);
-	//set_ambigous(*token);
+	set_ambiguous(*token, data);
 	/*
 	expand;
 	split white spaces;
@@ -252,116 +396,22 @@ void	remove_empty_env(t_token **head)
 	}
 }
 
-//int	is_redirect(t_token *current, char *arg)
-//{
-//	int	i;
+int	is_redirect(t_token *current, char *arg)
+{
+	int	i;
 
-//	i = 0;
-//	if (current->is_dquote || current->is_squote)
-//		return (0);
-//	if (arg[i] == '>' && arg[i + 1] == '>')
-//		return (1);
-//	else if (arg[i] == '>')
-//		return (1);
-//	else if (arg[i] == '<')
-//		return (1);
-//	return (0);
-//}
-//bool	is_space_(char c)
-//{
-//	if (c == 32 || (c >= 9 && c <= 13))
-//		return (true);
-//	return (false);
-//}
+	i = 0;
+	if (current->is_dquote || current->is_squote)
+		return (0);
+	if (arg[i] == '>' && arg[i + 1] == '>')
+		return (1);
+	else if (arg[i] == '>')
+		return (1);
+	else if (arg[i] == '<')
+		return (1);
+	return (0);
+}
 
-//int	last_index_isspace(char	*str)
-//{
-//	int	i;
-
-//	i = 0;
-//	while (str[i])
-//		i++;
-//	if (str[0] && is_space_(str[i - 1]))
-//		return (1);
-//	return (0);
-//}
-
-//int	space_in_middle(char *str)
-//{
-//	int	i;
-
-//	i = 1;
-//	if (!str[0])
-//		return (0);
-//	if (!is_space_(str[0]) && !last_index_isspace(str))
-//	{
-//		while (str[i])
-//		{
-//			if (is_space_(str[i]))
-//				return (1);
-//			i++;
-//		}
-//	}
-//	return (0);
-//}
-
-//static int	ft_counter(char *str)
-//{
-//	int	i;
-//	int	counter;
-
-//	i = 0;
-//	counter = 0;
-//	while (str[i])
-//	{
-//		while (is_space_(str[i]))
-//			i++;
-//		if (str[i])
-//			counter++;
-//		while (!is_space_(str[i]) && str[i])
-//			i++;
-//	}
-//	return (counter);
-//}
-
-//void	set_ambigous(t_token *head)
-//{
-//	t_token	*current;
-//	t_token	*next;
-
-//	current = head;
-//	next = current->next;
-//	while (current)
-//	{
-//		if (is_redirect(current, current->arg) && current->next &&!current->next->is_not_splittable)
-//		{
-//			next = current->next;
-//			current = current->next;
-//			while (current && !is_redirect(current, current->arg) && !current->is_ambiguous)
-//			{
-//				if (current->is_env_var && !current->is_dquote && is_space_(current->arg[0]) && !current->prev->is_dquote && !current->prev->is_space_next)
-//				{
-//					next->is_ambiguous = 1;
-//				}
-//				else if (current->is_env_var && !current->is_dquote && last_index_isspace(current->arg) && !current->is_space_next && current->next && !current->is_space_next)
-//				{	
-//					next->is_ambiguous = 1;
-//				}
-//				else if (current->is_env_var && !current->is_dquote && all_spaces(current->arg) && current->is_space_next)
-//					next->is_ambiguous = 1;
-//				else if (current->is_env_var && !current->is_dquote && ft_counter(current->arg) > 1)
-//				{
-//					next->is_ambiguous = 1;
-//				}
-//				current = current->next;
-//			}
-//		}
-//		if (next && next->is_ambiguous)
-//			printf("sus\n");
-//		if (current)
-//			current = current->next;
-//	}
-//}
 
 t_token	*token(char *str, t_data *data)
 {
@@ -389,6 +439,8 @@ t_token	*token(char *str, t_data *data)
 	//if(check_ambiguous(tok) == -1)
 	//	return (NULL);
 	node_cleaner(&tok);
+	//split_expanded(&tok, data);
+	//join_tokens(&tok);
 	//if (!args)
 	//	error_handler("args", NULL);
 //	while (args[i])

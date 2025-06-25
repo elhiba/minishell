@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:42:31 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/19 09:47:37 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/25 10:23:12 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ void	update_flags(t_token *current, t_token *save_next)
 		current->is_space_next = 1;
 	if (current->is_env_var || save_next->is_env_var)
 		current->is_env_var = 1;
+	if (current->is_env_var && save_next->is_dquote)
+	{
+		current->is_dquote = 1;
+		current->is_env_var = 0;
+	}
 	if (current->is_env_var && current->is_dquote)
 		current->is_dquote = 1;
 	else if (save_next->is_dquote && save_next->is_env_var)

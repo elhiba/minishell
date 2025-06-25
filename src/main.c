@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/18 18:34:13 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/24 16:01:16 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int ac, char **av, char **env)
 	handle_signals();
 	while (1)
 	{
-		prompt = build_prompt(&data);
+		prompt = prompt_builder();
 		data.readline_in = readline(prompt);
 		if (g_received_signal == SIGINT)
 		{
