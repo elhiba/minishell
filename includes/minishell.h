@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/25 15:34:34 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/26 16:41:57 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include <sys/stat.h>
+
+
+typedef enum e_signal_flag
+{
+	INTER,
+	DEFAULT,
+	SIGDOC
+}	t_signal_flag;
 
 typedef enum s_type
 {
@@ -141,8 +149,8 @@ char	*prompt_builder();
 void	cp_flag(t_token *dest, t_token *src);
 void	check_errors(t_cmd *cmd_list, t_token **token_list);
 bool	is_redir(t_token *current);
-
-
+void	set_to_default(void);
+void	set_to_inter(void);
 
 t_cmd	*exec_setup(void	**stock, t_data *data);
 void    pretty_print_cmd_list(t_cmd *cmd_list);

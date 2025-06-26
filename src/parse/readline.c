@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/25 15:36:47 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:24:32 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 			pid = fork();
 			if (pid == 0)
 			{
+				set_to_default();
 				if (current->next && !current->cmd_not_found)
 					dup2(fd[1], STDOUT_FILENO);
 				if (current->STDIN != 0)
@@ -144,6 +145,7 @@ void	heredoc(t_cmd *cmd_list)
 			pid = fork();
 			if (!pid)
 			{
+				set_to_default();
 				while (1337)
 				{
 					buffer = readline("> ");

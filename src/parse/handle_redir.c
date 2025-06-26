@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/25 15:36:32 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/26 17:24:00 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,52 @@ int	count_argv(t_token *head)
 		head = head->next;
 	}
 	return (count);
+}
+
+
+void	add_to_argv(t_cmd *cmd, t_token *token)
+{
+	int	index;
+
+	index = 0;
+	while(cmd->argv[index])
+		index++;
+	cmd->argv[index++] = token->arg;
+	cmd->argv[index] = NULL;
+}
+
+char **realloc_argv(char **old_argv)
+{
+	char 	**new_argv;
+	int		i;
+
+	i = 0;
+	while(old_argv[i])
+		i++;
+	new_argv = ft_collector(sizeof(char *) * (i + 2), ALLOC);
+	i = 0;
+	while (old_argv[i])
+	{
+		new_argv[i] = old_argv[i];
+		i++;
+	}
+	new_argv[i++] = ft_strdup("--color");
+	new_argv[i] = NULL;
+	return (new_argv);
+}
+
+char *get_cmd_name(char *buffer)
+{
+	int	i;
+
+	i = 0;
+	while (buffer[i])
+		i++;
+	while (buffer[i] != '/' && i != 0)
+		i--;
+	if (buffer[i] == '/')
+		i++;
+	return (buffer + i);
 }
 
 
@@ -190,19 +236,6 @@ void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data)
 	add_heredoc(&cmd->heredcs, heredoc_node);
 }
 
-
-
-void	add_to_argv(t_cmd *cmd, t_token *token)
-{
-	int	index;
-
-	index = 0;
-	while(cmd->argv[index])
-		index++;
-	cmd->argv[index++] = token->arg;
-	cmd->argv[index] = NULL;
-}
-
 void	add_cmd(t_cmd **cmd, t_cmd *new)
 {
 	t_cmd	*curr;
@@ -245,15 +278,7 @@ void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 	{
 		if (current->is_heredoc == HEREDOC)
 			handle_heredoc(node, current, data);
-		//else if (is_redir(current) && !node->should_not_execute)
-		//{
-		//	if (check_redir_err(current) == -1)
-		//	{
-		//		node->should_not_execute = 1;
-		//	}
-		//	else if (set_fd(node, current, data) == -1)
-		//		node->should_not_execute = 1;
-		//}
+
 		else if(flag && (current->is_dquote
 				|| current->is_word
 				|| current->is_squote
@@ -277,8 +302,8 @@ void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 			node->should_not_execute = 1;
 		current = current->next;
 	}
-	//if (node->cmd_not_found && !node->should_not_execute)
-	//	printf("minishell: %s: command not found!\n", node->cmd);
+	if (node->cmd && !ft_strcmp("ls", get_cmd_name(node->argv[0])))
+		node->argv = realloc_argv(node->argv);
 	add_cmd(cmd_list, node);
 }
 
