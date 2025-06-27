@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/27 15:53:52 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 15:59:39 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 					exit(127);
 				else if (errno == ENOTDIR)
 					exit (126);
+				else
+					exit (1);
 			}
 		}
 		dup2(fd[0], STDIN_FILENO);
@@ -118,6 +120,8 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 			data->last_exit_code = 128 + WTERMSIG(status);
 			if (WTERMSIG(status) == SIGSEGV)
 				printf("%d Segmentation fault (core dumped) %s\n", pid, last->argv[0]);
+			else if (WTERMSIG(status) == SIGTERM)
+				printf("%d terminated %s", last->argv[0]);
 		}
 	}
 	while ((pid = wait(&status)) > 0);
