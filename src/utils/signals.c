@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/26 21:42:07 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 22:54:34 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/*
+ * I should search about interactive mode and non interactive mode! 
+ * to make sure everystuff works fine if we for a minishell or any other non interactive file(script)*/
 
 void	handle_signals(void)
 {

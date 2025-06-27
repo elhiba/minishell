@@ -6,20 +6,22 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:22:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/21 00:57:51 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/27 22:47:49 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /*
- * echo is a builtin function (simple), we can use printf,
- * but we prefer using write function to manupulate file descriptors if we use pipes
+ * echo is a builtin function (simple), we can use printf(),
+ * but we prefer using write() function to manupulate file descriptors if we use pipes
+ * -- 27-06-25 -- echo looks fine no errors or bugs!
  */
 int	do_echo(t_cmd *data)
 {
 	char	**ptr;
 	int		i;
+	int		j;
 	int		fd;
 	int		is_newline;
 
@@ -27,17 +29,26 @@ int	do_echo(t_cmd *data)
 	fd = 1;
 	is_newline = 1;
 	ptr = ++data->argv;
-	if (*ptr)
+	while (ptr[i][0] == '-' && ptr[i][1] == 'n')
 	{
-		if (ptr[0][0] == '-' && ptr[0][1] == 'n')
+		j = 2;
+		while (ptr[i][j] == 'n')
+			j++;
+		if (ptr[i][j] == '\0')
 		{
 			i++;
 			is_newline = 0;
 		}
+		else
+			break ;
+	}
+	if (*ptr)
+	{
 		while (ptr[i])
 		{
 			write(fd, ptr[i], ft_strlen(ptr[i]));
-			write(fd, " ", 1);
+			if (ptr[i + 1])
+				write(fd, " ", 1);
 			i++;
 		}
 	}

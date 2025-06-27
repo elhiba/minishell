@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/27 15:59:39 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 22:01:11 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,14 +208,18 @@ void	ft_parse(t_data *data)
 			list = exec_setup(args, data);
 		//if (list)
 		//	pretty_print_cmd_list(list);
-		if (list)
-			heredoc(list);
-		if (list)
-			check_errors(list, (t_token **)args);
-		if (list)
+		/* This ft_builtin isn't helpfull here we will make changes later! */
+		if (ft_builtin(list) == 0)
+		{
+			if (list)
+				heredoc(list);
+			if (list)
+				check_errors(list, (t_token **)args);
+			if (list)
 				multiple_pipes(data, list, data->env);
-		dup2(saved_stdin, STDIN_FILENO);
-		close(saved_stdin);
+			dup2(saved_stdin, STDIN_FILENO);
+			close(saved_stdin);
+		}
 	//	dollar_expand(data, token_list);
 	//	data->token_list = token_list;
 	//	if (ft_builtin(data) == 0 && token_list)
