@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/27 13:28:30 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 16:22:49 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 volatile sig_atomic_t	g_received_signal = 0;
-
 
 void	init_stuff_main(char **env, t_data *data, ...)
 {
@@ -42,9 +41,9 @@ int	main(int ac, char **av, char **env)
 			printf("exit\n");
 			ft_collector(0, EXIT);
 		}
-		add_history(data.readline_in);
+		if (*data.readline_in && data.readline_in)
+			add_history(data.readline_in);
 		ft_parse(&data);
 	}
 	return (0);
 }
-	
