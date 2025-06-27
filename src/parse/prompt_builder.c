@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_builder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/27 13:34:51 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 16:53:22 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <linux/limits.h>
 
-
-char *cp_buffer(char *buffer)
+char	*cp_buffer(char *buffer)
 {
-	int i = 0;
-	char *new;
+	int		i;
+	char	*new;
+
+	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	new = malloc(i + 1);
+	new = ft_collector(i + 1, ALLOC);
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 	{
@@ -32,22 +34,28 @@ char *cp_buffer(char *buffer)
 
 char	*dir_name()
 {
-	char	*cwd;
-	char	*prompt;
-	int		i = 0;
+	int		i;
+	char	*full_path;
+	char	cwd[PATH_MAX];
 
-	cwd = getcwd(NULL, 0);
+	i = 0;
+	getcwd(cwd, sizeof(cwd));
 	while (cwd[i])
 		i++;
-	while (cwd[i] != '/' && i != 0)
+	full_path = ft_collector(sizeof(char) * (i + 1), ALLOC);
+	ft_strlcpy(full_path, cwd, i + 1);
+	while (full_path[i] != '/' && i != 0)
 		i--;
-	return (cwd + i + 1);
+	return (full_path + (i + 1));
 }
 
 char	*get_sha(char *buffer)
 {
-	int i = 0;
-	char	*new = malloc(8);
+	int		i;
+	char	*new;
+
+	i = 0;
+	new = ft_collector(8, ALLOC);
 	while (i < 7)
 	{
 		new[i] = buffer[i];
@@ -59,12 +67,14 @@ char	*get_sha(char *buffer)
 
 char *get_head(int *type)
 {
-	char *buffer = malloc(1000);
-	int	fd;
+	int		i;
+	int		fd;
+	char	*buffer;
 
+	i = 0;
+	buffer = ft_collector(1000, ALLOC);
 	fd = open("./.git/HEAD", O_RDONLY);
 	read(fd, buffer, 1000);
-	int i = 0;
 	if (ft_strncmp(buffer, "ref", 3) != 0)
 	{
 		if (type)
@@ -81,10 +91,9 @@ char *get_head(int *type)
 	return (buffer + i);
 }
 
-
 int	find_git()
 {
-	struct stat buffer;
+	struct stat	buffer;
 	int			type;
 
 	if (stat("./.git", &buffer) == 0 && S_ISDIR(buffer.st_mode))
