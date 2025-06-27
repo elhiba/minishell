@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/26 17:24:00 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 15:20:36 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,9 @@ char *get_full_path(char **path_stock, char *cmd_name, int *not_found)
 			return (tmp_stock[i]);
 		i++;
 	}
+	char *tmp = ft_strjoin("./", cmd_name);
+	if (access(tmp, F_OK) == 0)
+		return (tmp);
 	*not_found = 1;
 	return (cmd_name);
 }

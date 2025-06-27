@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/26 21:48:12 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 14:37:18 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include <sys/stat.h>
+# include <errno.h>
 
 
 extern volatile sig_atomic_t	g_received_signal;
@@ -148,7 +149,7 @@ int		is_it_expandable(char *buffer);
 void	get_env_value(char **envp, t_env *env);
 void	extract_variable_name(char *token, t_env *env);
 char	*ft_trim(char *str, int len);
-char	*prompt_builder();
+char	*prompt_builder(t_data *data);
 void	cp_flag(t_token *dest, t_token *src);
 void	check_errors(t_cmd *cmd_list, t_token **token_list);
 bool	is_redir(t_token *current);

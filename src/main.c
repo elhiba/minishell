@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/27 11:43:27 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 13:28:30 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ volatile sig_atomic_t	g_received_signal = 0;
 
 void	init_stuff_main(char **env, t_data *data, ...)
 {
-	ft_bzero(data, sizeof(data));
 	data->env = copy_env(env);
 	set_to_inter();
 }
@@ -27,10 +26,11 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 	char *prompt;
 
+	ft_bzero(&data, sizeof(data));
 	init_stuff_main(env, &data, ac, av);
 	while (1337)
 	{
-		prompt = prompt_builder();
+		prompt = prompt_builder(&data);
 		data.readline_in = readline(prompt);
 		if (g_received_signal == SIGINT)
 		{

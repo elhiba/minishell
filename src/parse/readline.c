@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/26 17:24:32 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 15:53:52 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ void	print_list(void **head)
 void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 {
 	t_cmd *current = cmd_list;
+	t_cmd *last;
 	int	fd[2];
 	pid_t pid;
 	int status = 0;
-	int	flag = 1;
 	while (current)
 	{
 		pipe(fd);
@@ -92,21 +92,34 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 				close(fd[0]);
 				close(fd[1]);
 				execve(current->cmd, current->argv, env);
-				perror(current->cmd);
+				printf("minishell: %s: %s\n", current->argv[0], strerror(errno));
+				if (errno == ENOENT)
+					exit(127);
+				else if (errno == ENOTDIR)
+					exit (126);
 			}
-			if (pid == 0)
-				exit(1);
 		}
-		flag = 0;
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		close(fd[1]);
 		//printf("%d\n", current->cmd_not_found);
 		//if (current->cmd_not_found)
 		//	break;
+		last = current;
 		current = current->next;
 	}
-	waitpid(pid, &status, 0);
+	if (last->cmd && !last->should_not_execute && !last->cmd_not_found)
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			data->last_exit_code = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			data->last_exit_code = 128 + WTERMSIG(status);
+			if (WTERMSIG(status) == SIGSEGV)
+				printf("%d Segmentation fault (core dumped) %s\n", pid, last->argv[0]);
+		}
+	}
 	while ((pid = wait(&status)) > 0);
 }
 

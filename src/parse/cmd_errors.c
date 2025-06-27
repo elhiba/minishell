@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:19 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/25 14:28:18 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 15:22:52 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	is_a_directory(char *cmd)
 
 int	check_for_err(t_cmd *cmd)
 {
-	//if (access(cmd->cmd, F_OK) != 0)
-	//	return (printf("minishell: %s: No such file or directory\n", cmd->cmd), -1);
+	//if (cmd->cmd && access(cmd->cmd, F_OK) != 0)
+	//	return (cmd->data->last_exit_code = 127, printf("minishell: %s: No such file or directory\n", cmd->cmd), -1);
 	if (is_a_directory(cmd->cmd))
-		return (printf("minishell: %s: Is a directory\n", cmd->cmd), -1);
+		return (cmd->data->last_exit_code = 126, printf("minishell: %s: Is a directory\n", cmd->argv[0]), -1);
 	else if (access(cmd->cmd, F_OK) == 0)
 	{
 		if (access(cmd->cmd, X_OK) != 0)
-			return (printf("minishell: %s: Permission denied\n", cmd->cmd), -1);
+			return (cmd->data->last_exit_code = 126, printf("minishell: %s: Permission denied\n", cmd->argv[0]), -1);
 	}
 	return (0);
 }
@@ -46,12 +46,14 @@ bool	is_redir(t_token *current)
 	return (false);
 }
 
-int	check_redir_err(t_token *current)
+int	check_redir_err(t_token *current, t_data *data)
 {
 	if (current->is_ambiguous)
-		return (printf("minishell: %s: is sus\n", current->ambiguous_name), -1);
+		return (data->last_exit_code = 1, printf("minishell: %s: is sus\n", current->ambiguous_name), -1);
+	if (!current->arg[0])
+		return (data->last_exit_code = 1, printf("minishell: %s: No such file or directory\n", current->arg), -1);
 	if (is_a_directory(current->arg))
-		return (printf("minishell: %s: is a directory\n", current->arg), -1);
+		return (data->last_exit_code = 1, printf("minishell: %s: is a directory\n", current->arg), -1);
 	//if (current->is_infile && access(current->arg, F_OK) != 0)
 	//	return (printf("minishell: %s: No such file or directory\n", current->arg), -1);
 	return (0);
@@ -65,7 +67,7 @@ int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 			close(cmd->STDOUT);
 		cmd->STDOUT = open(token->arg, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (cmd->STDOUT == -1)
-			return (perror(token->arg), -1);
+			return (data->last_exit_code = 1, printf("minishell: %s: %s\n", token->arg, strerror(errno)), -1);
 	}
 	else if (token->is_append == APPEND)
 	{
@@ -73,7 +75,7 @@ int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 			close(cmd->STDOUT);
 		cmd->STDOUT = open(token->arg, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (cmd->STDOUT == -1)
-			return (perror(token->arg), -1);
+			return (data->last_exit_code = 1, printf("minishell: %s: %s\n", token->arg, strerror(errno)), -1);
 	}
 	else if (token->is_infile == INPUT_FILE)
 	{
@@ -81,7 +83,7 @@ int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 			close(cmd->STDIN);
 		cmd->STDIN = open(token->arg, O_RDONLY, 0644);
 		if (cmd->STDIN == -1)
-			return (perror(token->arg), -1);
+			return (data->last_exit_code = 1, printf("minishell: %s: %s\n", token->arg, strerror(errno)), -1);
 	}
 	return (0);
 }
@@ -101,7 +103,7 @@ void	check_errors(t_cmd *cmd_list, t_token **token_list)
 		{
 			if (is_redir(token_current))
 			{
-				if (check_redir_err(token_current) == -1)
+				if (check_redir_err(token_current, cmd_current->data) == -1)
 				{
 					cmd_current->should_not_execute = 1;
 					break ;
@@ -123,6 +125,7 @@ void	check_errors(t_cmd *cmd_list, t_token **token_list)
 					printf("minishell: \'%s\': command not found!\n", cmd_current->cmd);
 				else
 					printf("%s: command not found!\n", cmd_current->cmd);
+				cmd_current->data->last_exit_code = 127;
 				break ;
 			}
 			else if (check_for_err(cmd_current) == -1)

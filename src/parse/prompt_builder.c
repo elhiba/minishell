@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/27 11:53:32 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 13:34:51 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,13 @@ int	find_git()
 }
 
 
-char	*prompt_builder()
+char	*prompt_builder(t_data *data)
 {
 	char	*dirname;
 	char	*prompt;
 	char	*git_branch;
 	char	*head;
+	char	*arrow;
 
 	dirname = dir_name();
 	if (find_git() == 1)
@@ -123,12 +124,16 @@ char	*prompt_builder()
 		head = ft_strjoin("\001\033[1m\033[31m\002", ft_strjoin(head, "\001\033[0m\033[1m\033[34m)\033[0m\002 "));
 		dirname = ft_strjoin("\001\033[1m\033[36m\002", ft_strjoin(dirname, "\001\033[0m\002"));
 		git_branch = ft_strjoin(" \001\033[1m\033[34m\002git:(\001\033[0m\002", head);
-		prompt = ft_strjoin(dirname, ft_strjoin(git_branch, "\001\033[1m\033[33m\002➜ \001\033[0m\002"));
+		if (data->last_exit_code == 0)
+			arrow = ft_strjoin("\001\033[1m\033[32m\002⮕\001\033[0m\002", " ");
+		else
+			arrow = ft_strjoin("\001\033[1m\033[31m\002⮕\001\033[0m\002", " ");
+		prompt = ft_strjoin(dirname, ft_strjoin(git_branch, arrow));
 		return (prompt);
 	}
 	else
 	{
-		prompt = ft_strjoin("\001\033[1m\033[36m\002", ft_strjoin(dirname, " \001\033[0m\033[1m\033[33m\002➜ \001\033[0m\002"));
+		prompt = ft_strjoin("\001\033[1m\033[36m\002", ft_strjoin(dirname, " \001\033[0m\033[1m\033[33m\002⮕ \001\033[0m\002"));
 		return (prompt);
 	}
 }
