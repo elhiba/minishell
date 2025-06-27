@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_builder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/25 11:19:49 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/27 11:53:32 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,19 +114,21 @@ char	*prompt_builder()
 	char	*dirname;
 	char	*prompt;
 	char	*git_branch;
+	char	*head;
 
 	dirname = dir_name();
 	if (find_git() == 1)
 	{
-		char *head = cp_buffer(get_head(NULL));
-		dirname = ft_strjoin("\033[1m\033[36m", ft_strjoin(dirname, "\033[0m"));
-		git_branch = ft_strjoin(" \033[1m\033[34mgit:(\033[0m\033[1m\033[31m", ft_strjoin(head, "\033[0m\033[1m\033[34m)\033[0m "));
-		prompt = ft_strjoin(dirname, ft_strjoin(git_branch, "\033[1m\033[33m➜ \033[0m"));
+		head = cp_buffer(get_head(NULL));
+		head = ft_strjoin("\001\033[1m\033[31m\002", ft_strjoin(head, "\001\033[0m\033[1m\033[34m)\033[0m\002 "));
+		dirname = ft_strjoin("\001\033[1m\033[36m\002", ft_strjoin(dirname, "\001\033[0m\002"));
+		git_branch = ft_strjoin(" \001\033[1m\033[34m\002git:(\001\033[0m\002", head);
+		prompt = ft_strjoin(dirname, ft_strjoin(git_branch, "\001\033[1m\033[33m\002➜ \001\033[0m\002"));
 		return (prompt);
 	}
 	else
 	{
-		prompt = ft_strjoin("\033[1m\033[36m", ft_strjoin(dirname, " \033[0m\033[1m\033[33m➜ \033[0m"));
+		prompt = ft_strjoin("\001\033[1m\033[36m\002", ft_strjoin(dirname, " \001\033[0m\033[1m\033[33m\002➜ \001\033[0m\002"));
 		return (prompt);
 	}
 }

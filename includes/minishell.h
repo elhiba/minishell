@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/26 16:41:57 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/26 21:48:12 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # include <stdbool.h>
 # include <fcntl.h>
 # include <sys/stat.h>
+
+
+extern volatile sig_atomic_t	g_received_signal;
 
 
 typedef enum e_signal_flag
@@ -128,11 +131,11 @@ char	*dollar_handler(char *str, int *i);
 char	*quotes_handler(char *str, int *i, int *flag);
 void	ft_spliter(t_token **token, char *str, t_data *data);
 char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
-void	expand_variable(t_token*current, char **envp, char **token);
+void	expand_variable(t_token *current, t_data *data, char **envp, char **token);
 void	join_tokens(t_token **tokens);
 int		check_is_expandable(t_token *current);
 void	split_expanded(t_token **token, t_data *data);
-void	check_and_expand(t_token **head, char **envp);
+void 	check_and_expand(t_token **head, t_data *data, char **envp);
 int		operator_cleaner(char *arg);
 int		there_is_space(char *s);
 int		all_spaces(char *s);

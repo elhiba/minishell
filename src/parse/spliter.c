@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/25 14:07:29 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/26 21:37:33 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,7 +323,7 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 		space_checker(str, &ptr, i);
 	}	
 	//ambiguous_redirect(token);
-	check_and_expand(token, data->env);
+	check_and_expand(token, data, data->env);
 	set_ambiguous(*token, data);
 	/*
 	expand;

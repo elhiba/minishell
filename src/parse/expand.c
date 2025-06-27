@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/26 16:46:41 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/26 22:36:56 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,15 +161,17 @@ use trim to remove the parts that you already added to the expanded token
 it could be more than one variable in the token
 so we need to loop over the token
 */
-void	expand_variable(t_token *current, char **envp, char **token)
+void	expand_variable(t_token *current, t_data *data, char **envp, char **token)
 {
 	t_env	*env;
 	char	*expanded_token;
 	int		flag;
+	char	*exit_code;
 
 	flag = 1;
 	env = ft_collector(sizeof(t_env), ALLOC);
 	expanded_token = ft_strdup("");
+	exit_code = ft_itoa(data->last_exit_code);
 	if (!env)
 		return ;
 	current->key = ft_strdup(current->arg);
@@ -181,11 +183,16 @@ void	expand_variable(t_token *current, char **envp, char **token)
 	}
 	while (**token)
 	{
-		if ((**token == '$' && !current->is_dquote && !is_alnum_(*(*token + 1))))
+		if ((**token == '$' && !current->is_dquote && *(*token + 1) != '?' && !is_alnum_(*(*token + 1))))
 		{
 			current->is_not_splittable = 1;
 		}
-		if ((**token == '$' && !is_digit_(*(*token + 1)) && is_alnum_(*(*token + 1)) == true))
+		if (**token == '$' && *(*token + 1) == '?')
+		{
+			expanded_token = ft_strnjoin(expanded_token, exit_code, ft_strlen(exit_code));
+			*token = ft_trim(*token, 2);
+		}
+		else if ((**token == '$' && !is_digit_(*(*token + 1)) && is_alnum_(*(*token + 1)) == true))
 		{
 			current->is_not_splittable = 0;
 			extract_variable_name(*token + 1, env);
@@ -210,7 +217,7 @@ void	expand_variable(t_token *current, char **envp, char **token)
 	*token = expanded_token;
 }
 
-void check_and_expand(t_token **head, char **envp)
+void check_and_expand(t_token **head, t_data *data, char **envp)
 {
 	t_token *current;
 	t_token *tmp;
@@ -231,7 +238,7 @@ void check_and_expand(t_token **head, char **envp)
 		}
 		if (check_is_expandable(current) && !current->is_squote && !current->not_expandable)
 		{
-			expand_variable(current, envp, &current->arg);
+			expand_variable(current, data, envp, &current->arg);
 			current->is_env_var = 1;
 		}
 		if (current->is_word && !current->is_space_next && current->arg[ft_strlen(current->arg) - 1] == '$')

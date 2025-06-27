@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 22:10:02 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/27 11:33:42 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:14:45 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ int		syntax_checker(t_data *data)
 	}
 	if (!status)
 		status = check_closed_quotes(is_squote, is_dquote);
-	data->last_exit_code = status;
+	if (status)
+		data->last_exit_code = status;
 	return (status);
 }
