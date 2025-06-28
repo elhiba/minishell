@@ -6,14 +6,15 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:46:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/20 22:57:06 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/28 20:57:09 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /*
- * this is probably a complete function!
+ * This is probably a complete function!
+ * Still no updates (looks fine)
  */
 int	do_env(t_cmd *data)
 {
