@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/27 22:54:34 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/29 13:28:29 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /*
  * I should search about interactive mode and non interactive mode! 
- * to make sure everystuff works fine if we for a minishell or any other non interactive file(script)*/
+ * to make sure everystuff works fine if we for a minishell or any other non interactive file(script)
+ * */
 
 void	handle_signals(void)
 {

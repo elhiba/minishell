@@ -6,12 +6,11 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/27 16:53:22 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/29 13:08:31 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <linux/limits.h>
 
 char	*cp_buffer(char *buffer)
 {
@@ -88,6 +87,7 @@ char *get_head(int *type)
 	i++;
 	if (type)
 		*type = 42;
+	close(fd);
 	return (buffer + i);
 }
 

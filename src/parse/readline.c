@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/27 22:01:11 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/29 21:13:29 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,8 +245,8 @@ int	ft_builtin(t_cmd *data)
 		status = do_env(data);
 	else if (ft_strcmp(*ptr->argv, "exit") == 0)
 		status = do_exit(data);
-	//else if (ft_strcmp(ptr->cmd, "export") == 0)
-	//	status = do_export(data);
+	else if (ft_strcmp(ptr->cmd, "export") == 0)
+		status = do_export(data);
 	else if (ft_strcmp(*ptr->argv, "pwd") == 0)
 		status = do_pwd(data);
 	else if (ft_strcmp(*ptr->argv, "unset") == 0)
