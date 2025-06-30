@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/27 14:37:18 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/30 12:17:13 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,5 +195,8 @@ void	check_quotes(char *str, int i, int *is_dquote, int *is_squote);
 
 /* Linked list stuff*/
 void	add_token_node(t_token **head, char *arg);
+
+/* Utils */
+char	*ft_strtrim(char *str, int limit);
 
 #endif

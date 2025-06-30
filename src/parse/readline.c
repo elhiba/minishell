@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/29 21:13:29 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:42:11 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 		pipe(fd);
 		if (current->cmd && !current->should_not_execute && !current->cmd_not_found)
 		{
+			signal(SIGINT, SIG_IGN);
 			pid = fork();
 			if (pid == 0)
 			{

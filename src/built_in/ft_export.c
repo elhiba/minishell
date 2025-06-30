@@ -6,13 +6,14 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/29 22:44:25 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:32:04 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /*
+ * ([X] mean works fine!)
  * export should make sure the allocated env is available:
  * first i would like to check if i already had this variable or not
  *	if (this variable exist)
@@ -21,7 +22,7 @@
  *		i should create new one and resort all variable (im not sure if needed to sort them!)
  *	if he add too mush vars like this example
  *	export SUS="djaja" ABMLO="ls -a" SNAKE="Im not lol!"
- *	i should loop on all this vars and add them to the env var!
+ *	-[X] i should loop on all this vars and add them to the env var!
  * */
 
 void	add_to_env(char *arg, char ***env)
@@ -55,17 +56,46 @@ void	export_filter(char *arg, char ***env)
 		add_to_env(arg, env);
 }
 
-int	do_export(t_cmd *data)
+int		exist(char *ptr, char ***env)
 {
-	char	**ptr;
+	char	*trim;
 	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (ptr[j] && ptr[j] != '=')
+		j++;
+	trim = ft_strtrim(ptr, j);
+	if (ptr[j])
+	{
+		while ((*env)[i])
+		{
+			if (ft_strncmp(trim, (*env)[i], ft_strlen(trim)) == 0)
+			{
+				(*env)[i] = ft_strdup(ptr);
+				return (1);
+			}
+			i++;
+		}
+	}
+	return (0);
+}
+
+int		do_export(t_cmd *data)
+{
+	int		i;
+	char	**ptr;
 
 	i = 0;
 	ptr = ++data->argv;
 
 	while (ptr[i])
 	{
-		export_filter(ptr[i], &data->data->env);
+		if (exist(ptr[i], &data->data->env))
+			;
+		else
+			export_filter(ptr[i], &data->data->env);
 		i++;
 	}
 	return (1);

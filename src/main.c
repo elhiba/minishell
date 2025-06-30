@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/29 13:32:53 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/30 12:45:42 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int ac, char **av, char **env)
 	init_stuff_main(env, &data, ac, av);
 	while (1337)
 	{
+		handle_signals();
 		prompt = prompt_builder(&data);
 		data.readline_in = readline(prompt);
 		if (g_received_signal == SIGINT)

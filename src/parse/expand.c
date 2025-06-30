@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/26 22:36:56 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/06/30 11:49:03 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ char	*ft_trim(char *str, int len)
 
 	i = 0;
 	trimmed_str = ft_collector(sizeof(char) * (ft_strlen(str) - len + 1), ALLOC);
-	if (!trimmed_str)
-		return (NULL);
 	while (str[i + len])
 	{
 		trimmed_str[i] = str[i + len];
