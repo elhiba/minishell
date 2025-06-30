@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/30 12:17:13 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:30:37 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,5 +198,6 @@ void	add_token_node(t_token **head, char *arg);
 
 /* Utils */
 char	*ft_strtrim(char *str, int limit);
+int		ft_arglen(char **args);
 
 #endif

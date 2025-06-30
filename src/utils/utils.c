@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:23:14 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/30 12:12:32 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:29:09 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,23 @@ char	*ft_strtrim(char *str, int limit)
 	char	*result;
 
 	i = 0;
-	result = ft_collector(limit + 1, ALLOC);
+	result = ft_collector(sizeof(char) * (limit + 2), ALLOC);
 	while (i <= limit)
 	{
 		result[i] = str[i];
 		i++;
 	}
 	return (result);
+}
+
+int		ft_arglen(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+		i++;
+	return (i);
 }
 
 //void	free_token_list(t_token **head)
