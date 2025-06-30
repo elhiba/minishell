@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:08:25 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/30 14:20:18 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/06/30 14:43:14 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	remove_env(char *var, char ***env)
 		if (ft_strncmp(var, (*env)[i], ft_strlen(var)) == 0)
 			i++;
 		new_env[j] = (*env)[i];
+		if (!(*env)[i])
+			break ;
 		i++;
 		j++;
 	}
