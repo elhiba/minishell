@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/29 13:28:29 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/01 21:54:11 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,15 @@ void	sigint_handler(int sig)
 
 void handle_sigint(int sig)
 {
-	g_received_signal = SIGINT;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
-	//set_exit_status(10);
+	if(sig == SIGINT)
+	{
+		g_received_signal = SIGINT;
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+		//set_exit_status(10);
+	}
 }
 
 void	setup_signal_handlers(int mode)

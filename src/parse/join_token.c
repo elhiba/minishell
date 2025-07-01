@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:42:31 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/25 15:45:16 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/01 21:57:51 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	join_tokens(t_token **tokens)
 {
 	t_token	*current;
 	t_token *save_next;
-	int		flag;
+	//int		flag;
 
-	flag = 0;
+	//flag = 0;
 	current = *tokens;
 	save_next = current->next;
 	while (save_next)

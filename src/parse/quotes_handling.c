@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:02:58 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/19 13:49:40 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/01 21:57:38 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,15 @@ char	*quotes_handler(char *str, int *index, int *flag)
 
 	(1) && (is_dquote = 0, is_squote = 0);
 	if (str[*index] == '\"')
-		(1) && (is_dquote = 1, *flag = 10);
+	{
+		is_dquote = 1;
+		*flag = 10;
+	}
 	else
-		(1) && (is_squote = 1, *flag = 11);
+	{
+		is_squote = 1;
+		*flag = 11;
+	}
 	start = *index + 1;
 	while (is_dquote)
 	{

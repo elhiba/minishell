@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/27 15:20:36 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/01 22:00:52 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,14 +219,14 @@ void	add_heredoc(t_heredoc **head, t_heredoc *new)
 
 void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data)
 {
-	int	i;
-	int	len;
+//	int	i;
+//	int	len;
 	char	*heredoc_name;
 	t_heredoc	*heredoc_node;
 
+//	len = 0;
+//	i = 0;
 	heredoc_node = ft_collector(sizeof(t_heredoc), ALLOC);
-	len = 0;
-	i = 0;
 	heredoc_node->heredoc_del = token->arg;
 	heredoc_name = ft_strjoin("heredoc", ft_random(data->env));
 	heredoc_name = ft_strjoin("/tmp/", heredoc_name);

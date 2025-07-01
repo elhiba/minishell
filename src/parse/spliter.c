@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spliter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/26 21:37:33 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/01 21:56:24 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,24 +95,24 @@ void	typer(t_token **token, char *arg)
 	 return (false);
  }
 
- static int	ft_counter(char *str)
-{
-	int	i;
-	int	counter;
-
-	i = 0;
-	counter = 0;
-	while (str[i])
-	{
-		while (is_space_(str[i]))
-			i++;
-		if (str[i])
-			counter++;
-		while (str[i] && !is_space_(str[i]))
-			i++;
-	}
-	return (counter);
-}
+//static int	ft_counter(char *str)
+//{
+//	int	i;
+//	int	counter;
+//
+//	i = 0;
+//	counter = 0;
+//	while (str[i])
+//	{
+//		while (is_space_(str[i]))
+//			i++;
+//		if (str[i])
+//			counter++;
+//		while (str[i] && !is_space_(str[i]))
+//			i++;
+//	}
+//	return (counter);
+//}
 
 void	add_tmp(t_token **head,t_token *new)
 {
@@ -211,6 +211,22 @@ void	build_error_name(t_token *token)
 	token->ambiguous_name = error_name;
 }
 
+int	is_redirect(t_token *current, char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (current->is_dquote || current->is_squote)
+		return (0);
+	if (arg[i] == '>' && arg[i + 1] == '>')
+		return (1);
+	else if (arg[i] == '>')
+		return (1);
+	else if (arg[i] == '<')
+		return (1);
+	return (0);
+}
+
 void	set_ambiguous(t_token *token, t_data *data)
 {
 	t_token *current;
@@ -253,7 +269,7 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 	//char	**args;
 	//int		index;
 	t_token	*ptr;
-	char	*arg;
+//	char	*arg;
 	int		op_len;
 	int		i;
 	int		start;
@@ -394,22 +410,6 @@ void	remove_empty_env(t_token **head)
 		}
 		current = current->next;
 	}
-}
-
-int	is_redirect(t_token *current, char *arg)
-{
-	int	i;
-
-	i = 0;
-	if (current->is_dquote || current->is_squote)
-		return (0);
-	if (arg[i] == '>' && arg[i + 1] == '>')
-		return (1);
-	else if (arg[i] == '>')
-		return (1);
-	else if (arg[i] == '<')
-		return (1);
-	return (0);
 }
 
 

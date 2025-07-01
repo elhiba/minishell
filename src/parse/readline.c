@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/01 18:31:51 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/01 21:54:43 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 			if (WTERMSIG(status) == SIGSEGV)
 				printf("%d Segmentation fault (core dumped) %s\n", pid, last->argv[0]);
 			else if (WTERMSIG(status) == SIGTERM)
-				printf("%d terminated %s", last->argv[0]);
+				printf("%s terminated", last->argv[0]);
 			else if (WIFSTOPPED(status))
 			{
 				data->last_exit_code = 128 + WSTOPSIG(status);

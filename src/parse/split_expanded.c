@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expanded.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:04:23 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/25 15:13:30 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/01 21:59:42 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	split_expanded(t_token **token, t_data *data)
 	t_token	*save;
 	bool	prev_was_null;
 
+	(void)data;
 	current = *token; 
 	prev_was_null = true;
 	save = NULL;
@@ -134,7 +135,11 @@ void	split_expanded(t_token **token, t_data *data)
 		if (current->is_env_var && !current->is_not_splittable && !current->is_dquote && !current->is_squote && there_is_space(current->arg) && current->is_dquote != 1)
 		{
 			if (prev)
-				(1) && (save = prev->next, prev->next = NULL, prev_was_null = false);
+			{
+				save = prev->next;
+				prev->next = NULL;
+				prev_was_null = false;
+			}
 			else
 				save = current;
 			split_into_nodes(&prev, save, current->arg);
