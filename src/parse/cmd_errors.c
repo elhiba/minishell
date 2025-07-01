@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:19 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/01 14:47:16 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:52:05 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ bool	is_redir(t_token *current)
 	return (false);
 }
 
+bool	is_a_fifo(char *str)
+{
+	struct stat statbuf;
+
+	ft_bzero(&statbuf, sizeof(statbuf));
+	stat(str, &statbuf);
+	if (S_ISFIFO(statbuf.st_mode))
+		return (1);
+	return (0);
+}
+
 int	check_redir_err(t_token *current, t_data *data)
 {
 	if (current->is_ambiguous)
@@ -54,6 +65,8 @@ int	check_redir_err(t_token *current, t_data *data)
 		return (data->last_exit_code = 1, printf("minishell: %s: No such file or directory\n", current->arg), -1);
 	if (is_a_directory(current->arg))
 		return (data->last_exit_code = 1, printf("minishell: %s: is a directory\n", current->arg), -1);
+	// if (is_a_fifo(current->arg))
+	// 	return (data->last_exit_code = 1, printf("minishell: %s: hada kaytsema tmekrib\n", current->arg), -1);
 	//if (current->is_infile && access(current->arg, F_OK) != 0)
 	//	return (printf("minishell: %s: No such file or directory\n", current->arg), -1);
 	return (0);
@@ -61,6 +74,7 @@ int	check_redir_err(t_token *current, t_data *data)
 
 int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 {
+	cmd->data->last_exit_code = 0;
 	if (token->is_outfile == OUTPUT_FILE)
 	{
 		if (cmd->STDOUT != 1)

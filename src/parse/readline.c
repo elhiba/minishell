@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/30 12:42:11 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:31:51 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,33 @@ void	print_list(void **head)
 	}
 }
 
+void	add_pid(pid_t **pid, pid_t new_pid, int *size)
+{
+	pid_t	*new_pid_list;
+	int		i;
+
+	i = 0;
+	new_pid_list = ft_collector(sizeof(pid_t) * (*size + 1), ALLOC);
+	while (i < *size)
+	{
+		new_pid_list[i] = (*pid)[i];
+		i++;
+	}
+	new_pid_list[i] = new_pid;
+	*size += 1;
+	*pid = new_pid_list;
+}
+
 void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 {
 	t_cmd *current = cmd_list;
+	pid_t	*pid_list;
+	int		len = 0;
 	t_cmd *last;
 	int	fd[2];
 	pid_t pid;
 	int status = 0;
+	current = cmd_list;
 	while (current)
 	{
 		pipe(fd);
@@ -87,33 +107,35 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 				if (current->next && !current->cmd_not_found)
 					dup2(fd[1], STDOUT_FILENO);
 				if (current->STDIN != 0)
+				{
 					dup2(current->STDIN, STDIN_FILENO);
+					close(current->STDIN);
+				}
 				if (current->STDOUT != 1)
+				{
 					dup2(current->STDOUT, STDOUT_FILENO);
+					close(current->STDOUT);
+				}
 				close(fd[0]);
 				close(fd[1]);
 				execve(current->cmd, current->argv, env);
 				printf("minishell: %s: %s\n", current->argv[0], strerror(errno));
 				if (errno == ENOENT)
 					exit(127);
-				else if (errno == ENOTDIR)
-					exit (126);
 				else
-					exit (1);
+					exit (126);
 			}
+			add_pid(&pid_list, pid, &len);
 		}
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		//printf("%d\n", current->cmd_not_found);
-		//if (current->cmd_not_found)
-		//	break;
 		last = current;
 		current = current->next;
 	}
 	if (last->cmd && !last->should_not_execute && !last->cmd_not_found)
 	{
-		waitpid(pid, &status, 0);
+		waitpid(pid_list[len - 1], &status, WUNTRACED);
 		if (WIFEXITED(status))
 			data->last_exit_code = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
@@ -123,9 +145,18 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 				printf("%d Segmentation fault (core dumped) %s\n", pid, last->argv[0]);
 			else if (WTERMSIG(status) == SIGTERM)
 				printf("%d terminated %s", last->argv[0]);
+			else if (WIFSTOPPED(status))
+			{
+				data->last_exit_code = 128 + WSTOPSIG(status);
+			}
 		}
 	}
-	while ((pid = wait(&status)) > 0);
+	pid = 0;
+	if (len > 1)
+	{
+		while (pid < len)
+			waitpid(pid_list[pid++], &status, WUNTRACED);
+	}
 }
 
 
