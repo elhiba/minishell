@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:19 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/27 15:22:52 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/01 14:47:16 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,6 @@ void	check_errors(t_cmd *cmd_list, t_token **token_list)
 			token_current = token_current->next;
 		}
 		i++;
+		cmd_current = cmd_current->next;
 	}
 }

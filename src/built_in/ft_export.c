@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/30 12:32:04 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:26:12 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,16 @@ int		do_export(t_cmd *data)
 	i = 0;
 	ptr = ++data->argv;
 
+	if (!ptr[i])
+	{
+		while (data->data->env[i])
+		{
+			write(1, data->data->env[i], ft_strlen(data->data->env[i]));
+			write(1,"\n", 1);
+			i++;
+		}
+	}
+	i = 0;
 	while (ptr[i])
 	{
 		if (exist(ptr[i], &data->data->env))
