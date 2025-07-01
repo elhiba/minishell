@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/30 13:30:37 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/01 22:58:52 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,8 @@ char	*ft_getenv(char *key, t_data *data);
 void	get_env_value(char **envp, t_env *env);
 
 /* Excecution! */
-void	ft_execution(t_data *data);
+//void	ft_execution(t_data *data);
+void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env);
 
 /* clean-up functions */
 void	free_d_arr(char **arr);

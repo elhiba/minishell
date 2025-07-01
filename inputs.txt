@@ -1,3 +1,4 @@
+echo $NAME
 echo Hello All we had to was following the damn train cj!
 echo -n Hi it just flag test!
 echo
@@ -10,30 +11,28 @@ echo Hello, world!
 pwd
 ls
 whoami
-NAME=Amine
+export NAME=Amine
 echo "My name is $NAME"
-ls -l; echo "Listed files"
+echo "Listed files"
+ls -l
 cat /etc/passwd | grep root
 echo "This is a test" > testfile.txt
 cat < testfile.txt
 echo "Another line" >> testfile.txt
-echo $NAME
 echo $USER
 echo $PATH Also all we had to was following the damn train cj!
 cat /etc/passwd | grep root > root_users.txt
 export TEST_VAR="testing"
 env | grep TEST_VAR
 cd ..
+ls -al > lol.txt
+cat lol.txt
 pwd
 cd /
 pwd
-false && echo "This won't print"
-true || echo "This won't print either"
-true && echo "This will print"
-false || echo "This will print too"
 echo "Double quotes test"
 echo 'Single quotes test'
-echo Mixed\ quotes\ test
+export
 export FOO=bar
 echo $FOO
 unset FOO

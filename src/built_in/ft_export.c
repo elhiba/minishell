@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/01 14:26:12 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/01 22:46:33 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,31 @@ void	add_to_env(char *arg, char ***env)
 	*env = new_env;
 }
 
+int		is_export(char *arg)
+{
+	if (!(ft_isalpha(arg[0]) || arg[0] == '_'))
+		return (0);
+	return (1);
+}
+
 void	export_filter(char *arg, char ***env)
 {
 	int	i;
 	
 	i = 0;
-	while (arg[i] && arg[i] != '=')
-		i++;
-	if (arg[i])
-		add_to_env(arg, env);
+	if (is_export(arg))
+	{
+		while (arg[i] && arg[i] != '=')
+			i++;
+		if (arg[i])
+			add_to_env(arg, env);
+	}
+	else
+	{
+		write(2, "minishell: export: `", 20);
+		write(2, arg, ft_strlen(arg));
+		write(2, "': not a valid identifier\n", 27);
+	}
 }
 
 int		exist(char *ptr, char ***env)
@@ -89,7 +105,6 @@ int		do_export(t_cmd *data)
 
 	i = 0;
 	ptr = ++data->argv;
-
 	if (!ptr[i])
 	{
 		while (data->data->env[i])

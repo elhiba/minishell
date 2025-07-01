@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:22:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/27 22:58:54 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/01 22:20:04 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	do_echo(t_cmd *data)
 				is_newline = 0;
 			}
 			else
-			break ;
+				break ;
 		}
 		while (ptr[i])
 		{
