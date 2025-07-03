@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:19 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/01 18:52:05 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/03 12:01:14 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,14 @@ void	check_errors(t_cmd *cmd_list, t_token **token_list)
 			token_current = token_current->next;
 		}
 		token_current = token_list[i];
-		while (token_current && !cmd_current->should_not_execute)
+		while (cmd_current->cmd && token_current && !cmd_current->should_not_execute)
 		{
 			if (cmd_current->cmd_not_found)
 			{
 				if (!cmd_current->cmd[0])
+				{
 					printf("minishell: \'%s\': command not found!\n", cmd_current->cmd);
+				}
 				else
 					printf("%s: command not found!\n", cmd_current->cmd);
 				cmd_current->data->last_exit_code = 127;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/30 11:49:03 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:50:35 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,22 +163,22 @@ void	expand_variable(t_token *current, t_data *data, char **envp, char **token)
 {
 	t_env	*env;
 	char	*expanded_token;
-	int		flag;
+	// int		flag;
 	char	*exit_code;
 
-	flag = 1;
+	// flag = 1;
 	env = ft_collector(sizeof(t_env), ALLOC);
 	expanded_token = ft_strdup("");
 	exit_code = ft_itoa(data->last_exit_code);
 	if (!env)
 		return ;
 	current->key = ft_strdup(current->arg);
-	if (flag && (!ft_strcmp(*token, "$") && !current->is_dquote && !current->is_space_next))
-	{
-		expanded_token = ft_strdup("");
-		*token = expanded_token;
-		return ;
-	}
+	// if (flag && (!ft_strcmp(*token, "$") && !current->is_dquote && !current->is_space_next))
+	// {
+	// 	expanded_token = ft_strdup("");
+	// 	*token = expanded_token;
+	// 	return ;
+	// }
 	while (**token)
 	{
 		if ((**token == '$' && !current->is_dquote && *(*token + 1) != '?' && !is_alnum_(*(*token + 1))))
@@ -239,8 +239,8 @@ void check_and_expand(t_token **head, t_data *data, char **envp)
 			expand_variable(current, data, envp, &current->arg);
 			current->is_env_var = 1;
 		}
-		if (current->is_word && !current->is_space_next && current->arg[ft_strlen(current->arg) - 1] == '$')
-			current->arg = ft_strnjoin("", current->arg, ft_strlen(current->arg) - 1);
+		// if (current->is_word && !current->is_space_next && current->arg[ft_strlen(current->arg) - 1] == '$')
+		// 	current->arg = ft_strnjoin("", current->arg, ft_strlen(current->arg) - 1);
 		current = current->next;
 	}
 }

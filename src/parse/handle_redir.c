@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/01 22:00:52 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:21:53 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ char *ft_random(char **env)
 	{
 		close(fd[0]);
 		dup2(fd[1], 1);
+		close(fd[1]);
 		execve("/bin/openssl", argv, env);
 	}
 	close(fd[1]);
 	read(fd[0], buffer, 16);
+	close(fd[0]);
 	return (ft_strjoin("_", buffer));
 }
 
@@ -114,14 +116,13 @@ char *get_cmd_name(char *buffer)
 char *get_full_path(char **path_stock, char *cmd_name, int *not_found)
 {
 	int		i;
-	int		len;
 	char	**tmp_stock;
 	char	*new_name;
 
-	(1) && (i = 0, len = 0);
+	i = 0;
 	while (path_stock[i])
-		(1) && (len += 1, i += 1);
-	tmp_stock = ft_collector(sizeof(char *) * (len + 1), ALLOC);
+		i += 1;
+	tmp_stock = ft_collector(sizeof(char *) * (i + 1), ALLOC);
 	i = 0;
 	while (path_stock[i])
 	{
@@ -131,15 +132,22 @@ char *get_full_path(char **path_stock, char *cmd_name, int *not_found)
 	}
 	tmp_stock[i] = NULL;
 	i = 0;
-	while (tmp_stock[i])
+	while (tmp_stock[i]) // check first with X_OK
 	{
-		if (access(tmp_stock[i], X_OK) == 0)
+		if (access(tmp_stock[i], X_OK) == 0 && !is_a_directory(tmp_stock[i]))
 			return (tmp_stock[i]);
 		i++;
 	}
-	char *tmp = ft_strjoin("./", cmd_name);
-	if (access(tmp, F_OK) == 0)
-		return (tmp);
+	i = 0;
+	while (tmp_stock[i]) // check second with F_OK
+	{
+		if (access(tmp_stock[i], F_OK) == 0)
+			return (tmp_stock[i]);
+		i++;
+	}
+	// char *tmp = ft_strjoin("./", cmd_name);
+	// if (access(tmp, F_OK) == 0)
+	// 	return (tmp);
 	*not_found = 1;
 	return (cmd_name);
 }
@@ -231,7 +239,7 @@ void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data)
 	heredoc_name = ft_strjoin("heredoc", ft_random(data->env));
 	heredoc_name = ft_strjoin("/tmp/", heredoc_name);
 	heredoc_node->heredoc_file = heredoc_name;
-	heredoc_node->fd = open(heredoc_name, O_CREAT | O_WRONLY, 0644);
+	heredoc_node->fd = open(heredoc_name, O_CREAT | O_RDWR, 0644);
 	heredoc_node->expand = 1;
 	if (token->is_dquote || token->is_squote)
 		heredoc_node->expand = 0;
@@ -266,6 +274,14 @@ void	init_stuff(t_token *head, t_cmd *node)
 	node->next = NULL;
 }
 
+
+int	empty_env_var(t_token *current)
+{
+	if (current->is_env_var && !is_redir(current) && !current->prev && !current->next && !current->is_dquote && !current->arg[0])
+		return (1);
+	return (0);
+}
+
 void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 {
 	t_token	*current;
@@ -288,8 +304,7 @@ void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 				|| current->is_env_var)
 				&& !(current->is_env_var
 				&& !current->is_dquote
-				&& !current->arg[0]
-				&& current->next)
+				&& !current->arg[0])
 				&& !is_redir(current)
 				&& !current->is_ambiguous)
 		{
@@ -301,8 +316,8 @@ void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 				&& !current->is_ambiguous
 				&& !is_redir(current))
 			add_to_argv(node, current);
-		if (current->is_env_var && !is_redir(current) && !current->prev && !current->next && !current->is_dquote && !current->arg[0]) // to prevent epty var from executing;
-			node->should_not_execute = 1;
+		// if (current->is_env_var && !is_redir(current) && !current->prev && !current->next && !current->is_dquote && !current->arg[0]) // to prevent epty var from executing;
+		// 	node->cmd = NULL;
 		current = current->next;
 	}
 	if (node->cmd && !ft_strcmp("ls", get_cmd_name(node->argv[0])))

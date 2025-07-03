@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/01 22:58:33 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:37:26 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,68 +67,11 @@ void	print_list(void **head)
 	}
 }
 
-void	ft_putendl_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
-	{
-		write (fd, &s[i], 1);
-		i++;
-	}
-	write (fd, "\n", 1);
-}
-
-
-void	heredoc(t_cmd *cmd_list)
-{
-	t_cmd		*cmd;
-	t_heredoc	*current;
-	char		*buffer;
-	pid_t		pid;
-
-	cmd = cmd_list;
-	current = NULL;
-	while (cmd)
-	{
-		current = cmd->heredcs;
-		while (current)
-		{
-			pid = fork();
-			if (!pid)
-			{
-				set_to_default();
-				while (1337)
-				{
-					buffer = readline("> ");
-					if (!ft_strcmp(buffer, current->heredoc_del))
-						break ;
-					if (is_it_expandable(buffer) && current->expand)
-						expand_variable_heredoc(cmd->data->env,&buffer);
-					ft_putendl_fd(buffer, current->fd);
-				}
-				exit(0);
-			}
-			waitpid(pid, NULL, 0);
-			close(current->fd);
-			if (cmd->STDIN != 0)
-				close(cmd->STDIN);
-			cmd->STDIN = open(current->heredoc_file, O_RDONLY);
-			current = current->next;
-		}
-		cmd = cmd->next;
-	}
-}
-
 
 void	ft_parse(t_data *data)
 {
 	void	**args;
 	t_cmd	*list;
-	int saved_stdin = dup(STDIN_FILENO);
 //	t_token	*token_list;
 //	int		i;
 
@@ -144,8 +87,8 @@ void	ft_parse(t_data *data)
 		//printf("\nEXEC LIST:\n\n");
 		if (args)
 			list = exec_setup(args, data);
-		//if (list)
-		//	pretty_print_cmd_list(list);
+		// if (list)
+		// 	pretty_print_cmd_list(list);
 		/* This ft_builtin isn't helpfull here we will make changes later! */
 		if (ft_builtin(list) == 0)
 		{
@@ -155,8 +98,6 @@ void	ft_parse(t_data *data)
 				check_errors(list, (t_token **)args);
 			if (list)
 				multiple_pipes(data, list, data->env);
-			dup2(saved_stdin, STDIN_FILENO);
-			close(saved_stdin);
 		}
 	//	dollar_expand(data, token_list);
 	//	data->token_list = token_list;

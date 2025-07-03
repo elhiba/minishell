@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/01 22:58:13 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/03 12:37:53 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@ void	add_pid(pid_t **pid, pid_t new_pid, int *size)
 	new_pid_list[i] = new_pid;
 	*size += 1;
 	*pid = new_pid_list;
+
 }
 
+// had function khasna ngado leha nrom wn9essemoha asap!!
 void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 {
 	t_cmd *current = cmd_list;
 	pid_t	*pid_list;
 	int		len = 0;
-	t_cmd *last;
+	int saved_stdin = dup(STDIN_FILENO);
+	t_cmd *last = NULL;
 	int	fd[2];
 	pid_t pid;
 	int status = 0;
@@ -42,14 +45,14 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 	while (current)
 	{
 		pipe(fd);
-		if (current->cmd && !current->should_not_execute && !current->cmd_not_found)
+		if (!current->should_not_execute && !current->cmd_not_found)
 		{
 			signal(SIGINT, SIG_IGN);
 			pid = fork();
 			if (pid == 0)
 			{
 				set_to_default();
-				if (current->next && !current->cmd_not_found)
+				if (current->next)
 					dup2(fd[1], STDOUT_FILENO);
 				if (current->STDIN != 0)
 				{
@@ -63,8 +66,12 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 				}
 				close(fd[0]);
 				close(fd[1]);
+				close(saved_stdin);
+				if (!current->cmd)
+					ft_collector(0, EXIT);
 				execve(current->cmd, current->argv, env);
 				printf("minishell: %s: %s\n", current->argv[0], strerror(errno));
+				ft_collector(0, FREE);
 				if (errno == ENOENT)
 					exit(127);
 				else
@@ -76,24 +83,31 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 		close(fd[0]);
 		close(fd[1]);
 		last = current;
+		if (current->STDIN != 0)
+			close(current->STDIN);
+		if (current->STDOUT != 1)
+			close(current->STDOUT);
 		current = current->next;
 	}
-	if (last->cmd && !last->should_not_execute && !last->cmd_not_found)
+	if (!last->should_not_execute && !last->cmd_not_found)
 	{
 		waitpid(pid_list[len - 1], &status, WUNTRACED);
 		if (WIFEXITED(status))
+		{
 			data->last_exit_code = WEXITSTATUS(status);
+		}
 		else if (WIFSIGNALED(status))
 		{
 			data->last_exit_code = 128 + WTERMSIG(status);
 			if (WTERMSIG(status) == SIGSEGV)
-				printf("%d Segmentation fault (core dumped) %s\n", pid, last->argv[0]);
+				printf("%d Segmentation fault (core dumped) %s", pid, last->argv[0]);
 			else if (WTERMSIG(status) == SIGTERM)
 				printf("%s terminated", last->argv[0]);
 			else if (WIFSTOPPED(status))
 			{
 				data->last_exit_code = 128 + WSTOPSIG(status);
 			}
+			write(1, "\n", 1);
 		}
 	}
 	pid = 0;
@@ -102,6 +116,8 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 		while (pid < len)
 			waitpid(pid_list[pid++], &status, WUNTRACED);
 	}
+	dup2(saved_stdin, STDIN_FILENO);
+	close(saved_stdin);
 }
 //char	*join_path(const char *dir, const char *cmd)
 //{

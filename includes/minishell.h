@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/01 22:58:52 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:35:17 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,9 @@ void	check_errors(t_cmd *cmd_list, t_token **token_list);
 bool	is_redir(t_token *current);
 void	set_to_default(void);
 void	set_to_inter(void);
+void	heredoc(t_cmd *cmd_list);
+int		is_a_directory(char *cmd);
+int		empty_env_var(t_token *current);
 
 t_cmd	*exec_setup(void	**stock, t_data *data);
 void    pretty_print_cmd_list(t_cmd *cmd_list);

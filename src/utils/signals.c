@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/01 21:54:11 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/02 12:15:24 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handle_signals(void)
 
 	sigemptyset(&sa.sa_mask);
 	sigaddset(&sa.sa_mask, SIGQUIT);
-	sa.sa_flags = SA_RESTART;
+	sa.sa_flags = 0;
 	sa.sa_handler = sigint_handler;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		error_handler("sigaction", NULL);
