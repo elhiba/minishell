@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/01 22:46:33 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/03 23:58:42 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,19 @@ void	add_to_env(char *arg, char ***env)
 
 int		is_export(char *arg)
 {
+	int	i;
+
+	i = 0;
 	if (!(ft_isalpha(arg[0]) || arg[0] == '_'))
 		return (0);
+	while (arg[i])
+	{
+		if ((arg[i] >= 21 && arg[i] <= 47) || (arg[i] >= 58 && arg[i] <= 59)
+			|| (arg[i] >= 63 && arg[i] <= 64) || (arg[i] >= 91 && arg[i] <= 94)
+			|| arg[i] == 96 || (arg[i] >= 123 && arg[i] <= 126))
+			return (0);
+		i++;
+	}
 	return (1);
 }
 
@@ -59,8 +70,6 @@ void	export_filter(char *arg, char ***env)
 	i = 0;
 	if (is_export(arg))
 	{
-		while (arg[i] && arg[i] != '=')
-			i++;
 		if (arg[i])
 			add_to_env(arg, env);
 	}
@@ -109,6 +118,7 @@ int		do_export(t_cmd *data)
 	{
 		while (data->data->env[i])
 		{
+			write(1, "declare -x ", 11);
 			write(1, data->data->env[i], ft_strlen(data->data->env[i]));
 			write(1,"\n", 1);
 			i++;

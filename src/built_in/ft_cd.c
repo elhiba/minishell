@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 14:59:36 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/01 22:17:29 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/03 23:10:39 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ int	do_cd(t_cmd *data)
 		write(2, "minishell: too many arguments\n", 31);
 		return (2);
 	}
-	if (chdir(path) == -1)
+	if (!path)
+	{
+		if (chdir(sea_ret(data->data->env, "HOME")) == -1)
+			write(2, "minishell: cd: HOME not set\n", 28);
+	}
+	else if (chdir(path) == -1)
 		perror(ft_strjoin("minishell: cd: ", path));
 	return (1);
 }

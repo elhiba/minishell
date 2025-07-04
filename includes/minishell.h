@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/02 19:35:17 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/03 23:10:49 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,5 +203,6 @@ void	add_token_node(t_token **head, char *arg);
 /* Utils */
 char	*ft_strtrim(char *str, int limit);
 int		ft_arglen(char **args);
+char	*sea_ret(char **env, char *arg);
 
 #endif

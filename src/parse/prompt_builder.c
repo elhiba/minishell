@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/29 13:08:31 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/03 23:24:13 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*cp_buffer(char *buffer)
 	return (new);
 }
 
-char	*dir_name()
+char	*dir_name(t_data *data)
 {
 	int		i;
 	char	*full_path;
@@ -39,6 +39,8 @@ char	*dir_name()
 
 	i = 0;
 	getcwd(cwd, sizeof(cwd));
+	if (ft_strcmp(cwd, sea_ret(data->env, "HOME")) == 0)
+		return ("~");
 	while (cwd[i])
 		i++;
 	full_path = ft_collector(sizeof(char) * (i + 1), ALLOC);
@@ -126,7 +128,7 @@ char	*prompt_builder(t_data *data)
 	char	*head;
 	char	*arrow;
 
-	dirname = dir_name();
+	dirname = dir_name(data);
 	if (find_git() == 1)
 	{
 		head = cp_buffer(get_head(NULL));

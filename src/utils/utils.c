@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:23:14 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/30 13:29:09 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/03 23:09:33 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,21 @@ int		ft_arglen(char **args)
 //	}
 //	free(ptr);
 //}
+
+/* Search And Replace */
+char	*sea_ret(char **env, char *arg)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], arg, ft_strlen(arg)) == 0)
+			return (env[i] + (ft_strlen(arg) + 1));
+		i++;
+	}
+	return (NULL);
+}
 
 char	**ft_splits(char *arg, char *delimits)
 {
