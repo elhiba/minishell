@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/03 23:24:13 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/04 06:27:48 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*dir_name(t_data *data)
 	getcwd(cwd, sizeof(cwd));
 	if (ft_strcmp(cwd, sea_ret(data->env, "HOME")) == 0)
 		return ("~");
+	if (cwd[0] == '/' && cwd[1] == '\0')
+		return ("/");
 	while (cwd[i])
 		i++;
 	full_path = ft_collector(sizeof(char) * (i + 1), ALLOC);
