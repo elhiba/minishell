@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/15 17:14:37 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/15 17:28:09 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,6 @@ static int	validate_branch_ref(char *git_root, char *head)
 static int	check_detached(char *git_root)
 {
 	char	*objects_path;
-	struct stat	buffer;
 
 	objects_path = ft_strjoin(git_root, "/objects");
 	if (is_a_directory(objects_path))
