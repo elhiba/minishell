@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/14 18:55:27 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:29:58 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
  * export should make sure the allocated env is available:
  * first i would like to check if i already had this variable or not
  *	if (this variable exist)
- *		i should only updated it!
+  i should only updated it!
  *	else
- *		i should create new one and resort all variable (im not sure if needed to sort them!)
+  i should create new one and resort all variable (im not sure if 
+  needed to sort them!)
  *	if he add too mush vars like this example
  *	export SUS="djaja" ABMLO="ls -a" SNAKE="Im not lol!"
  *	-[X] i should loop on all this vars and add them to the env var!
@@ -45,14 +46,14 @@ void	add_to_env(char *arg, char ***env)
 	*env = new_env;
 }
 
-int		is_export(char *arg)
+int	is_export(char *arg)
 {
 	int	i;
 
 	i = 0;
 	if (!(ft_isalpha(arg[0]) || arg[0] == '_'))
 		return (0);
-	while (arg[i])
+	while (arg[i] && arg[i] != '=')
 	{
 		if ((arg[i] >= 21 && arg[i] <= 47) || (arg[i] >= 58 && arg[i] <= 59)
 			|| (arg[i] >= 63 && arg[i] <= 64) || (arg[i] >= 91 && arg[i] <= 94)
@@ -66,7 +67,7 @@ int		is_export(char *arg)
 void	export_filter(t_cmd *data, char *arg, char ***env)
 {
 	int	i;
-	
+
 	i = 0;
 	if (is_export(arg))
 	{
@@ -83,7 +84,7 @@ void	export_filter(t_cmd *data, char *arg, char ***env)
 	}
 }
 
-int		exist(char *ptr, char ***env)
+int	exist(char *ptr, char ***env)
 {
 	char	*trim;
 	int		i;
@@ -109,20 +110,18 @@ int		exist(char *ptr, char ***env)
 	return (0);
 }
 
-int		do_export(t_cmd *data)
+int	do_export(t_cmd *data)
 {
 	int		i;
 	char	**ptr;
 
-	i = 0;
-	ptr = ++data->argv;
+	(1) && (i = 0, ptr = ++data->argv);
 	if (!ptr[i])
 	{
 		while (data->data->env[i])
 		{
-			write(1, "declare -> ", 11);
-			write(1, data->data->env[i], ft_strlen(data->data->env[i]));
-			write(1,"\n", 1);
+			write(1, ft_strjoin3("declare -> ", data->data->env[i], "\n"), \
+					ft_strlen(data->data->env[i]) + 12);
 			i++;
 		}
 		data->data->last_exit_code = 0;
