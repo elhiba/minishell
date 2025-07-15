@@ -6,35 +6,29 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/03 12:21:53 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/15 16:25:07 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-char *ft_random(char **env)
+char *read_rand()
 {
-	int	fd[2];
-	int	pid;
-	char	**argv;
-	char *buffer;
+	char 	*buffer;
+	int		fd;
+    int     i = 0;
 
-	argv = ft_collector(sizeof(char *) * 5, ALLOC);
-	memcpy(argv, (char *[]){"openssl", "rand", "-hex", "8", NULL}, sizeof(char *) * 5);
-	buffer = ft_collector(17, ALLOC);
-	pipe(fd);
-	pid = fork();
-	if (pid == 0)
-	{
-		close(fd[0]);
-		dup2(fd[1], 1);
-		close(fd[1]);
-		execve("/bin/openssl", argv, env);
-	}
-	close(fd[1]);
-	read(fd[0], buffer, 16);
-	close(fd[0]);
+	buffer = malloc(17);
+	fd = open("/dev/random", O_RDONLY);
+	read(fd, buffer, 16);
+	close(fd);
+    while (i < 16)
+    {
+        buffer[i] = buffer[i] % 26 + 'a';
+        if (!ft_isalpha(buffer[i]))
+            buffer[i] = (i % 10) + 48;
+        i++;
+    }
 	return (ft_strjoin("_", buffer));
 }
 
@@ -234,12 +228,12 @@ void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data)
 
 //	len = 0;
 //	i = 0;
+	(void)data;
 	heredoc_node = ft_collector(sizeof(t_heredoc), ALLOC);
 	heredoc_node->heredoc_del = token->arg;
-	heredoc_name = ft_strjoin("heredoc", ft_random(data->env));
+	heredoc_name = ft_strjoin("heredoc", read_rand());
 	heredoc_name = ft_strjoin("/tmp/", heredoc_name);
 	heredoc_node->heredoc_file = heredoc_name;
-	heredoc_node->fd = open(heredoc_name, O_CREAT | O_RDWR, 0644);
 	heredoc_node->expand = 1;
 	if (token->is_dquote || token->is_squote)
 		heredoc_node->expand = 0;
@@ -316,8 +310,6 @@ void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 				&& !current->is_ambiguous
 				&& !is_redir(current))
 			add_to_argv(node, current);
-		// if (current->is_env_var && !is_redir(current) && !current->prev && !current->next && !current->is_dquote && !current->arg[0]) // to prevent epty var from executing;
-		// 	node->cmd = NULL;
 		current = current->next;
 	}
 	if (node->cmd && !ft_strcmp("ls", get_cmd_name(node->argv[0])))

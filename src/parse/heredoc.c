@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:53:22 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/07 01:54:44 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:23:29 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,77 +27,182 @@ void	ft_putendl_fd(char *s, int fd)
 	write (fd, "\n", 1);
 }
 
-void    prevent_exec(t_cmd *cmd_list)
+void	prevent_exec(t_cmd *cmd_list)
 {
-    t_cmd   *cmd;
+	t_cmd	*cmd;
 
-    cmd = cmd_list;
-    while (cmd)
-    {
-        cmd->should_not_execute = 1;
-        cmd = cmd->next;
-    }
+	cmd = cmd_list;
+	while (cmd)
+	{
+		cmd->should_not_execute = 1;
+		cmd = cmd->next;
+	}
+}
+
+static int	prevent_flag(int sigint_was_here)
+{
+	static int	i;
+
+	if (sigint_was_here == 2)
+	{
+		i = 2;
+		return (i);
+	}
+	else if (sigint_was_here == 1337)
+	{
+		i = 0;
+		return(i);
+	}
+	else
+		return (i);
+}
+
+static void	heredoc_input(t_heredoc *heredoc, t_data *data)
+{
+	char	*buffer;
+	char	*managed_buffer;
+
+	heredoc->fd = open(heredoc->heredoc_file, O_CREAT | O_WRONLY, 0644);
+	while (1)
+	{
+		buffer = readline("> ");
+		if (!buffer)
+		{
+			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", heredoc->heredoc_del);
+			break ;
+		}
+		if (!ft_strcmp(buffer, heredoc->heredoc_del))
+		{
+			free(buffer);
+			break ;
+		}
+		managed_buffer = ft_strdup(buffer);
+		free(buffer);
+		if (is_it_expandable(managed_buffer) && heredoc->expand)
+			expand_variable_heredoc(data, data->env, &managed_buffer);
+		ft_putendl_fd(managed_buffer, heredoc->fd);
+	}
+	close(heredoc->fd);
+}
+
+static void	signal_term(int signal, pid_t pid, t_cmd *cmd_list)
+{
+	if (signal == SIGSEGV)
+		printf("%d Segmentation fault (core dumped) HEREDOC", pid);
+	else if (signal == SIGTERM)
+		printf("%d terminated HEREDOC", pid);
+	prevent_exec(cmd_list);
+	write(1, "\n", 1);
+}
+
+static void	heredoc_exit_code(int status, t_data *data, pid_t pid, t_cmd *cmd_list)
+{
+	if (WIFEXITED(status))
+	{
+		data->last_exit_code = WEXITSTATUS(status);
+		if (data->last_exit_code == 130)
+			prevent_flag(2);
+	}
+	else if (WIFSIGNALED(status))
+	{
+		data->last_exit_code = 128 + WTERMSIG(status);
+		signal_term(WTERMSIG(status), pid, cmd_list);
+	}
+	else if (WIFSTOPPED(status))
+		data->last_exit_code = 128 + WSTOPSIG(status);
+}
+
+static t_heredoc	*save_heredoc(t_heredoc *heredocs)
+{
+	static t_heredoc *saved_heredoc;
+
+	if (heredocs == NULL)
+		return (saved_heredoc);
+	else
+	{
+		saved_heredoc = heredocs;
+		return (saved_heredoc);
+	}
+}
+
+static t_cmd	*save_cmd(t_cmd *cmd)
+{
+	static t_cmd *saved_cmd;
+
+	if (cmd == NULL)
+		return (saved_cmd);
+	else
+	{
+		saved_cmd = cmd;
+		return (saved_cmd);
+	}
+}
+
+void heredoc_handler(int sig)
+{
+	t_cmd		*cmd;
+	t_heredoc	*heredocs;
+
+	(void)sig;
+	cmd = save_cmd(NULL);
+	heredocs = save_heredoc(NULL);
+	close(heredocs->fd);
+	if (cmd->STDIN != 0 && cmd->STDIN < 0)
+			close(cmd->STDIN);
+	if (cmd->STDOUT != 1 && cmd->STDOUT < 0)
+		close(cmd->STDOUT);
+	ft_collector(0, FREE);
+	write(1, "\n", 1);
+	exit(130);
 }
 
 
-// we should handle SIGINT exit (leaks)
+static void	heredoc_logic(t_cmd *cmd, t_heredoc *heredoc, t_cmd *cmd_list)
+{
+	pid_t	pid;
+	int		status;
+
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (!pid)
+	{
+		signal(SIGINT, heredoc_handler);
+		signal(SIGQUIT, SIG_IGN);
+		heredoc_input(heredoc, cmd->data);
+		if (cmd->STDIN != 0 && cmd->STDIN < 0)
+			close(cmd->STDIN);
+		if (cmd->STDOUT != 1 && cmd->STDOUT < 0)
+			close(cmd->STDOUT);
+		ft_collector(0, FREE);
+		exit(0);
+	}
+	waitpid(pid, &status, WUNTRACED);
+	heredoc_exit_code(status, cmd->data, pid, cmd_list);
+}
+
 void	heredoc(t_cmd *cmd_list)
 {
 	t_cmd		*cmd;
-	t_heredoc	*current;
-	char		*buffer;
-    t_data      *data;
-    int         status;
-	pid_t		pid;
-
+	t_heredoc	*heredocs;
+	
 	cmd = cmd_list;
-    data = cmd->data;
-	current = NULL;
+	prevent_flag(1337);
 	while (cmd)
 	{
-		current = cmd->heredcs;
-		while (current)
+		save_cmd(cmd);
+		if (cmd->heredcs)
 		{
-            signal(SIGINT, SIG_IGN);
-			pid = fork();
-			if (!pid)
+			heredocs = cmd->heredcs;
+			while (heredocs && !prevent_flag(42))
 			{
-				set_to_default();
-				while (1337)
-				{
-					buffer = readline("> ");
-					if (!ft_strcmp(buffer, current->heredoc_del))
-						break ;
-					if (is_it_expandable(buffer) && current->expand)
-						expand_variable_heredoc(cmd->data->env,&buffer);
-					ft_putendl_fd(buffer, current->fd);
-				}
-				close(current->fd);
-                ft_collector(0, FREE);
-                exit(0);
+				save_heredoc(heredocs);
+				heredoc_logic(cmd, heredocs, cmd_list);
+				if (!heredocs->next)
+					cmd->last_heredoc = heredocs;
+				heredocs = heredocs->next;
 			}
-			waitpid(pid, &status, WUNTRACED);
-            if (WIFEXITED(status))
-			    data->last_exit_code = WEXITSTATUS(status);
-            else if (WIFSIGNALED(status))
-		    {
-		    	data->last_exit_code = 128 + WTERMSIG(status);
-		    	if (WTERMSIG(status) == SIGSEGV)
-		    		printf("%d Segmentation fault (core dumped) HEREDOC\n", pid);
-		    	else if (WTERMSIG(status) == SIGTERM)
-		    		printf("%d terminated HEREDOC", pid);
-		    	else if (WIFSTOPPED(status))
-		    	{
-		    		data->last_exit_code = 128 + WSTOPSIG(status);
-		    	}
-                prevent_exec(cmd_list);
-		    	write(1, "\n", 1);
-		    }
-			close(current->fd);
-			if (cmd->STDIN != 0)
-				close(cmd->STDIN);
-			cmd->STDIN = open(current->heredoc_file, O_RDONLY);
-			current = current->next;
+			if (prevent_flag(42))
+				prevent_exec(cmd_list);
 		}
 		cmd = cmd->next;
 	}

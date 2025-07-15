@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/03 23:10:49 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:22:22 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,12 @@ typedef struct s_cmd
 	int		cmd_not_found; // flag to handle cmd not found
 	int		should_not_execute;
 	t_data	*data;
+	int			use_last_heredoc;
+	t_heredoc	*last_heredoc;
 	int		STDIN; // stdin rah bayna 
-	int		STDOUT; // ta hade bayna asahbe
+	char	*STDIN_test;
+	int		STDOUT;
+	char	*STDOUT_test; // ta hade bayna asahbe
 	struct s_cmd *next;
 }	t_cmd;
 
@@ -144,7 +148,7 @@ bool	is_white_space(char c);
 bool	is_alnum_(char c);
 bool	is_alpha_(char c);
 bool	is_digit_(char c);
-void	expand_variable_heredoc( char **envp, char **token);
+void	expand_variable_heredoc(t_data *data, char **envp, char **token);
 int		is_it_expandable(char *buffer);
 void	get_env_value(char **envp, t_env *env);
 void	extract_variable_name(char *token, t_env *env);

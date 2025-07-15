@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/03 12:37:53 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/15 14:42:47 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,41 @@ void	add_pid(pid_t **pid, pid_t new_pid, int *size)
 
 }
 
+
+void	should_use_last_herdoc(t_cmd *current)
+{
+	if (current->last_heredoc && current->use_last_heredoc)
+	{
+		if (current->STDIN != 0)
+		{
+			close(current->STDIN);
+			current->STDIN = open(current->last_heredoc->heredoc_file, O_RDONLY, 0644);
+		}
+		else
+			current->STDIN = open(current->last_heredoc->heredoc_file, O_RDONLY, 0644);
+	}
+}
+
+
+void	change_std(t_cmd *current)
+{
+	if (current->STDIN != 0)
+	{
+		dup2(current->STDIN, STDIN_FILENO);
+		close(current->STDIN);
+	}
+	if (current->STDOUT != 1)
+	{
+		dup2(current->STDOUT, STDOUT_FILENO);
+		close(current->STDOUT);
+	}
+}
+
+void	close_pipe(int fd[2])
+{
+	close(fd[0]);
+	close(fd[1]);
+}
 // had function khasna ngado leha nrom wn9essemoha asap!!
 void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 {
@@ -54,18 +89,9 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 				set_to_default();
 				if (current->next)
 					dup2(fd[1], STDOUT_FILENO);
-				if (current->STDIN != 0)
-				{
-					dup2(current->STDIN, STDIN_FILENO);
-					close(current->STDIN);
-				}
-				if (current->STDOUT != 1)
-				{
-					dup2(current->STDOUT, STDOUT_FILENO);
-					close(current->STDOUT);
-				}
-				close(fd[0]);
-				close(fd[1]);
+				should_use_last_herdoc(current);
+				change_std(current);
+				close_pipe(fd);
 				close(saved_stdin);
 				if (!current->cmd)
 					ft_collector(0, EXIT);
@@ -80,8 +106,7 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 			add_pid(&pid_list, pid, &len);
 		}
 		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		close(fd[1]);
+		close_pipe(fd);
 		last = current;
 		if (current->STDIN != 0)
 			close(current->STDIN);
@@ -89,6 +114,8 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 			close(current->STDOUT);
 		current = current->next;
 	}
+	dup2(saved_stdin, STDIN_FILENO);
+	close(saved_stdin);
 	if (!last->should_not_execute && !last->cmd_not_found)
 	{
 		waitpid(pid_list[len - 1], &status, WUNTRACED);
@@ -116,8 +143,6 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 		while (pid < len)
 			waitpid(pid_list[pid++], &status, WUNTRACED);
 	}
-	dup2(saved_stdin, STDIN_FILENO);
-	close(saved_stdin);
 }
 //char	*join_path(const char *dir, const char *cmd)
 //{

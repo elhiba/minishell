@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:19 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/03 12:01:14 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/15 17:14:57 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	is_a_directory(char *cmd)
 	struct stat statbuf;
 
 	ft_bzero(&statbuf, sizeof(statbuf));
-	stat(cmd, &statbuf);
-	if (S_ISDIR(statbuf.st_mode))
+	if (!stat(cmd, &statbuf)&& S_ISDIR(statbuf.st_mode))
 		return (1);
 	return (0);
 }
@@ -41,7 +40,7 @@ int	check_for_err(t_cmd *cmd)
 bool	is_redir(t_token *current)
 {
 	if (current->is_infile || current->is_outfile
-		|| current->is_append)
+		|| current->is_append || current->is_heredoc)
 		return (true);
 	return (false);
 }
@@ -74,6 +73,7 @@ int	check_redir_err(t_token *current, t_data *data)
 
 int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 {
+	cmd->use_last_heredoc = 0;
 	cmd->data->last_exit_code = 0;
 	if (token->is_outfile == OUTPUT_FILE)
 	{
@@ -82,6 +82,8 @@ int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 		cmd->STDOUT = open(token->arg, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (cmd->STDOUT == -1)
 			return (data->last_exit_code = 1, printf("minishell: %s: %s\n", token->arg, strerror(errno)), -1);
+		cmd->STDOUT_test = token->arg;
+		// close(cmd->STDOUT);
 	}
 	else if (token->is_append == APPEND)
 	{
@@ -90,6 +92,8 @@ int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 		cmd->STDOUT = open(token->arg, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (cmd->STDOUT == -1)
 			return (data->last_exit_code = 1, printf("minishell: %s: %s\n", token->arg, strerror(errno)), -1);
+		cmd->STDOUT_test = token->arg;
+		// close(cmd->STDOUT);
 	}
 	else if (token->is_infile == INPUT_FILE)
 	{
@@ -98,6 +102,60 @@ int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 		cmd->STDIN = open(token->arg, O_RDONLY, 0644);
 		if (cmd->STDIN == -1)
 			return (data->last_exit_code = 1, printf("minishell: %s: %s\n", token->arg, strerror(errno)), -1);
+		cmd->STDIN_test = token->arg;
+		// close(cmd->STDIN);
+	}
+	return (0);
+}
+
+int	check_and_set_fd(t_cmd *cmd_current, t_token *token_current)
+{
+	while (token_current)
+	{
+		if (is_redir(token_current))
+		{
+			if (check_redir_err(token_current, cmd_current->data) == -1 && !token_current->is_heredoc)
+			{
+				cmd_current->should_not_execute = 1;
+				return (1);
+			}
+			else if (!token_current->is_heredoc && set_fd(cmd_current, token_current, cmd_current->data) == -1)
+			{
+				cmd_current->should_not_execute = 1;
+				return (1);
+			}
+			else if (token_current->is_heredoc)
+			{
+				cmd_current->use_last_heredoc = 1;
+			}
+		}
+		token_current = token_current->next;
+	}
+	return (0);
+}
+
+
+int	check_cmd_errors(t_cmd *cmd_current, t_token *token_current)
+{
+	while (cmd_current->cmd && token_current && !cmd_current->should_not_execute)
+	{
+		if (cmd_current->cmd_not_found)
+		{
+			if (!cmd_current->cmd[0])
+			{
+				printf("minishell: \'%s\': command not found!\n", cmd_current->cmd);
+			}
+			else
+				printf("%s: command not found!\n", cmd_current->cmd);
+			cmd_current->data->last_exit_code = 127;
+			return (1);
+		}
+		else if (check_for_err(cmd_current) == -1)
+		{
+			cmd_current->should_not_execute = 1;
+			return (1);
+		}
+		token_current = token_current->next;
 	}
 	return (0);
 }
@@ -113,44 +171,10 @@ void	check_errors(t_cmd *cmd_list, t_token **token_list)
 	while (cmd_current && token_list[i])
 	{
 		token_current = token_list[i];
-		while (token_current)
-		{
-			if (is_redir(token_current))
-			{
-				if (check_redir_err(token_current, cmd_current->data) == -1)
-				{
-					cmd_current->should_not_execute = 1;
-					break ;
-				}
-				else if (set_fd(cmd_current, token_current, cmd_current->data) == -1)
-				{
-					cmd_current->should_not_execute = 1;
-					break ;
-				}
-			}
-			token_current = token_current->next;
-		}
-		token_current = token_list[i];
-		while (cmd_current->cmd && token_current && !cmd_current->should_not_execute)
-		{
-			if (cmd_current->cmd_not_found)
-			{
-				if (!cmd_current->cmd[0])
-				{
-					printf("minishell: \'%s\': command not found!\n", cmd_current->cmd);
-				}
-				else
-					printf("%s: command not found!\n", cmd_current->cmd);
-				cmd_current->data->last_exit_code = 127;
-				break ;
-			}
-			else if (check_for_err(cmd_current) == -1)
-			{
-				cmd_current->should_not_execute = 1;
-				break;
-			}
-			token_current = token_current->next;
-		}
+		if (check_and_set_fd(cmd_current, token_current))
+			break ;
+		if (check_cmd_errors(cmd_current, token_current))
+			break ;
 		i++;
 		cmd_current = cmd_current->next;
 	}

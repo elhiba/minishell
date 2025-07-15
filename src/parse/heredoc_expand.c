@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/06/24 15:37:19 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/15 16:20:52 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,23 @@ int	is_it_expandable(char *buffer)
 /*
 	this function is the same as the normal expanding function, just without all the eadge cases...
 */
-void	expand_variable_heredoc( char **envp, char **token)
+void	expand_variable_heredoc(t_data *data, char **envp, char **token)
 {
 	t_env	*env;
 	char	*expanded_token;
+	char	*exit_code;
 
+	exit_code = ft_itoa(data->last_exit_code);
 	env = ft_collector(sizeof(t_env), ALLOC);
-	expanded_token = ft_strdup("");
+	expanded_token = ft_strdup("");	
 	while (**token)
 	{
-		if ((**token == '$' && !is_digit_(*(*token + 1)) && is_alnum_(*(*token + 1)) == true))
+		if (**token == '$' && *(*token + 1) == '?')
+		{
+			expanded_token = ft_strnjoin(expanded_token, exit_code, ft_strlen(exit_code));
+			*token = ft_trim(*token, 2);
+		}
+		else if ((**token == '$' && !is_digit_(*(*token + 1)) && is_alnum_(*(*token + 1)) == true))
 		{
 			extract_variable_name(*token + 1, env);
 			get_env_value(envp, env);
