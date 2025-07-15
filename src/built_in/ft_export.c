@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/03 23:58:42 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:55:27 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		is_export(char *arg)
 	return (1);
 }
 
-void	export_filter(char *arg, char ***env)
+void	export_filter(t_cmd *data, char *arg, char ***env)
 {
 	int	i;
 	
@@ -72,12 +72,14 @@ void	export_filter(char *arg, char ***env)
 	{
 		if (arg[i])
 			add_to_env(arg, env);
+		data->data->last_exit_code = 0;
 	}
 	else
 	{
 		write(2, "minishell: export: `", 20);
 		write(2, arg, ft_strlen(arg));
 		write(2, "': not a valid identifier\n", 27);
+		data->data->last_exit_code = 1;
 	}
 }
 
@@ -118,11 +120,12 @@ int		do_export(t_cmd *data)
 	{
 		while (data->data->env[i])
 		{
-			write(1, "declare -x ", 11);
+			write(1, "declare -> ", 11);
 			write(1, data->data->env[i], ft_strlen(data->data->env[i]));
 			write(1,"\n", 1);
 			i++;
 		}
+		data->data->last_exit_code = 0;
 	}
 	i = 0;
 	while (ptr[i])
@@ -130,7 +133,7 @@ int		do_export(t_cmd *data)
 		if (exist(ptr[i], &data->data->env))
 			;
 		else
-			export_filter(ptr[i], &data->data->env);
+			export_filter(data, ptr[i], &data->data->env);
 		i++;
 	}
 	return (1);

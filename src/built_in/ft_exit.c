@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:24:56 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/14 16:37:03 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:23:11 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,35 @@
 int	do_exit(t_cmd *data)
 {
 	char	**args;
+	int		i;
 
+	i = 0;
 	args = ++data->argv;
 
 	write(1, "exit\n", 5);
 	if (*args)
 	{
-		if (args[1] != NULL)
+		if (args[0] != NULL)
 		{
-			write(2, "minishell: exit: too many arguments\n", 36);
-			data->data->last_exit_code = 1;
+			while (i < (int)ft_strlen(args[0]))
+			{
+				if (ft_isalpha(args[0][i]))
+				{
+					write(2, "minishell: exit: ", 17);
+					write(2, args[0], ft_strlen(args[0]));
+					write(2,  ": numeric argument required\n", 28);
+					exit(2);
+				}
+				i++;
+			}
+			if (ft_isalpha(args[0][i]) == 0)
+			{
+				write(2, "minishell: exit: too many arguments\n", 36);
+				data->data->last_exit_code = 1;
+			}
+			else
+				exit(ft_atoi(args[0]));
 		}
-		else
-			exit(ft_atoi(args[0]));
 	}
 	else
 		exit(0);

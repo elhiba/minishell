@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:53:22 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/03 12:38:29 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/07 01:54:44 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	heredoc(t_cmd *cmd_list)
 		    {
 		    	data->last_exit_code = 128 + WTERMSIG(status);
 		    	if (WTERMSIG(status) == SIGSEGV)
-		    		printf("%d Segmentation fault (core dumped) HEREDOC", pid);
+		    		printf("%d Segmentation fault (core dumped) HEREDOC\n", pid);
 		    	else if (WTERMSIG(status) == SIGTERM)
 		    		printf("%d terminated HEREDOC", pid);
 		    	else if (WIFSTOPPED(status))

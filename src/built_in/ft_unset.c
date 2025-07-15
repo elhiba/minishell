@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:08:25 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/06/30 14:43:14 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/15 05:33:38 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ int	do_unset(t_cmd *data)
 		unset_filter(ptr[i], &data->data->env);
 		i++;
 	}
+	data->data->last_exit_code = 0;
 	return (1);
 }

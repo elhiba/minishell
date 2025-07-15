@@ -11,9 +11,9 @@
       "ft_isalnum.o",
       "ft_isalnum.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_isalnum.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_isalnum.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_isalnum.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_isalnum.o"
   },
   {
     "arguments": [
@@ -27,9 +27,9 @@
       "ft_split.o",
       "ft_split.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_split.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_split.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_split.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_split.o"
   },
   {
     "arguments": [
@@ -43,9 +43,9 @@
       "ft_strchr.o",
       "ft_strchr.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_strchr.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_strchr.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strchr.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strchr.o"
   },
   {
     "arguments": [
@@ -59,9 +59,9 @@
       "ft_strdup.o",
       "ft_strdup.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_strdup.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_strdup.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strdup.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strdup.o"
   },
   {
     "arguments": [
@@ -75,9 +75,9 @@
       "ft_strjoin.o",
       "ft_strjoin.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_strjoin.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_strjoin.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strjoin.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strjoin.o"
   },
   {
     "arguments": [
@@ -91,9 +91,9 @@
       "ft_strlcat.o",
       "ft_strlcat.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_strlcat.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_strlcat.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strlcat.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strlcat.o"
   },
   {
     "arguments": [
@@ -107,9 +107,9 @@
       "ft_strlcpy.o",
       "ft_strlcpy.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_strlcpy.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_strlcpy.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strlcpy.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strlcpy.o"
   },
   {
     "arguments": [
@@ -123,9 +123,9 @@
       "ft_strlen.o",
       "ft_strlen.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_strlen.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_strlen.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strlen.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strlen.o"
   },
   {
     "arguments": [
@@ -139,9 +139,9 @@
       "ft_atoi.o",
       "ft_atoi.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_atoi.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_atoi.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_atoi.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_atoi.o"
   },
   {
     "arguments": [
@@ -155,9 +155,9 @@
       "ft_strncmp.o",
       "ft_strncmp.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_strncmp.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_strncmp.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strncmp.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strncmp.o"
   },
   {
     "arguments": [
@@ -171,9 +171,9 @@
       "ft_strcmp.o",
       "ft_strcmp.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_strcmp.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_strcmp.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strcmp.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strcmp.o"
   },
   {
     "arguments": [
@@ -187,9 +187,9 @@
       "ft_itoa.o",
       "ft_itoa.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_itoa.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_itoa.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_itoa.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_itoa.o"
   },
   {
     "arguments": [
@@ -203,9 +203,9 @@
       "ft_bzero.o",
       "ft_bzero.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_bzero.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_bzero.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_bzero.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_bzero.o"
   },
   {
     "arguments": [
@@ -219,9 +219,9 @@
       "ft_substr.o",
       "ft_substr.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_substr.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_substr.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_substr.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_substr.o"
   },
   {
     "arguments": [
@@ -235,9 +235,9 @@
       "ft_isalpha.o",
       "ft_isalpha.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_isalpha.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_isalpha.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_isalpha.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_isalpha.o"
   },
   {
     "arguments": [
@@ -251,9 +251,9 @@
       "ft_strndup.o",
       "ft_strndup.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_strndup.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_strndup.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strndup.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strndup.o"
   },
   {
     "arguments": [
@@ -267,9 +267,9 @@
       "ft_strnjoin.o",
       "ft_strnjoin.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_strnjoin.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_strnjoin.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strnjoin.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_strnjoin.o"
   },
   {
     "arguments": [
@@ -283,9 +283,9 @@
       "ft_isdigit.o",
       "ft_isdigit.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_isdigit.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_isdigit.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_isdigit.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_isdigit.o"
   },
   {
     "arguments": [
@@ -299,9 +299,9 @@
       "ft_memcpy.o",
       "ft_memcpy.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell/includes/libft",
-    "file": "/home/moel-hib/Documents/minishell/includes/libft/ft_memcpy.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/libft/ft_memcpy.o"
+    "directory": "/home/elhiba/Documents/code/minishell/includes/libft",
+    "file": "/home/elhiba/Documents/code/minishell/includes/libft/ft_memcpy.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/libft/ft_memcpy.o"
   },
   {
     "arguments": [
@@ -315,9 +315,9 @@
       "src/main.o",
       "src/main.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/main.c",
-    "output": "/home/moel-hib/Documents/minishell/src/main.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/main.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/main.o"
   },
   {
     "arguments": [
@@ -331,9 +331,9 @@
       "src/built_in/ft_cd.o",
       "src/built_in/ft_cd.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/built_in/ft_cd.c",
-    "output": "/home/moel-hib/Documents/minishell/src/built_in/ft_cd.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/built_in/ft_cd.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/built_in/ft_cd.o"
   },
   {
     "arguments": [
@@ -347,9 +347,9 @@
       "src/built_in/ft_echo.o",
       "src/built_in/ft_echo.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/built_in/ft_echo.c",
-    "output": "/home/moel-hib/Documents/minishell/src/built_in/ft_echo.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/built_in/ft_echo.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/built_in/ft_echo.o"
   },
   {
     "arguments": [
@@ -363,9 +363,9 @@
       "src/built_in/ft_env.o",
       "src/built_in/ft_env.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/built_in/ft_env.c",
-    "output": "/home/moel-hib/Documents/minishell/src/built_in/ft_env.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/built_in/ft_env.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/built_in/ft_env.o"
   },
   {
     "arguments": [
@@ -379,9 +379,9 @@
       "src/built_in/ft_exit.o",
       "src/built_in/ft_exit.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/built_in/ft_exit.c",
-    "output": "/home/moel-hib/Documents/minishell/src/built_in/ft_exit.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/built_in/ft_exit.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/built_in/ft_exit.o"
   },
   {
     "arguments": [
@@ -395,9 +395,9 @@
       "src/built_in/ft_export.o",
       "src/built_in/ft_export.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/built_in/ft_export.c",
-    "output": "/home/moel-hib/Documents/minishell/src/built_in/ft_export.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/built_in/ft_export.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/built_in/ft_export.o"
   },
   {
     "arguments": [
@@ -411,9 +411,9 @@
       "src/built_in/ft_pwd.o",
       "src/built_in/ft_pwd.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/built_in/ft_pwd.c",
-    "output": "/home/moel-hib/Documents/minishell/src/built_in/ft_pwd.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/built_in/ft_pwd.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/built_in/ft_pwd.o"
   },
   {
     "arguments": [
@@ -427,9 +427,9 @@
       "src/built_in/ft_unset.o",
       "src/built_in/ft_unset.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/built_in/ft_unset.c",
-    "output": "/home/moel-hib/Documents/minishell/src/built_in/ft_unset.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/built_in/ft_unset.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/built_in/ft_unset.o"
   },
   {
     "arguments": [
@@ -443,9 +443,9 @@
       "src/exec/exec.o",
       "src/exec/exec.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/exec/exec.c",
-    "output": "/home/moel-hib/Documents/minishell/src/exec/exec.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/exec/exec.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/exec/exec.o"
   },
   {
     "arguments": [
@@ -459,9 +459,9 @@
       "src/exec/cmd_errors.o",
       "src/exec/cmd_errors.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors.c",
-    "output": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/exec/cmd_errors.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/exec/cmd_errors.o"
   },
   {
     "arguments": [
@@ -475,9 +475,9 @@
       "src/utils/signals.o",
       "src/utils/signals.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/utils/signals.c",
-    "output": "/home/moel-hib/Documents/minishell/src/utils/signals.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/utils/signals.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/utils/signals.o"
   },
   {
     "arguments": [
@@ -491,9 +491,9 @@
       "src/utils/error.o",
       "src/utils/error.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/utils/error.c",
-    "output": "/home/moel-hib/Documents/minishell/src/utils/error.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/utils/error.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/utils/error.o"
   },
   {
     "arguments": [
@@ -507,9 +507,9 @@
       "src/utils/utils.o",
       "src/utils/utils.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/utils/utils.c",
-    "output": "/home/moel-hib/Documents/minishell/src/utils/utils.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/utils/utils.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/utils/utils.o"
   },
   {
     "arguments": [
@@ -523,9 +523,9 @@
       "src/utils/linked_list.o",
       "src/utils/linked_list.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/utils/linked_list.c",
-    "output": "/home/moel-hib/Documents/minishell/src/utils/linked_list.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/utils/linked_list.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/utils/linked_list.o"
   },
   {
     "arguments": [
@@ -539,9 +539,9 @@
       "src/utils/utils_env.o",
       "src/utils/utils_env.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/utils/utils_env.c",
-    "output": "/home/moel-hib/Documents/minishell/src/utils/utils_env.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/utils/utils_env.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/utils/utils_env.o"
   },
   {
     "arguments": [
@@ -555,9 +555,9 @@
       "src/utils/special_split.o",
       "src/utils/special_split.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/utils/special_split.c",
-    "output": "/home/moel-hib/Documents/minishell/src/utils/special_split.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/utils/special_split.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/utils/special_split.o"
   },
   {
     "arguments": [
@@ -571,9 +571,9 @@
       "src/parse/readline.o",
       "src/parse/readline.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/readline.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/readline.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/readline.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/readline.o"
   },
   {
     "arguments": [
@@ -587,9 +587,9 @@
       "src/parse/spliter.o",
       "src/parse/spliter.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/spliter.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/spliter.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/spliter.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/spliter.o"
   },
   {
     "arguments": [
@@ -603,9 +603,9 @@
       "src/parse/dollar_expander.o",
       "src/parse/dollar_expander.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/dollar_expander.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/dollar_expander.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/dollar_expander.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/dollar_expander.o"
   },
   {
     "arguments": [
@@ -619,9 +619,9 @@
       "src/parse/prompt_builder.o",
       "src/parse/prompt_builder.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/prompt_builder.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/prompt_builder.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/prompt_builder.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/prompt_builder.o"
   },
   {
     "arguments": [
@@ -635,9 +635,9 @@
       "src/parse/quotes_handling.o",
       "src/parse/quotes_handling.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/quotes_handling.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/quotes_handling.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/quotes_handling.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/quotes_handling.o"
   },
   {
     "arguments": [
@@ -651,9 +651,9 @@
       "src/parse/syntax_checker.o",
       "src/parse/syntax_checker.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/syntax_checker.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/syntax_checker.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/syntax_checker.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/syntax_checker.o"
   },
   {
     "arguments": [
@@ -667,9 +667,9 @@
       "src/parse/expand.o",
       "src/parse/expand.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/expand.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/expand.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/expand.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/expand.o"
   },
   {
     "arguments": [
@@ -683,9 +683,9 @@
       "src/parse/heredoc_expand.o",
       "src/parse/heredoc_expand.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/heredoc_expand.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/heredoc_expand.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/heredoc_expand.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/heredoc_expand.o"
   },
   {
     "arguments": [
@@ -699,9 +699,9 @@
       "src/parse/heredoc.o",
       "src/parse/heredoc.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/heredoc.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/heredoc.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/heredoc.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/heredoc.o"
   },
   {
     "arguments": [
@@ -715,9 +715,9 @@
       "src/parse/join_token.o",
       "src/parse/join_token.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/join_token.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/join_token.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/join_token.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/join_token.o"
   },
   {
     "arguments": [
@@ -731,9 +731,9 @@
       "src/parse/split_expanded.o",
       "src/parse/split_expanded.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/split_expanded.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/split_expanded.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/split_expanded.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/split_expanded.o"
   },
   {
     "arguments": [
@@ -747,9 +747,9 @@
       "src/parse/handle_redir.o",
       "src/parse/handle_redir.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/handle_redir.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/handle_redir.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/src/parse/handle_redir.c",
+    "output": "/home/elhiba/Documents/code/minishell/src/parse/handle_redir.o"
   },
   {
     "arguments": [
@@ -763,8 +763,8 @@
       "includes/gcft/gc_collector.o",
       "includes/gcft/gc_collector.c"
     ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/includes/gcft/gc_collector.c",
-    "output": "/home/moel-hib/Documents/minishell/includes/gcft/gc_collector.o"
+    "directory": "/home/elhiba/Documents/code/minishell",
+    "file": "/home/elhiba/Documents/code/minishell/includes/gcft/gc_collector.c",
+    "output": "/home/elhiba/Documents/code/minishell/includes/gcft/gc_collector.o"
   }
 ]
