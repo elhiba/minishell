@@ -1,0 +1,13 @@
+LICENSE
+Makefile
+README.md
+[0m[01;32ma.out[0m
+compile_commands.json
+[01;34mincludes[0m
+inputs.txt
+[01;32mminishell[0m
+outfile
+readline.supp
+[01;34msrc[0m
+test.c
+todo.md

@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:53:22 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/15 16:23:29 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/16 17:14:31 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	signal_term(int signal, pid_t pid, t_cmd *cmd_list)
 	else if (signal == SIGTERM)
 		printf("%d terminated HEREDOC", pid);
 	prevent_exec(cmd_list);
-	write(1, "\n", 1);
+	write(2, "\n", 1);
 }
 
 static void	heredoc_exit_code(int status, t_data *data, pid_t pid, t_cmd *cmd_list)
@@ -152,7 +152,7 @@ void heredoc_handler(int sig)
 	if (cmd->STDOUT != 1 && cmd->STDOUT < 0)
 		close(cmd->STDOUT);
 	ft_collector(0, FREE);
-	write(1, "\n", 1);
+	write(2, "\n", 1);
 	exit(130);
 }
 

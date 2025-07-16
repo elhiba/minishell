@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/16 16:43:30 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/16 17:14:17 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	save_exit_status(t_cmd *last, t_data *data, pid_t pid)
 		{
 			data->last_exit_code = 128 + WSTOPSIG(status);
 		}
-		write(1, "\n", 1);
+		write(2, "\n", 1);
 	}
 }
 
@@ -200,7 +200,6 @@ void	execute(t_cmd *cmd_list, t_data *data)
 		multiple_pipes(data, cmd_list);
 	else
 		single_command(data, cmd_list);
-	set_to_inter();
 }
 
 //char	*join_path(const char *dir, const char *cmd)
