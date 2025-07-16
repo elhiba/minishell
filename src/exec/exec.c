@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/16 14:02:10 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/16 16:43:30 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,7 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list)
 void	single_command(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid;
-	int		status;
 
-	status = 0;
 	signal(SIGINT, SIG_IGN);
 	if (ft_builtin(cmd) == 0)
 	{
