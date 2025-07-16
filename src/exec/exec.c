@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/15 14:42:47 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/16 14:02:10 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,46 +65,73 @@ void	close_pipe(int fd[2])
 	close(fd[0]);
 	close(fd[1]);
 }
+
+void	save_exit_status(t_cmd *last, t_data *data, pid_t pid)
+{
+	int	status;
+
+	status = 0;
+	waitpid(pid, &status, WUNTRACED);
+	if (WIFEXITED(status))
+	{
+		data->last_exit_code = WEXITSTATUS(status);
+	}
+	else if (WIFSIGNALED(status))
+	{
+		data->last_exit_code = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGSEGV)
+			printf("%d Segmentation fault (core dumped) %s", pid, last->argv[0]);
+		else if (WTERMSIG(status) == SIGTERM)
+			printf("%s terminated", last->argv[0]);
+		else if (WIFSTOPPED(status))
+		{
+			data->last_exit_code = 128 + WSTOPSIG(status);
+		}
+		write(1, "\n", 1);
+	}
+}
+
 // had function khasna ngado leha nrom wn9essemoha asap!!
-void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
+void	multiple_pipes(t_data *data, t_cmd *cmd_list)
 {
 	t_cmd *current = cmd_list;
 	pid_t	*pid_list;
 	int		len = 0;
-	int saved_stdin = dup(STDIN_FILENO);
 	t_cmd *last = NULL;
 	int	fd[2];
 	pid_t pid;
-	int status = 0;
 	current = cmd_list;
 	while (current)
 	{
 		pipe(fd);
-		if (!current->should_not_execute && !current->cmd_not_found)
+		signal(SIGINT, SIG_IGN);
+		pid = fork();
+		if (pid == 0)
 		{
-			signal(SIGINT, SIG_IGN);
-			pid = fork();
-			if (pid == 0)
+			set_to_default();
+			if (current->next)
+				dup2(fd[1], STDOUT_FILENO);
+			should_use_last_herdoc(current);
+			change_std(current);
+			close_pipe(fd);
+			close(data->STDIN);
+			close(data->STDOUT);
+			if (current->should_not_execute || current->cmd_not_found)
 			{
-				set_to_default();
-				if (current->next)
-					dup2(fd[1], STDOUT_FILENO);
-				should_use_last_herdoc(current);
-				change_std(current);
-				close_pipe(fd);
-				close(saved_stdin);
-				if (!current->cmd)
-					ft_collector(0, EXIT);
-				execve(current->cmd, current->argv, env);
-				printf("minishell: %s: %s\n", current->argv[0], strerror(errno));
 				ft_collector(0, FREE);
-				if (errno == ENOENT)
-					exit(127);
-				else
-					exit (126);
+				exit(current->exit_code);
 			}
-			add_pid(&pid_list, pid, &len);
+			if (!current->cmd)
+				ft_collector(0, EXIT);
+			execve(current->cmd, current->argv, data->env);
+			printf("minishell: %s: %s\n", current->argv[0], strerror(errno));
+			ft_collector(0, FREE);
+			if (errno == ENOENT)
+				exit(127);
+			else
+				exit (126);
 		}
+		add_pid(&pid_list, pid, &len);
 		dup2(fd[0], STDIN_FILENO);
 		close_pipe(fd);
 		last = current;
@@ -114,36 +141,70 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env)
 			close(current->STDOUT);
 		current = current->next;
 	}
-	dup2(saved_stdin, STDIN_FILENO);
-	close(saved_stdin);
-	if (!last->should_not_execute && !last->cmd_not_found)
-	{
-		waitpid(pid_list[len - 1], &status, WUNTRACED);
-		if (WIFEXITED(status))
-		{
-			data->last_exit_code = WEXITSTATUS(status);
-		}
-		else if (WIFSIGNALED(status))
-		{
-			data->last_exit_code = 128 + WTERMSIG(status);
-			if (WTERMSIG(status) == SIGSEGV)
-				printf("%d Segmentation fault (core dumped) %s", pid, last->argv[0]);
-			else if (WTERMSIG(status) == SIGTERM)
-				printf("%s terminated", last->argv[0]);
-			else if (WIFSTOPPED(status))
-			{
-				data->last_exit_code = 128 + WSTOPSIG(status);
-			}
-			write(1, "\n", 1);
-		}
-	}
+	dup2(data->STDIN, STDIN_FILENO);
+	save_exit_status(last, data, pid);
 	pid = 0;
 	if (len > 1)
 	{
 		while (pid < len)
-			waitpid(pid_list[pid++], &status, WUNTRACED);
+			waitpid(pid_list[pid++], NULL, WUNTRACED);
 	}
 }
+
+
+
+void	single_command(t_data *data, t_cmd *cmd)
+{
+	pid_t	pid;
+	int		status;
+
+	status = 0;
+	signal(SIGINT, SIG_IGN);
+	if (ft_builtin(cmd) == 0)
+	{
+		if (!cmd->should_not_execute && !cmd->cmd_not_found)
+		{
+			pid = fork();
+			if (pid == 0)
+			{
+				set_to_default();
+				should_use_last_herdoc(cmd);
+				change_std(cmd);
+				if (!cmd->cmd)
+					ft_collector(0, EXIT);
+				execve(cmd->cmd, cmd->argv, data->env);
+				printf("minishell: %s: %s\n", cmd->argv[0], strerror(errno));
+				ft_collector(0, FREE);
+				if (errno == ENOENT)
+					exit(127);
+				else
+					exit (126);
+			}
+			save_exit_status(cmd, data, pid);
+		}
+	}
+}
+
+
+void	execute(t_cmd *cmd_list, t_data *data)
+{
+	int	count;
+	t_cmd	*current;
+
+	count = 0;
+	current = cmd_list;
+	while(current)
+	{
+		count++;
+		current = current->next;
+	}
+	if (count > 1)
+		multiple_pipes(data, cmd_list);
+	else
+		single_command(data, cmd_list);
+	set_to_inter();
+}
+
 //char	*join_path(const char *dir, const char *cmd)
 //{
 //	char	*tmp;

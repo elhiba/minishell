@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/15 16:22:22 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/16 13:52:46 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,9 @@ typedef struct s_cmd
 	int			use_last_heredoc;
 	t_heredoc	*last_heredoc;
 	int		STDIN; // stdin rah bayna 
-	char	*STDIN_test;
 	int		STDOUT;
-	char	*STDOUT_test; // ta hade bayna asahbe
-	struct s_cmd *next;
+	int		exit_code;
+	struct s_cmd *next; // rah bayna 
 }	t_cmd;
 
 
@@ -118,6 +117,8 @@ typedef struct s_data
 
 	t_token	*token_list;
 	int		last_exit_code;
+	int		STDIN;
+	int		STDOUT;
 }	t_data;
 
 #define SYN_OP_ERROR "minishell: syntax error near unexpected token"
@@ -162,6 +163,7 @@ void	set_to_inter(void);
 void	heredoc(t_cmd *cmd_list);
 int		is_a_directory(char *cmd);
 int		empty_env_var(t_token *current);
+void	execute(t_cmd *cmd_list, t_data *data);
 
 t_cmd	*exec_setup(void	**stock, t_data *data);
 void    pretty_print_cmd_list(t_cmd *cmd_list);
@@ -188,7 +190,7 @@ void	get_env_value(char **envp, t_env *env);
 
 /* Excecution! */
 //void	ft_execution(t_data *data);
-void	multiple_pipes(t_data *data, t_cmd *cmd_list, char **env);
+void	multiple_pipes(t_data *data, t_cmd *cmd_list);
 
 /* clean-up functions */
 void	free_d_arr(char **arr);

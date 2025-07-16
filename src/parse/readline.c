@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/15 13:29:22 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/16 13:45:29 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	ft_parse(t_data *data)
 			if (list)
 				check_errors(list, (t_token **)args);
 			if (list)
-				multiple_pipes(data, list, data->env);
+				execute(list, data);
 		}
 	//	dollar_expand(data, token_list);
 	//	data->token_list = token_list;

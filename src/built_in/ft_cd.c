@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 14:59:36 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/15 16:30:48 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/15 17:31:49 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ int	do_cd(t_cmd *data)
 		if (chdir(sea_ret(data->data->env, "HOME")) == -1)
 			write(2, "minishell: cd: HOME not set\n", 28);
 		data->data->last_exit_code = 1;
+		return (1);
 	}
 	else if (chdir(path) == -1)
 	{
 		perror(ft_strjoin("minishell: cd: ", path));
 		data->data->last_exit_code = 1;
+		return (1);
 	}
 	data->data->last_exit_code = 0;
 	return (1);

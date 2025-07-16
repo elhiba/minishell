@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/02 12:15:24 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/16 14:39:11 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void handle_sigint(int sig)
 	if(sig == SIGINT)
 	{
 		g_received_signal = SIGINT;
-		write(STDOUT_FILENO, "\n", 1);
+		write(STDERR_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		rl_redisplay();
