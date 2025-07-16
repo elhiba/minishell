@@ -1,5 +1,0 @@
-==133620== FILE DESCRIPTORS: 4 open (3 std) at exit.
-==133620== Open file descriptor 3: /home/slasfar/Desktop/minishell-main/val
-==133620==    <inherited from parent>
-==133620== 
-==133620== 
