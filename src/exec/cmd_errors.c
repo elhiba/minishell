@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:19 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/17 14:14:25 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 15:50:30 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_redir_err(t_token *current, t_data *data)
 		return (data->last_exit_code = 1, printf("minishell: %s: is sus\n", current->ambiguous_name), -1);
 	if (!current->arg[0])
 		return (data->last_exit_code = 1, printf("minishell: %s: No such file or directory\n", current->arg), -1);
-	if (is_a_directory(current->arg))
+	if (is_a_directory(current->arg) && !current->is_infile)
 		return (data->last_exit_code = 1, printf("minishell: %s: is a directory\n", current->arg), -1);
 	// if (is_a_fifo(current->arg))
 	// 	return (data->last_exit_code = 1, printf("minishell: %s: hada kaytsema tmekrib\n", current->arg), -1);
@@ -73,7 +73,18 @@ int	check_redir_err(t_token *current, t_data *data)
 
 int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 {
-	if (token->is_outfile == OUTPUT_FILE)
+	if (token->is_infile == INPUT_FILE)
+	{
+		if (cmd->STDIN != 0)
+			close(cmd->STDIN);
+		if (is_a_directory(token->arg))
+			return (0);
+		cmd->use_last_heredoc = 0;
+		cmd->STDIN = open(token->arg, O_RDONLY, 0644);
+		if (cmd->STDIN == -1)
+			return (data->last_exit_code = 1, printf("minishell: %s: %s\n", token->arg, strerror(errno)), -1);
+	}
+	else if (token->is_outfile == OUTPUT_FILE)
 	{
 		if (cmd->STDOUT != 1)
 			close(cmd->STDOUT);
@@ -87,15 +98,6 @@ int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 			close(cmd->STDOUT);
 		cmd->STDOUT = open(token->arg, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (cmd->STDOUT == -1)
-			return (data->last_exit_code = 1, printf("minishell: %s: %s\n", token->arg, strerror(errno)), -1);
-	}
-	else if (token->is_infile == INPUT_FILE)
-	{
-		cmd->use_last_heredoc = 0;
-		if (cmd->STDIN != 0)
-			close(cmd->STDIN);
-		cmd->STDIN = open(token->arg, O_RDONLY, 0644);
-		if (cmd->STDIN == -1)
 			return (data->last_exit_code = 1, printf("minishell: %s: %s\n", token->arg, strerror(errno)), -1);
 	}
 	return (0);
