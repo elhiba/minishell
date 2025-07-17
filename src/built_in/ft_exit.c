@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:24:56 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/15 17:05:53 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:56:33 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	do_exit(t_cmd *data)
 	i = 0;
 	args = ++data->argv;
 	write(1, "exit\n", 5);
+	close(data->data->STDIN);
+	close(data->data->STDOUT);
 	if (*args)
 	{
 		if (args[0] != NULL)
@@ -55,10 +57,16 @@ int	do_exit(t_cmd *data)
 				data->data->last_exit_code = 1;
 			}
 			else
+			{
+				ft_collector(0, FREE);
 				exit(ft_atoi(args[0]));
+			}
 		}
 	}
 	else
+	{
+		ft_collector(0, FREE);
 		exit(0);
+	}
 	return (1);
 }
