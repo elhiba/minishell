@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/17 11:52:00 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 17:01:21 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,13 @@ char *get_full_path(char **path_stock, char *cmd_name, int *not_found)
 	i = 0;
 	while (path_stock[i])
 		i += 1;
+	if (i == 0)
+	{
+		if (access(ft_strjoin("./", cmd_name), X_OK) == 0 && !is_a_directory(ft_strjoin("./", cmd_name)))
+			return (ft_strjoin("./", cmd_name));
+		else if (access(ft_strjoin("./", cmd_name), F_OK) == 0)
+			return (ft_strjoin("./", cmd_name));
+	}
 	tmp_stock = ft_collector(sizeof(char *) * (i + 1), ALLOC);
 	i = 0;
 	while (path_stock[i])

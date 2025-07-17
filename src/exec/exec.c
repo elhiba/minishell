@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 15:37:48 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 16:56:12 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ void	save_exit_status(t_cmd *last, t_data *data, pid_t pid)
 	status = 0;
 	waitpid(pid, &status, WUNTRACED);
 	if (WIFEXITED(status))
-	{
 		data->last_exit_code = WEXITSTATUS(status);
-	}
 	else if (WIFSIGNALED(status))
 	{
 		data->last_exit_code = 128 + WTERMSIG(status);

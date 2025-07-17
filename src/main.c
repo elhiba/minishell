@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 14:09:17 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 16:07:29 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 	char *prompt;
-
 	
 	ft_bzero(&data, sizeof(data));
 	init_stuff_main(env, &data, ac, av);
