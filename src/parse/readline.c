@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 17:25:49 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 17:39:34 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,7 @@ int	ft_builtin(t_cmd *data)
 		status = do_pwd(data);
 	else if (ft_strcmp(*ptr->argv, "unset") == 0)
 		status = do_unset(data);
-	return (0);
+	else
+		status = 0;
+	return (status);
 }
