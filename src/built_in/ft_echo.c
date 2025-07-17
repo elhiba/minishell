@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:22:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/15 16:37:06 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:05:11 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	allow_newline(char **arg, int *index, int *is_newline)
 	int	j;
 
 	j = 0;
-	while (arg[*index][0] == '-' && arg[*index][1] == 'n')
+	while (arg[*index] && arg[*index][0] == '-' && arg[*index][1] == 'n')
 	{
 		j = 2;
 		while (arg[*index][j] == 'n')
