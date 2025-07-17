@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 15:31:31 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 15:37:48 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,10 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list)
 	int	fd[2];
 	pid_t pid;
 	current = cmd_list;
-	int	child_exit_code;
 	while (current)
 	{
 		pipe(fd);
 		signal(SIGINT, SIG_IGN);
-		child_exit_code = current->exit_code;
 		pid = fork();
 		if (pid == 0)
 		{
