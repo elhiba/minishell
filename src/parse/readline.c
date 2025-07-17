@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 13:44:50 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 17:25:49 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,9 @@ int	ft_builtin(t_cmd *data)
 	t_cmd	*ptr;
 	int		status;
 
-	if (!data || !data->argv)
+	if (data->should_not_execute)
+		return (1337);
+	if ((!data || !data->argv))
 		return (0);
 	ptr = data;
 	if (ft_strcmp(*ptr->argv, "cd") == 0)
@@ -127,7 +129,5 @@ int	ft_builtin(t_cmd *data)
 		status = do_pwd(data);
 	else if (ft_strcmp(*ptr->argv, "unset") == 0)
 		status = do_unset(data);
-	else
-		status = 0;
-	return (status);
+	return (0);
 }

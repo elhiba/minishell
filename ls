@@ -1,0 +1,3 @@
+#!/hdbkdjfdf
+
+echo hello
