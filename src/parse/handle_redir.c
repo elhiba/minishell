@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/15 16:25:07 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 11:52:00 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char *read_rand()
 	int		fd;
     int     i = 0;
 
-	buffer = malloc(17);
+	buffer = ft_collector(17, ALLOC);
+	ft_bzero(buffer, 17);
 	fd = open("/dev/random", O_RDONLY);
 	read(fd, buffer, 16);
 	close(fd);
@@ -106,6 +107,27 @@ char *get_cmd_name(char *buffer)
 	return (buffer + i);
 }
 
+int	is_a_builtin(char *name)
+{
+	if (!name)
+		return (0);
+	if (ft_strcmp(name, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(name, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(name, "env") == 0)
+		return (1);
+	else if (ft_strcmp(name, "exit") == 0)
+		return (1);
+	else if (ft_strcmp(name, "export") == 0)
+		return (1);
+	else if (ft_strcmp(name, "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(name, "unset") == 0)
+		return (1);
+	return (0);
+}
+
 
 char *get_full_path(char **path_stock, char *cmd_name, int *not_found)
 {
@@ -139,10 +161,8 @@ char *get_full_path(char **path_stock, char *cmd_name, int *not_found)
 			return (tmp_stock[i]);
 		i++;
 	}
-	// char *tmp = ft_strjoin("./", cmd_name);
-	// if (access(tmp, F_OK) == 0)
-	// 	return (tmp);
-	*not_found = 1;
+	if (!is_a_builtin(cmd_name))
+		*not_found = 1;
 	return (cmd_name);
 }
 

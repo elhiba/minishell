@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/16 13:45:29 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 11:42:12 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,22 +83,19 @@ void	ft_parse(t_data *data)
 		//quotes_handler(data);
 		args = ft_tokenizer(data);
 		// if (args)
-		// 	print_list(args);
+			// print_list(args);
 		//printf("\nEXEC LIST:\n\n");
 		if (args)
 			list = exec_setup(args, data);
 		// if (list)
 		// 	pretty_print_cmd_list(list);
 		/* This ft_builtin isn't helpfull here we will make changes later! */
-		if (ft_builtin(list) == 0)
-		{
-			if (list)
-				heredoc(list);
-			if (list)
-				check_errors(list, (t_token **)args);
-			if (list)
-				execute(list, data);
-		}
+		if (list)
+			heredoc(list);
+		if (list)
+			check_errors(list, (t_token **)args);
+		if (list)
+			execute(list, data);
 	//	dollar_expand(data, token_list);
 	//	data->token_list = token_list;
 	//	if (ft_builtin(data) == 0 && token_list)

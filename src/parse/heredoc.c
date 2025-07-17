@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:53:22 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/16 17:14:31 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 11:38:56 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ void heredoc_handler(int sig)
 			close(cmd->STDIN);
 	if (cmd->STDOUT != 1 && cmd->STDOUT < 0)
 		close(cmd->STDOUT);
+	close(cmd->data->STDIN);
+	close(cmd->data->STDOUT);
 	ft_collector(0, FREE);
 	write(2, "\n", 1);
 	exit(130);
@@ -173,6 +175,8 @@ static void	heredoc_logic(t_cmd *cmd, t_heredoc *heredoc, t_cmd *cmd_list)
 			close(cmd->STDIN);
 		if (cmd->STDOUT != 1 && cmd->STDOUT < 0)
 			close(cmd->STDOUT);
+		close(cmd->data->STDIN);
+		close(cmd->data->STDOUT);
 		ft_collector(0, FREE);
 		exit(0);
 	}

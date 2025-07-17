@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/16 17:14:17 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 11:33:28 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	should_use_last_herdoc(t_cmd *current)
 }
 
 
-void	change_std(t_cmd *current)
+void	change_std(t_cmd *current, t_data *data)
 {
 	if (current->STDIN != 0)
 	{
@@ -58,6 +58,8 @@ void	change_std(t_cmd *current)
 		dup2(current->STDOUT, STDOUT_FILENO);
 		close(current->STDOUT);
 	}
+	close(data->STDIN);
+	close(data->STDOUT);
 }
 
 void	close_pipe(int fd[2])
@@ -101,10 +103,12 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list)
 	int	fd[2];
 	pid_t pid;
 	current = cmd_list;
+	int	child_exit_code;
 	while (current)
 	{
 		pipe(fd);
 		signal(SIGINT, SIG_IGN);
+		child_exit_code = current->exit_code;
 		pid = fork();
 		if (pid == 0)
 		{
@@ -112,14 +116,14 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list)
 			if (current->next)
 				dup2(fd[1], STDOUT_FILENO);
 			should_use_last_herdoc(current);
-			change_std(current);
+			change_std(current, data);
 			close_pipe(fd);
 			close(data->STDIN);
 			close(data->STDOUT);
 			if (current->should_not_execute || current->cmd_not_found)
 			{
 				ft_collector(0, FREE);
-				exit(current->exit_code);
+				exit(child_exit_code);
 			}
 			if (!current->cmd)
 				ft_collector(0, EXIT);
@@ -152,34 +156,37 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list)
 }
 
 
-
 void	single_command(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid;
+	int		child_exit_code;
 
 	signal(SIGINT, SIG_IGN);
 	if (ft_builtin(cmd) == 0)
 	{
-		if (!cmd->should_not_execute && !cmd->cmd_not_found)
+		child_exit_code = cmd->exit_code;
+		pid = fork();
+		if (pid == 0)
 		{
-			pid = fork();
-			if (pid == 0)
+			set_to_default();
+			should_use_last_herdoc(cmd);
+			change_std(cmd, data);
+			if (cmd->should_not_execute || cmd->cmd_not_found)
 			{
-				set_to_default();
-				should_use_last_herdoc(cmd);
-				change_std(cmd);
-				if (!cmd->cmd)
-					ft_collector(0, EXIT);
-				execve(cmd->cmd, cmd->argv, data->env);
-				printf("minishell: %s: %s\n", cmd->argv[0], strerror(errno));
 				ft_collector(0, FREE);
-				if (errno == ENOENT)
-					exit(127);
-				else
-					exit (126);
+				exit(child_exit_code);
 			}
-			save_exit_status(cmd, data, pid);
+			if (!cmd->cmd)
+				ft_collector(0, EXIT);
+			execve(cmd->cmd, cmd->argv, data->env);
+			printf("minishell: %s: %s\n", cmd->argv[0], strerror(errno));
+			ft_collector(0, FREE);
+			if (errno == ENOENT)
+				exit(127);
+			else
+				exit (126);
 		}
+		save_exit_status(cmd, data, pid);
 	}
 }
 

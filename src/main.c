@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/16 18:26:27 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 11:57:45 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av, char **env)
 	init_stuff_main(env, &data, ac, av);
 	while (1337)
 	{
-		set_to_inter();
+		handle_signals();
 		prompt = prompt_builder(&data);
 		rl_outstream = stderr;
 		data.readline_in = readline(prompt);
