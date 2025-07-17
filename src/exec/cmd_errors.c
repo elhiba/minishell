@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:19 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/17 11:44:36 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 14:14:25 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ int	check_redir_err(t_token *current, t_data *data)
 
 int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 {
-	cmd->use_last_heredoc = 0;
-	cmd->data->last_exit_code = 0;
 	if (token->is_outfile == OUTPUT_FILE)
 	{
 		if (cmd->STDOUT != 1)
@@ -93,6 +91,7 @@ int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 	}
 	else if (token->is_infile == INPUT_FILE)
 	{
+		cmd->use_last_heredoc = 0;
 		if (cmd->STDIN != 0)
 			close(cmd->STDIN);
 		cmd->STDIN = open(token->arg, O_RDONLY, 0644);
@@ -108,7 +107,7 @@ int	check_and_set_fd(t_cmd *cmd_current, t_token *token_current)
 	{
 		if (is_redir(token_current))
 		{
-			if (check_redir_err(token_current, cmd_current->data) == -1 && !token_current->is_heredoc)
+			if (!token_current->is_heredoc && check_redir_err(token_current, cmd_current->data) == -1)
 			{
 				cmd_current->should_not_execute = 1;
 				cmd_current->exit_code = cmd_current->data->last_exit_code;
@@ -175,10 +174,8 @@ void	check_errors(t_cmd *cmd_list, t_token **token_list)
 	while (cmd_current && token_list[i])
 	{
 		token_current = token_list[i];
-		if (check_and_set_fd(cmd_current, token_current))
-			break ;
-		if (check_cmd_errors(cmd_current, token_current))
-			break ;
+		check_and_set_fd(cmd_current, token_current);
+		check_cmd_errors(cmd_current, token_current);
 		i++;
 		cmd_current = cmd_current->next;
 	}

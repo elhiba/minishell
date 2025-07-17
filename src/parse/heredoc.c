@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:53:22 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/17 11:38:56 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 13:48:10 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,9 @@ void heredoc_handler(int sig)
 	cmd = save_cmd(NULL);
 	heredocs = save_heredoc(NULL);
 	close(heredocs->fd);
-	if (cmd->STDIN != 0 && cmd->STDIN < 0)
+	if (cmd->STDIN != 0)
 			close(cmd->STDIN);
-	if (cmd->STDOUT != 1 && cmd->STDOUT < 0)
+	if (cmd->STDOUT != 1)
 		close(cmd->STDOUT);
 	close(cmd->data->STDIN);
 	close(cmd->data->STDOUT);
@@ -171,9 +171,9 @@ static void	heredoc_logic(t_cmd *cmd, t_heredoc *heredoc, t_cmd *cmd_list)
 		signal(SIGINT, heredoc_handler);
 		signal(SIGQUIT, SIG_IGN);
 		heredoc_input(heredoc, cmd->data);
-		if (cmd->STDIN != 0 && cmd->STDIN < 0)
+		if (cmd->STDIN != 0)
 			close(cmd->STDIN);
-		if (cmd->STDOUT != 1 && cmd->STDOUT < 0)
+		if (cmd->STDOUT != 1)
 			close(cmd->STDOUT);
 		close(cmd->data->STDIN);
 		close(cmd->data->STDOUT);
@@ -201,8 +201,7 @@ void	heredoc(t_cmd *cmd_list)
 			{
 				save_heredoc(heredocs);
 				heredoc_logic(cmd, heredocs, cmd_list);
-				if (!heredocs->next)
-					cmd->last_heredoc = heredocs;
+				cmd->last_heredoc = heredocs;
 				heredocs = heredocs->next;
 			}
 			if (prevent_flag(42))

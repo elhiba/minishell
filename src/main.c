@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 11:57:45 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 14:09:17 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	main(int ac, char **av, char **env)
 			write(2, "exit\n", 5);
 			close(data.STDIN);
 			close(data.STDOUT);
-			ft_collector(0, EXIT);
+			ft_collector(0, FREE);
+			exit(data.last_exit_code);
 		}
 		if (*data.readline_in && data.readline_in)
 			add_history(data.readline_in);

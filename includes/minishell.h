@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/16 13:52:46 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 14:37:23 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <errno.h>
+# include <dirent.h>
 
 
 extern volatile sig_atomic_t	g_received_signal;
@@ -164,6 +165,7 @@ void	heredoc(t_cmd *cmd_list);
 int		is_a_directory(char *cmd);
 int		empty_env_var(t_token *current);
 void	execute(t_cmd *cmd_list, t_data *data);
+int		is_a_builtin(char *name);
 
 t_cmd	*exec_setup(void	**stock, t_data *data);
 void    pretty_print_cmd_list(t_cmd *cmd_list);
