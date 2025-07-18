@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 09:07:08 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/31 16:38:38 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:27:57 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static char	*malloki(char *src, int start, int end)
 {
 	char	*dest;
 
-	dest = ft_collector(sizeof(char) * ((end - start) + 1), ALLOC);
+	dest = ft_collector(sizeof(char) * \
+				((end - start) + 1), ALLOC);
 	if (!dest)
 		return (ft_collector(0, EXIT));
 	ft_memcpy(dest, src + start, (end - start));
@@ -74,9 +75,8 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	i = 0;
 	start = 0;
-	words = ft_collector(sizeof(char *) * (count_words((char *)s, c) + 1), ALLOC);
-	if (!words)
-		return (ft_collector(0, EXIT));
+	words = ft_collector(sizeof(char *) * \
+				(count_words((char *)s, c) + 1), ALLOC);
 	while (s[start])
 	{
 		sus((char *)s, c, &start, &end);

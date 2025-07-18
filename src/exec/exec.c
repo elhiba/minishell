@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 17:26:20 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 17:44:25 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,27 @@ void	should_use_last_herdoc(t_cmd *current)
 {
 	if (current->last_heredoc && current->use_last_heredoc)
 	{
-		if (current->STDIN != 0)
-			close(current->STDIN);
-		current->STDIN = open(current->last_heredoc->heredoc_file, O_RDONLY, 0644);
+		if (current->stdin_ != 0)
+			close(current->stdin_);
+		current->stdin_ = open(current->last_heredoc->heredoc_file, O_RDONLY, 0644);
 	}
 }
 
 
 void	change_std(t_cmd *current, t_data *data)
 {
-	if (current->STDIN != 0)
+	if (current->stdin_ != 0)
 	{
-		dup2(current->STDIN, STDIN_FILENO);
-		close(current->STDIN);
+		dup2(current->stdin_, STDIN_FILENO);
+		close(current->stdin_);
 	}
-	if (current->STDOUT != 1)
+	if (current->stdout_ != 1)
 	{
-		dup2(current->STDOUT, STDOUT_FILENO);
-		close(current->STDOUT);
+		dup2(current->stdout_, STDOUT_FILENO);
+		close(current->stdout_);
 	}
-	close(data->STDIN);
-	close(data->STDOUT);
+	close(data->stdin_);
+	close(data->stdout_);
 }
 
 void	close_pipe(int fd[2])
@@ -112,8 +112,8 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list)
 			should_use_last_herdoc(current);
 			change_std(current, data);
 			close_pipe(fd);
-			close(data->STDIN);
-			close(data->STDOUT);
+			close(data->stdin_);
+			close(data->stdout_);
 			if (current->should_not_execute || current->cmd_not_found)
 			{
 				ft_collector(0, FREE);
@@ -138,13 +138,13 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list)
 		dup2(fd[0], STDIN_FILENO);
 		close_pipe(fd);
 		last = current;
-		if (current->STDIN != 0)
-			close(current->STDIN);
-		if (current->STDOUT != 1)
-			close(current->STDOUT);
+		if (current->stdin_ != 0)
+			close(current->stdin_);
+		if (current->stdout_ != 1)
+			close(current->stdout_);
 		current = current->next;
 	}
-	dup2(data->STDIN, STDIN_FILENO);
+	dup2(data->stdin_, STDIN_FILENO);
 	save_exit_status(last, data, pid);
 	pid = 0;
 	if (len > 1)
@@ -183,10 +183,10 @@ void	single_command(t_data *data, t_cmd *cmd)
 			else
 				exit (126);
 		}
-		if (cmd->STDIN != 0)
-			close(cmd->STDIN);
-		if (cmd->STDOUT != 1)
-			close(cmd->STDOUT);
+		if (cmd->stdin_ != 0)
+			close(cmd->stdin_);
+		if (cmd->stdout_ != 1)
+			close(cmd->stdout_);
 		save_exit_status(cmd, data, pid);
 	}
 }

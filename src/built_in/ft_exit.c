@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:24:56 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 17:56:33 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/17 18:10:50 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@
  * if exit with a number for ex : exit 2 should exit with 2
  * if exit with many args should print it as exit: too many arguments and 
  *	set status_exit with 1
- * There is an issue with exit codes !!!!here!!!!!!!!!!!1
- * !!!!!!!!!!!! STILL NOT FULL COMPLITED !!!!!!!!!!!!!!
- * */
+* */
 
 void	is_numeric_arg(char **args, int *index)
 {
@@ -30,6 +28,7 @@ void	is_numeric_arg(char **args, int *index)
 			write(2, "minishell: exit: ", 17);
 			write(2, args[0], ft_strlen(args[0]));
 			write(2, ": numeric argument required\n", 28);
+			ft_collector(0, FREE);
 			exit(2);
 		}
 		(*index)++;
@@ -44,8 +43,7 @@ int	do_exit(t_cmd *data)
 	i = 0;
 	args = ++data->argv;
 	write(1, "exit\n", 5);
-	close(data->data->STDIN);
-	close(data->data->STDOUT);
+	(1) && (close(data->data->stdin_), close(data->data->stdout_));
 	if (*args)
 	{
 		if (args[0] != NULL)

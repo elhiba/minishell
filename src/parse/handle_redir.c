@@ -290,8 +290,8 @@ void	init_stuff(t_token *head, t_cmd *node)
 	node->argv = ft_collector(sizeof(char *) * (count_argv(head) + 1), ALLOC);
 	node->argv[0] = NULL;
 	node->heredcs = NULL;
-	node->STDIN = 0;
-	node->STDOUT = 1;
+	node->stdin_ = 0;
+	node->stdout_ = 1;
 	node->next = NULL;
 }
 
@@ -402,8 +402,8 @@ void    pretty_print_cmd_list(t_cmd *cmd_list)
         printf(":---------------------------------------:\n");
 
         // Print I/O file descriptors
-        printf("| %-12s: %d\n", "STDIN", cmd_list->STDIN);
-        printf("| %-12s: %d\n", "STDOUT", cmd_list->STDOUT);
+        printf("| %-12s: %d\n", "stdin_", cmd_list->stdin_);
+        printf("| %-12s: %d\n", "stdout_", cmd_list->stdout_);
         printf(":---------------------------------------:\n");
         
         // --- NEW SECTION for flags ---

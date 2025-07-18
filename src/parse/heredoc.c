@@ -147,12 +147,12 @@ void heredoc_handler(int sig)
 	cmd = save_cmd(NULL);
 	heredocs = save_heredoc(NULL);
 	close(heredocs->fd);
-	if (cmd->STDIN != 0)
-			close(cmd->STDIN);
-	if (cmd->STDOUT != 1)
-		close(cmd->STDOUT);
-	close(cmd->data->STDIN);
-	close(cmd->data->STDOUT);
+	if (cmd->stdin_ != 0)
+			close(cmd->stdin_);
+	if (cmd->stdout_ != 1)
+		close(cmd->stdout_);
+	close(cmd->data->stdin_);
+	close(cmd->data->stdout_);
 	ft_collector(0, FREE);
 	write(2, "\n", 1);
 	exit(130);
@@ -171,12 +171,12 @@ static void	heredoc_logic(t_cmd *cmd, t_heredoc *heredoc, t_cmd *cmd_list)
 		signal(SIGINT, heredoc_handler);
 		signal(SIGQUIT, SIG_IGN);
 		heredoc_input(heredoc, cmd->data);
-		if (cmd->STDIN != 0)
-			close(cmd->STDIN);
-		if (cmd->STDOUT != 1)
-			close(cmd->STDOUT);
-		close(cmd->data->STDIN);
-		close(cmd->data->STDOUT);
+		if (cmd->stdin_ != 0)
+			close(cmd->stdin_);
+		if (cmd->stdout_ != 1)
+			close(cmd->stdout_);
+		close(cmd->data->stdin_);
+		close(cmd->data->stdout_);
 		ft_collector(0, FREE);
 		exit(0);
 	}

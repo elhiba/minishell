@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 14:37:23 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/18 14:46:17 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 # include <errno.h>
 # include <dirent.h>
 
-
 extern volatile sig_atomic_t	g_received_signal;
 
+typedef struct s_data			t_data;
 
 typedef enum e_signal_flag
 {
@@ -85,45 +85,56 @@ typedef struct s_token
 
 typedef struct s_heredoc
 {
-	char	*heredoc_file;
-	char	*heredoc_del;
-	int		fd;
-	int		expand;
-	struct s_heredoc *next;
-} t_heredoc;
+	char				*heredoc_file;
+	char				*heredoc_del;
+	int					fd;
+	int					expand;
+	struct s_heredoc	*next;
+}	t_heredoc;
 
-typedef struct 	s_data t_data;
-
+/*
+ * 	char			*cmd; // usr/bin/ls
+	char			**argv; // {"ls", "-l"}
+	t_heredoc		*heredcs; // linked list of heredocs
+	int				cmd_not_found; // flag to handle cmd not found
+	int				should_not_execute;
+	t_data			*data;
+	int				use_last_heredoc;
+	t_heredoc		*last_heredoc;
+	int				stdin_; // stdin rah bayna 
+	int				stdout_;
+	int				exit_code;
+	struct s_cmd	*next; // rah bayna 
+*/
 typedef struct s_cmd
 {
-	char	*cmd; // usr/bin/ls
-	char	**argv; // {"ls", "-l"}
-	t_heredoc	*heredcs; // linked list of heredocs
-	int		cmd_not_found; // flag to handle cmd not found
-	int		should_not_execute;
-	t_data	*data;
-	int			use_last_heredoc;
-	t_heredoc	*last_heredoc;
-	int		STDIN; // stdin rah bayna 
-	int		STDOUT;
-	int		exit_code;
-	struct s_cmd *next; // rah bayna 
+	char			*cmd;
+	char			**argv;
+	t_heredoc		*heredcs;
+	int				cmd_not_found;
+	int				should_not_execute;
+	t_data			*data;
+	int				use_last_heredoc;
+	t_heredoc		*last_heredoc;
+	int				stdin_;
+	int				stdout_;
+	int				exit_code;
+	struct s_cmd	*next;
 }	t_cmd;
-
 
 typedef struct s_data
 {
-	char	*readline_in;
-	char	**env;
+	char			*readline_in;
+	char			**env;
 
-	t_token	*token_list;
-	int		last_exit_code;
-	int		STDIN;
-	int		STDOUT;
+	t_token			*token_list;
+	int				last_exit_code;
+	int				stdin_;
+	int				stdout_;
 }	t_data;
 
-#define SYN_OP_ERROR "minishell: syntax error near unexpected token"
-#define SYN_Q_ERROR "minishell: unexpected EOF while looking for matching"
+# define SYN_OP_ERROR "minishell: syntax error near unexpected token"
+# define SYN_Q_ERROR "minishell: unexpected EOF while looking for matching"
 /* debug*/
 void	print_list(void **head);
 
@@ -138,11 +149,12 @@ char	*dollar_handler(char *str, int *i);
 char	*quotes_handler(char *str, int *i, int *flag);
 void	ft_spliter(t_token **token, char *str, t_data *data);
 char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
-void	expand_variable(t_token *current, t_data *data, char **envp, char **token);
+void	expand_variable(t_token *current, t_data *data,
+			char **envp, char **token);
 void	join_tokens(t_token **tokens);
 int		check_is_expandable(t_token *current);
 void	split_expanded(t_token **token, t_data *data);
-void 	check_and_expand(t_token **head, t_data *data, char **envp);
+void	check_and_expand(t_token **head, t_data *data, char **envp);
 int		operator_cleaner(char *arg);
 int		there_is_space(char *s);
 int		all_spaces(char *s);
@@ -168,7 +180,7 @@ void	execute(t_cmd *cmd_list, t_data *data);
 int		is_a_builtin(char *name);
 
 t_cmd	*exec_setup(void	**stock, t_data *data);
-void    pretty_print_cmd_list(t_cmd *cmd_list);
+void	pretty_print_cmd_list(t_cmd *cmd_list);
 
 /* error handler */
 void	error_handler(char *error_name, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:29:39 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/31 16:36:08 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:26:25 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 
 /* Garbage Collector */
-void	*ft_collector(size_t size, int flag);
+void				*ft_collector(size_t size, int flag);
 
 /* libft */
 int					ft_atoi(const char *nptr);
