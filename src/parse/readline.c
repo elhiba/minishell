@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 17:39:34 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/18 17:00:51 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,26 @@ void	ft_parse(t_data *data)
 	}
 }
 
+void	dup_to_redir(t_cmd *current)
+{
+	if (current->stdin_ != 0)
+	{
+		dup2(current->stdin_, STDIN_FILENO);
+		close(current->stdin_);
+	}
+	if (current->stdout_ != 1)
+	{
+		dup2(current->stdout_, STDOUT_FILENO);
+		close(current->stdout_);
+	}
+}
+
+void	restore_std(t_data *data)
+{
+	dup2(data->stdin_, STDIN_FILENO);
+	dup2(data->stdout_, STDOUT_FILENO);
+}
+
 int	ft_builtin(t_cmd *data)
 {
 	t_cmd	*ptr;
@@ -115,6 +135,7 @@ int	ft_builtin(t_cmd *data)
 	if ((!data || !data->argv))
 		return (0);
 	ptr = data;
+	dup_to_redir(ptr);
 	if (ft_strcmp(*ptr->argv, "cd") == 0)
 		status = do_cd(data);
 	else if (ft_strcmp(*ptr->argv, "echo") == 0)
@@ -131,5 +152,6 @@ int	ft_builtin(t_cmd *data)
 		status = do_unset(data);
 	else
 		status = 0;
+	restore_std(ptr->data);
 	return (status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 14:44:09 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/18 17:14:28 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	mini_init(char **prompt_add, t_data *data)
 	handle_signals();
 	*prompt_add = prompt_builder(data);
 	rl_outstream = stderr;
-	(*data).readline_in = readline(*prompt_add);
+	data->readline_in = readline(*prompt_add);
 }
 
 int	main(int ac, char **av, char **env)
