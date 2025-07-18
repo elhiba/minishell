@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 11:02:22 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/18 19:51:32 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/*
- * I should search about interactive mode and non interactive mode! 
- * to make sure everystuff works fine if we for a minishell or any other non interactive file(script)
- * */
 
 void	handle_signals(void)
 {
@@ -30,7 +25,6 @@ void	handle_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-
 void	sigint_handler(int sig)
 {
 	if (sig == SIGINT)
@@ -44,9 +38,9 @@ void	sigint_handler(int sig)
 	}
 }
 
-void handle_sigint(int sig)
+void	handle_sigint(int sig)
 {
-	if(sig == SIGINT)
+	if (sig == SIGINT)
 	{
 		g_received_signal = SIGINT;
 		write(STDERR_FILENO, "\n", 1);
@@ -73,9 +67,4 @@ void	setup_signal_handlers(int mode)
 void	set_to_default(void)
 {
 	setup_signal_handlers(DEFAULT);
-}
-
-void	set_to_inter(void)
-{
-	setup_signal_handlers(INTER);
 }

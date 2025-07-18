@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 14:46:17 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/18 19:29:35 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ typedef struct s_data
 
 # define SYN_OP_ERROR "minishell: syntax error near unexpected token"
 # define SYN_Q_ERROR "minishell: unexpected EOF while looking for matching"
+# define MAX_PATH_SIZE 4096
+
 /* debug*/
 void	print_list(void **head);
 
@@ -224,5 +226,18 @@ void	add_token_node(t_token **head, char *arg);
 char	*ft_strtrim(char *str, int limit);
 int		ft_arglen(char **args);
 char	*sea_ret(char **env, char *arg);
+
+/* prompt */
+char	*check_git(char *dir_path);
+char	*get_parent_dir(char *current_path);
+char	*cp_buffer(char *buffer);
+char	*dir_name(t_data *data);
+int		validate_branch_ref(char *git_root, char *head);
+char	*read_head(int *git_type);
+char	*search_for_git(void);
+char	*format_exit_code(int exit_code);
+char	*get_status_arrow(int exit_code);
+char	*build_git_part(void);
+int		is_git_valid(void);
 
 #endif

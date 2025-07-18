@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:23:14 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/03 23:09:33 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/18 19:52:46 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strtrim(char *str, int limit)
 	return (result);
 }
 
-int		ft_arglen(char **args)
+int	ft_arglen(char **args)
 {
 	int	i;
 
@@ -46,40 +46,6 @@ int		ft_arglen(char **args)
 		i++;
 	return (i);
 }
-
-//void	free_token_list(t_token **head)
-//{
-//	t_token	*tmp;
-//	t_token	*next;
-//
-//	if (!head || !*head)
-//		return ;
-//	tmp = *head;
-//	while (tmp)
-//	{
-//		next = tmp->next;
-//		if (tmp->arg)
-//			free(tmp->arg);
-//		free(tmp);
-//		tmp = next;
-//	}
-//	*head = NULL;
-//}
-
-//void	free_d_arr(char **arr)
-//{
-//	char	**ptr;
-//	int		i;
-//
-//	ptr = arr;
-//	i = 0;
-//	while (arr[i])
-//	{
-//		free(ptr[i]);
-//		i++;
-//	}
-//	free(ptr);
-//}
 
 /* Search And Replace */
 char	*sea_ret(char **env, char *arg)

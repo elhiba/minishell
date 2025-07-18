@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 17:14:28 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/18 19:44:16 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	init_stuff_main(char **env, t_data *data, ...)
 	data->env = copy_env(env);
 	data->stdin_ = dup(STDIN_FILENO);
 	data->stdout_ = dup(STDOUT_FILENO);
-	set_to_inter();
 }
 
 void	mini_init(char **prompt_add, t_data *data)
