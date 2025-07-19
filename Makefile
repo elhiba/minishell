@@ -29,9 +29,11 @@ FILES = $(addprefix $(SRC), main.c) \
 		$(addprefix $(BUITIN), ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c) \
 		$(addprefix $(EXEC), exec.c cmd_errors.c) \
 		$(addprefix $(UTILS), signals.c error.c utils.c linked_list.c utils_env.c special_split.c) \
-		$(addprefix $(PARSE), readline.c spliter.c dollar_expander.c quotes_handling.c syntax_checker.c \
-		expand.c heredoc_expand.c heredoc.c join_token.c split_expanded.c handle_redir.c \
-		$(addprefix prompt/, prompt_builder.c git_checker0.c git_checker1.c git_checker2.c)) \
+		$(addprefix $(PARSE), readline.c spliter.c quotes_handling.c \
+		heredoc_expand.c heredoc.c join_token.c split_expanded.c handle_redir.c \
+		$(addprefix prompt/, prompt_builder.c git_checker0.c git_checker1.c git_checker2.c) \
+		$(addprefix dollar_expand/, dollar_expander.c expand.c expand_modifier.c) \
+		$(addprefix syntax/, op_checkers.c syntax_checker.c)) \
 		$(GCFT)
 
 OBJ = $(FILES:.c=.o)

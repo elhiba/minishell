@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 19:29:35 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/19 12:14:04 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,14 @@ void	print_list(void **head);
 void	handle_signals(void);
 void	sigint_handler(int sig);
 
+/* Syntax checker */
+int		syntax_checker(t_data *data);
+int		check_hereappend(char *str, int *i);
+int		check_redirect(char *str, int *i);
+int		check_pipe(char *str, int *i);
+
 /* Parse */
 void	ft_parse(t_data *data);
-int		syntax_checker(t_data *data);
 char	*dollar_handler(char *str, int *i);
 char	*quotes_handler(char *str, int *i, int *flag);
 void	ft_spliter(t_token **token, char *str, t_data *data);
@@ -180,9 +185,9 @@ int		is_a_directory(char *cmd);
 int		empty_env_var(t_token *current);
 void	execute(t_cmd *cmd_list, t_data *data);
 int		is_a_builtin(char *name);
+void	expand_verifier(t_token *current, char **token, void **data);
 
 t_cmd	*exec_setup(void	**stock, t_data *data);
-void	pretty_print_cmd_list(t_cmd *cmd_list);
 
 /* error handler */
 void	error_handler(char *error_name, t_data *data);

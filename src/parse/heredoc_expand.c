@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/15 16:20:52 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 09:29:03 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	is_it_expandable(char *buffer)
 	i = 0;
 	while (buffer[i])
 	{
-		if ((buffer[i] == '$' && !is_digit_(buffer[i + 1]) && !is_white_space(buffer[i + 1])))
+		if ((buffer[i] == '$' && !ft_isdigit(buffer[i + 1]) \
+			&& !is_white_space(buffer[i + 1])))
 			return (1);
 		i++;
 	}
@@ -45,7 +46,7 @@ void	expand_variable_heredoc(t_data *data, char **envp, char **token)
 			expanded_token = ft_strnjoin(expanded_token, exit_code, ft_strlen(exit_code));
 			*token = ft_trim(*token, 2);
 		}
-		else if ((**token == '$' && !is_digit_(*(*token + 1)) && is_alnum_(*(*token + 1)) == true))
+		else if ((**token == '$' && !ft_isdigit(*(*token + 1)) && is_alnum_(*(*token + 1)) == true))
 		{
 			extract_variable_name(*token + 1, env);
 			get_env_value(envp, env);

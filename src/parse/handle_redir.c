@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/17 17:01:21 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 12:27:25 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 char *read_rand()
 {
-	char 	*buffer;
+	char	*buffer;
 	int		fd;
-    int     i = 0;
+	int		i = 0;
 
 	buffer = ft_collector(17, ALLOC);
 	ft_bzero(buffer, 17);
 	fd = open("/dev/random", O_RDONLY);
 	read(fd, buffer, 16);
 	close(fd);
-    while (i < 16)
-    {
-        buffer[i] = buffer[i] % 26 + 'a';
-        if (!ft_isalpha(buffer[i]))
-            buffer[i] = (i % 10) + 48;
-        i++;
-    }
+	while (i < 16)
+	{
+		buffer[i] = buffer[i] % 26 + 'a';
+		if (!ft_isalpha(buffer[i]))
+			buffer[i] = (i % 10) + 48;
+		i++;
+	}
 	return (ft_strjoin("_", buffer));
 }
 
@@ -60,7 +60,6 @@ int	count_argv(t_token *head)
 	}
 	return (count);
 }
-
 
 void	add_to_argv(t_cmd *cmd, t_token *token)
 {
@@ -106,7 +105,6 @@ char *get_cmd_name(char *buffer)
 		i++;
 	return (buffer + i);
 }
-
 int	is_a_builtin(char *name)
 {
 	if (!name)
@@ -359,7 +357,7 @@ t_cmd	*exec_setup(void	**stock, t_data *data)
 	return (cmd_list);
 }
 
-
+/*
 void    pretty_print_cmd_list(t_cmd *cmd_list)
 {
     int i;
@@ -444,3 +442,4 @@ void    pretty_print_cmd_list(t_cmd *cmd_list)
         cmd_list = cmd_list->next;
     }
 }
+*/

@@ -600,38 +600,6 @@
       "-g3",
       "-c",
       "-o",
-      "src/parse/dollar_expander.o",
-      "src/parse/dollar_expander.c"
-    ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/dollar_expander.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/dollar_expander.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-g3",
-      "-c",
-      "-o",
-      "src/parse/prompt_builder.o",
-      "src/parse/prompt_builder.c"
-    ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/prompt_builder.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/prompt_builder.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-g3",
-      "-c",
-      "-o",
       "src/parse/quotes_handling.o",
       "src/parse/quotes_handling.c"
     ],
@@ -654,22 +622,6 @@
     "directory": "/home/moel-hib/Documents/minishell",
     "file": "/home/moel-hib/Documents/minishell/src/parse/syntax_checker.c",
     "output": "/home/moel-hib/Documents/minishell/src/parse/syntax_checker.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-g3",
-      "-c",
-      "-o",
-      "src/parse/expand.o",
-      "src/parse/expand.c"
-    ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/expand.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/expand.o"
   },
   {
     "arguments": [
@@ -750,6 +702,118 @@
     "directory": "/home/moel-hib/Documents/minishell",
     "file": "/home/moel-hib/Documents/minishell/src/parse/handle_redir.c",
     "output": "/home/moel-hib/Documents/minishell/src/parse/handle_redir.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/prompt/prompt_builder.o",
+      "src/parse/prompt/prompt_builder.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/prompt/prompt_builder.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/prompt/prompt_builder.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/prompt/git_checker0.o",
+      "src/parse/prompt/git_checker0.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/prompt/git_checker0.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/prompt/git_checker0.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/prompt/git_checker1.o",
+      "src/parse/prompt/git_checker1.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/prompt/git_checker1.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/prompt/git_checker1.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/prompt/git_checker2.o",
+      "src/parse/prompt/git_checker2.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/prompt/git_checker2.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/prompt/git_checker2.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/dollar_expand/dollar_expander.o",
+      "src/parse/dollar_expand/dollar_expander.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/dollar_expand/dollar_expander.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/dollar_expand/dollar_expander.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/dollar_expand/expand.o",
+      "src/parse/dollar_expand/expand.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/dollar_expand/expand.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/dollar_expand/expand.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/dollar_expand/expand_modifier.o",
+      "src/parse/dollar_expand/expand_modifier.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/dollar_expand/expand_modifier.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/dollar_expand/expand_modifier.o"
   },
   {
     "arguments": [

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:34:38 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 17:15:21 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 09:12:20 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	add_pid(pid_t **pid, pid_t new_pid, int *size)
 
 }
 
-
 void	should_use_last_herdoc(t_cmd *current)
 {
 	if (current->last_heredoc && current->use_last_heredoc)
@@ -40,7 +39,6 @@ void	should_use_last_herdoc(t_cmd *current)
 		current->stdin_ = open(current->last_heredoc->heredoc_file, O_RDONLY, 0644);
 	}
 }
-
 
 void	change_std(t_cmd *current, t_data *data)
 {
@@ -96,6 +94,7 @@ void	multiple_pipes(t_data *data, t_cmd *cmd_list)
 	t_cmd *last = NULL;
 	int	fd[2];
 	pid_t pid;
+
 	current = cmd_list;
 	while (current)
 	{
