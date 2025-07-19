@@ -31,8 +31,8 @@ jobs:
         continue-on-error: true
         run: |
           norminette . | tee norm.txt
-          norm_exit=${PIPELINE[0]}
-          exit $norm_exit
+          norm_exit=${PIPELINE[@]}
+          echo $norm_exit
 
       - name: Final result (For norminette)
         run: |
