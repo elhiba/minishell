@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/19 15:58:41 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 22:13:19 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_cmd
 	int				stdin_;
 	int				stdout_;
 	int				exit_code;
+
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -186,6 +187,13 @@ int		empty_env_var(t_token *current);
 void	execute(t_cmd *cmd_list, t_data *data);
 int		is_a_builtin(char *name);
 void	expand_verifier(t_token *current, char **token, void **data);
+void	space_checker(char *str, t_token **tok, int index);
+int		operation_len(char *str);
+void	typer(t_token **token, char *arg);
+void	build_error_name(t_token *token);
+int		additional_check(t_token *token);
+int		joining_result(t_token	*token, t_data *data);
+void	set_ambiguous(t_token *token, t_data *data);
 t_cmd	*exec_setup(void	**stock, t_data *data);
 
 /* Heredoc utilities */
