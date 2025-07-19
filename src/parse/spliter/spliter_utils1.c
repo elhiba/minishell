@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 17:09:53 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/19 17:58:27 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/20 00:43:26 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	joining_result(t_token	*token, t_data *data)
 			break ;
 		token = token->next;
 	}
-	split_expanded(&tmp_list, data);
+	split_expanded(&tmp_list, data, NULL);
 	join_tokens(&tmp_list);
 	current = tmp_list;
 	while (current)

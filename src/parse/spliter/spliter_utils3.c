@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 22:12:15 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/19 22:16:53 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/19 23:28:47 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	split_cmp_action(t_token **token, char *str, void **tx)
 			&& !operation_len(str + *(int *)tx[2]))
 			(*(int *)tx[2])++;
 		add_token_node(token, ft_substr(str, *(int *)tx[1], \
-							*(int *)tx[2] - *(int *)tx[1]));
+			*(int *)tx[2] - *(int *)tx[1]));
 		*(int *)tx[0] = 1337;
 	}
 }
@@ -57,7 +57,7 @@ void	ft_spliter(t_token **token, char *str, t_data *data)
 	int		start;
 	int		i;
 
-	(1) && (i = 0, traff = ft_collector(sizeof(void *) * 6, ALLOC));
+	(1) && (i = 0, traff = ft_collector(sizeof(void *) * 4, ALLOC));
 	while (str[i])
 	{
 		(1) && (traff[0] = &op_len, traff[1] = &start, traff[2] = &i);

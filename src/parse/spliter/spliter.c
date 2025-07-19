@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:42:44 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/19 22:21:12 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/20 00:43:02 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_token	*token(char *str, t_data *data)
 
 	tok = NULL;
 	ft_spliter(&tok, str, data);
-	split_expanded(&tok, data);
+	split_expanded(&tok, data, NULL);
 	join_tokens(&tok);
 	ptr = tok;
 	while (ptr)

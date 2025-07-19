@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/19 22:13:19 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/20 00:42:40 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void	expand_variable(t_token *current, t_data *data,
 			char **envp, char **token);
 void	join_tokens(t_token **tokens);
 int		check_is_expandable(t_token *current);
-void	split_expanded(t_token **token, t_data *data);
+void	split_expanded(t_token **token, t_data *data, void **boat);
 void	check_and_expand(t_token **head, t_data *data, char **envp);
 int		operator_cleaner(char *arg);
 int		there_is_space(char *s);
@@ -170,6 +170,8 @@ bool	is_white_space(char c);
 bool	is_alnum_(char c);
 bool	is_alpha_(char c);
 bool	is_digit_(char c);
+bool	is_space(char c);
+void	extract_word(char **buffer, t_token **head, t_token *save);
 void	expand_variable_heredoc(t_data *data, char **envp, char **token);
 int		is_it_expandable(char *buffer);
 void	get_env_value(char **envp, t_env *env);

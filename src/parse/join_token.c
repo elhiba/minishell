@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:42:31 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/01 21:57:51 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/19 23:59:35 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ char	*ft_strjoin_(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	str = ft_collector((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char), ALLOC);
+	str = ft_collector((ft_strlen(s1) + ft_strlen(s2) + 1) \
+				* sizeof(char), ALLOC);
 	if (!str)
 		return (ft_collector(0, EXIT));
 	while (s1[i])
@@ -61,13 +62,30 @@ void	update_flags(t_token *current, t_token *save_next)
 	}
 }
 
+void	joiner(t_token **current, t_token **save_next)
+{
+	(*current)->arg = ft_strjoin_((*current)->arg, (*save_next)->arg);
+	(*current)->next = (*save_next)->next;
+	if ((*save_next)->next)
+		(*save_next)->next->prev = (*current);
+	if ((*current)->prev && !ft_strcmp((*current)->prev->arg, "<<")
+		&& (*save_next)->arg[0] && ((*save_next)->is_dquote
+			|| (*save_next)->is_squote))
+	{
+		if ((*save_next)->is_dquote)
+			(*current)->is_dquote = 1;
+		else if ((*save_next)->is_squote)
+			(*current)->is_squote = 1;
+	}
+	else
+		update_flags(*current, *save_next);
+}
+
 void	join_tokens(t_token **tokens)
 {
 	t_token	*current;
-	t_token *save_next;
-	//int		flag;
+	t_token	*save_next;
 
-	//flag = 0;
 	current = *tokens;
 	save_next = current->next;
 	while (save_next)
@@ -76,24 +94,8 @@ void	join_tokens(t_token **tokens)
 				&& current->next->is_env_var
 				&& !current->next->is_dquote
 				&& current->next->arg[0] == ' ')
-				&& !operator_cleaner(current->arg))
-		{
-			current->arg = ft_strjoin_(current->arg, save_next->arg);
-			current->next = save_next->next;
-			if (save_next->next)
-				save_next->next->prev = current;
-			if (current->prev && !ft_strcmp(current->prev->arg, "<<")
-				&& save_next->arg[0] && (save_next->is_dquote
-				|| save_next->is_squote))
-			{
-				if (save_next->is_dquote)
-					current->is_dquote = 1;
-				else if (save_next->is_squote)
-					current->is_squote = 1;
-			}
-			else
-				update_flags(current, save_next);
-		}
+			&& !operator_cleaner(current->arg))
+			joiner(&current, &save_next);
 		else
 			current = save_next;
 		save_next = current->next;
