@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/19 12:14:04 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/19 15:58:41 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,37 @@ int		empty_env_var(t_token *current);
 void	execute(t_cmd *cmd_list, t_data *data);
 int		is_a_builtin(char *name);
 void	expand_verifier(t_token *current, char **token, void **data);
-
 t_cmd	*exec_setup(void	**stock, t_data *data);
+
+/* Heredoc utilities */
+char	*read_rand(void);
+int		count_heredoc(t_token *head);
+void	add_heredoc(t_heredoc **head, t_heredoc *new);
+void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data);
+
+/* Command path utilities */
+char	*get_cmd_name(char *buffer);
+char	*handle_empty_path(char *cmd_name);
+char	**cp_stock(char *cmd_name, char **path_stock);
+char	*check_for_cmd_existence(char **tmp_stock);
+
+/* Argument vector utilities */
+int		count_argv(t_token *head);
+void	add_to_argv(t_cmd *cmd, t_token *token);
+char	**realloc_argv(char **old_argv);
+
+/* Validation utilities */
+char	*get_full_path(char **path_stock, char *cmd_name, int *not_found);
+int		check_absolute_path(char *s);
+char	*check_if_correct(char *path);
+int		is_valid_cmd_name(t_token *current);
+
+/* Command builder utilities */
+int		set_cmd_name(t_cmd *cmd, t_token *token, t_data *data);
+void	add_cmd(t_cmd **cmd, t_cmd *new);
+void	init_stuff(t_token *head, t_cmd *node);
+void	do_while(t_token *current, t_cmd *node, t_data *data, int *flag);
+void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data);
 
 /* error handler */
 void	error_handler(char *error_name, t_data *data);

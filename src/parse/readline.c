@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 18:00:37 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/19 16:23:27 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,16 @@ int	ft_builtin(t_cmd *data)
 {
 	int		status;
 
+	status = 0;
 	if (data->should_not_execute)
 		return (1337);
 	if ((!data || !data->argv))
 		return (0);
-	dup_to_redir(data);
-	status = cmd_verifier(data);
-	restore_std(data->data);
+	if (is_a_builtin(data->cmd))
+	{
+		dup_to_redir(data);
+		status = cmd_verifier(data);
+		restore_std(data->data);
+	}
 	return (status);
 }

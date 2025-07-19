@@ -34,7 +34,7 @@ FILES = $(addprefix $(SRC), main.c) \
 		$(addprefix prompt/, prompt_builder.c git_checker0.c git_checker1.c git_checker2.c) \
 		$(addprefix dollar_expand/, dollar_expander.c expand.c expand_modifier.c) \
 		$(addprefix syntax/, op_checkers.c syntax_checker.c) \
-		$(addprefix set_cmd_list/, handle_redir.c)) \
+		$(addprefix set_cmd_list/, heredoc_utils.c cmd_path_utils.c argv_utils.c validation_utils.c cmd_builder.c exec_setup.c)) \
 		$(GCFT)
 
 OBJ = $(FILES:.c=.o)
