@@ -24,8 +24,11 @@ jobs:
         run: valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=readline.supp -q ./minishell < inputs.txt
 
       - name: Install norminette
-        id: norm
         run: pipx install norminette
+        
+      - name: Run norminette
+        id: norm
+        run: norminette
         continue-on-error: true
 
       - name: Final result (For norminette)
