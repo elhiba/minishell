@@ -6,11 +6,11 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:53:22 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/17 13:48:10 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 17:13:18 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	ft_putendl_fd(char *s, int fd)
 {
@@ -51,10 +51,20 @@ static int	prevent_flag(int sigint_was_here)
 	else if (sigint_was_here == 1337)
 	{
 		i = 0;
-		return(i);
+		return (i);
 	}
 	else
 		return (i);
+}
+
+void	write_heredoc_warning(t_heredoc *heredoc)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin("minishell: warning: here-document\
+			delimited by end-of-file (wanted `", heredoc->heredoc_del);
+	tmp = ft_strjoin(tmp, "')\n");
+	write (2, tmp, ft_strlen(tmp));
 }
 
 static void	heredoc_input(t_heredoc *heredoc, t_data *data)
@@ -68,7 +78,7 @@ static void	heredoc_input(t_heredoc *heredoc, t_data *data)
 		buffer = readline("> ");
 		if (!buffer)
 		{
-			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", heredoc->heredoc_del);
+			write_heredoc_warning(heredoc);
 			break ;
 		}
 		if (!ft_strcmp(buffer, heredoc->heredoc_del))
@@ -95,7 +105,8 @@ static void	signal_term(int signal, pid_t pid, t_cmd *cmd_list)
 	write(2, "\n", 1);
 }
 
-static void	heredoc_exit_code(int status, t_data *data, pid_t pid, t_cmd *cmd_list)
+static void	heredoc_exit_code(int status, t_data *data
+	, pid_t pid, t_cmd *cmd_list)
 {
 	if (WIFEXITED(status))
 	{
@@ -114,7 +125,7 @@ static void	heredoc_exit_code(int status, t_data *data, pid_t pid, t_cmd *cmd_li
 
 static t_heredoc	*save_heredoc(t_heredoc *heredocs)
 {
-	static t_heredoc *saved_heredoc;
+	static t_heredoc	*saved_heredoc;
 
 	if (heredocs == NULL)
 		return (saved_heredoc);
@@ -127,7 +138,7 @@ static t_heredoc	*save_heredoc(t_heredoc *heredocs)
 
 static t_cmd	*save_cmd(t_cmd *cmd)
 {
-	static t_cmd *saved_cmd;
+	static t_cmd	*saved_cmd;
 
 	if (cmd == NULL)
 		return (saved_cmd);
@@ -138,7 +149,7 @@ static t_cmd	*save_cmd(t_cmd *cmd)
 	}
 }
 
-void heredoc_handler(int sig)
+void	heredoc_handler(int sig)
 {
 	t_cmd		*cmd;
 	t_heredoc	*heredocs;
@@ -148,7 +159,7 @@ void heredoc_handler(int sig)
 	heredocs = save_heredoc(NULL);
 	close(heredocs->fd);
 	if (cmd->stdin_ != 0)
-			close(cmd->stdin_);
+		close(cmd->stdin_);
 	if (cmd->stdout_ != 1)
 		close(cmd->stdout_);
 	close(cmd->data->stdin_);
@@ -157,7 +168,6 @@ void heredoc_handler(int sig)
 	write(2, "\n", 1);
 	exit(130);
 }
-
 
 static void	heredoc_logic(t_cmd *cmd, t_heredoc *heredoc, t_cmd *cmd_list)
 {
@@ -188,7 +198,7 @@ void	heredoc(t_cmd *cmd_list)
 {
 	t_cmd		*cmd;
 	t_heredoc	*heredocs;
-	
+
 	cmd = cmd_list;
 	prevent_flag(1337);
 	while (cmd)

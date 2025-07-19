@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 09:29:03 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/19 17:47:48 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 int	is_it_expandable(char *buffer)
 {
@@ -27,9 +27,7 @@ int	is_it_expandable(char *buffer)
 	return (0);
 }
 
-/*
-	this function is the same as the normal expanding function, just without all the eadge cases...
-*/
+
 void	expand_variable_heredoc(t_data *data, char **envp, char **token)
 {
 	t_env	*env;
