@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:04:23 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 09:22:58 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/19 22:45:53 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	split_into_nodes(t_token **head, t_token *save, char *buffer)
 			tmp->is_word = 1;
 			tmp->is_env_var = 1;
 			tmp->is_space_next = 1;
-			if (save && !save->is_space_next)
+			if (save && !save->prev && !save->is_space_next)
 				tmp->is_space_next = 0;
 			if (save && save->is_ambiguous)
 			{

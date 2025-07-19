@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:19 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 16:40:08 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 22:54:49 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 		if (is_a_directory(token->arg) && token->next)
 			return (0);
 		cmd->use_last_heredoc = 0;
-		if (is_a_directory(token->arg))
-			return (data->last_exit_code = 1, printf("minishell: %s: is a directory\n", token->arg), -1);
 		cmd->stdin_ = open(token->arg, O_RDONLY, 0644);
 		if (cmd->stdin_ == -1)
 			return (data->last_exit_code = 1, printf("minishell: %s: %s\n", token->arg, strerror(errno)), -1);
