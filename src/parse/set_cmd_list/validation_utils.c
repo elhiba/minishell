@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 15:57:10 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 16:49:43 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,4 @@ int	is_valid_cmd_name(t_token *current)
 		&& !current->is_ambiguous)
 		return (1);
 	return (0);
-} 
+}

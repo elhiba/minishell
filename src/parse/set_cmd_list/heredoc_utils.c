@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 15:50:36 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 16:49:24 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,4 @@ void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data)
 	if (token->is_dquote || token->is_squote)
 		heredoc_node->expand = 0;
 	add_heredoc(&cmd->heredcs, heredoc_node);
-} 
+}

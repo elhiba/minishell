@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 15:51:04 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 16:49:38 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,4 @@ char	**realloc_argv(char **old_argv)
 	new_argv[i++] = ft_strdup("--color");
 	new_argv[i] = NULL;
 	return (new_argv);
-} 
+}

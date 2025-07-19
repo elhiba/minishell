@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 16:25:19 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 16:49:49 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,4 @@ void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 	if (node->cmd && !ft_strcmp("ls", get_cmd_name(node->argv[0])))
 		node->argv = realloc_argv(node->argv);
 	add_cmd(cmd_list, node);
-} 
+}

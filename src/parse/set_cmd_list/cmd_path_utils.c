@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 15:50:53 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/19 16:49:32 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,4 @@ char	*check_for_cmd_existence(char **tmp_stock)
 		i++;
 	}
 	return (NULL);
-} 
+}
