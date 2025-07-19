@@ -30,10 +30,11 @@ FILES = $(addprefix $(SRC), main.c) \
 		$(addprefix $(EXEC), exec.c cmd_errors.c) \
 		$(addprefix $(UTILS), signals.c error.c utils.c linked_list.c utils_env.c special_split.c) \
 		$(addprefix $(PARSE), readline.c spliter.c quotes_handling.c \
-		heredoc_expand.c heredoc.c join_token.c split_expanded.c handle_redir.c \
+		heredoc_expand.c heredoc.c join_token.c split_expanded.c \
 		$(addprefix prompt/, prompt_builder.c git_checker0.c git_checker1.c git_checker2.c) \
 		$(addprefix dollar_expand/, dollar_expander.c expand.c expand_modifier.c) \
-		$(addprefix syntax/, op_checkers.c syntax_checker.c)) \
+		$(addprefix syntax/, op_checkers.c syntax_checker.c) \
+		$(addprefix set_cmd_list/, handle_redir.c)) \
 		$(GCFT)
 
 OBJ = $(FILES:.c=.o)

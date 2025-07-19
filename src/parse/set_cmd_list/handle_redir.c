@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 12:27:25 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/19 15:46:39 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-char *read_rand()
+char	*read_rand(void)
 {
 	char	*buffer;
 	int		fd;
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	buffer = ft_collector(17, ALLOC);
 	ft_bzero(buffer, 17);
 	fd = open("/dev/random", O_RDONLY);
@@ -66,19 +67,19 @@ void	add_to_argv(t_cmd *cmd, t_token *token)
 	int	index;
 
 	index = 0;
-	while(cmd->argv[index])
+	while (cmd->argv[index])
 		index++;
 	cmd->argv[index++] = token->arg;
 	cmd->argv[index] = NULL;
 }
 
-char **realloc_argv(char **old_argv)
+char	**realloc_argv(char **old_argv)
 {
-	char 	**new_argv;
+	char	**new_argv;
 	int		i;
 
 	i = 0;
-	while(old_argv[i])
+	while (old_argv[i])
 		i++;
 	new_argv = ft_collector(sizeof(char *) * (i + 2), ALLOC);
 	i = 0;
@@ -92,7 +93,7 @@ char **realloc_argv(char **old_argv)
 	return (new_argv);
 }
 
-char *get_cmd_name(char *buffer)
+char	*get_cmd_name(char *buffer)
 {
 	int	i;
 
@@ -105,6 +106,7 @@ char *get_cmd_name(char *buffer)
 		i++;
 	return (buffer + i);
 }
+
 int	is_a_builtin(char *name)
 {
 	if (!name)
@@ -126,23 +128,27 @@ int	is_a_builtin(char *name)
 	return (0);
 }
 
-
-char *get_full_path(char **path_stock, char *cmd_name, int *not_found)
+char	*handle_empty_path(char *cmd_name)
 {
-	int		i;
+	char	*tmp;
+
+	tmp = ft_strjoin("./", cmd_name);
+	if (access(tmp, X_OK) == 0 && !is_a_directory(tmp))
+		return (tmp);
+	else if (access(tmp, F_OK) == 0)
+		return (tmp);
+	return (NULL);
+}
+
+char	**cp_stock(char *cmd_name, char **path_stock)
+{
 	char	**tmp_stock;
 	char	*new_name;
+	int		i;
 
 	i = 0;
 	while (path_stock[i])
 		i += 1;
-	if (i == 0)
-	{
-		if (access(ft_strjoin("./", cmd_name), X_OK) == 0 && !is_a_directory(ft_strjoin("./", cmd_name)))
-			return (ft_strjoin("./", cmd_name));
-		else if (access(ft_strjoin("./", cmd_name), F_OK) == 0)
-			return (ft_strjoin("./", cmd_name));
-	}
 	tmp_stock = ft_collector(sizeof(char *) * (i + 1), ALLOC);
 	i = 0;
 	while (path_stock[i])
@@ -152,20 +158,52 @@ char *get_full_path(char **path_stock, char *cmd_name, int *not_found)
 		i++;
 	}
 	tmp_stock[i] = NULL;
+	return (tmp_stock);
+}
+
+char	*check_for_cmd_existence(char **tmp_stock)
+{
+	int	i;
+
 	i = 0;
-	while (tmp_stock[i]) // check first with X_OK
+	while (tmp_stock[i])
 	{
 		if (access(tmp_stock[i], X_OK) == 0 && !is_a_directory(tmp_stock[i]))
 			return (tmp_stock[i]);
 		i++;
 	}
 	i = 0;
-	while (tmp_stock[i]) // check second with F_OK
+	while (tmp_stock[i])
 	{
 		if (access(tmp_stock[i], F_OK) == 0)
 			return (tmp_stock[i]);
 		i++;
 	}
+	return (NULL);
+}
+
+char	*get_full_path(char **path_stock, char *cmd_name, int *not_found)
+{
+	int		i;
+	char	**tmp_stock;
+	char	*cmd_path;
+	char	*tmp;
+
+	i = 0;
+	cmd_path = NULL;
+	while (path_stock[i])
+		i += 1;
+	if (i == 0)
+	{
+		tmp = handle_empty_path(cmd_name);
+		if (tmp)
+			return (tmp);
+	}
+	tmp_stock = cp_stock(cmd_name, path_stock);
+	i = 0;
+	cmd_path = check_for_cmd_existence(tmp_stock);
+	if (cmd_path)
+		return (cmd_path);
 	if (!is_a_builtin(cmd_name))
 		*not_found = 1;
 	return (cmd_name);
@@ -192,7 +230,6 @@ char	*check_if_correct(char *path)
 	return (path);
 }
 
-
 int	set_cmd_name(t_cmd *cmd, t_token *token, t_data *data)
 {
 	t_env	*envp;
@@ -203,26 +240,12 @@ int	set_cmd_name(t_cmd *cmd, t_token *token, t_data *data)
 	envp->name_len = 4;
 	get_env_value(data->env, envp);
 	stock = ft_split(envp->value, ':');
-	if (*token->arg && check_absolute_path(token->arg)) 
-	{
-		/*
-		 if the user did not give the absolute path add it.
-		 in case of cmd not found it will return the same name without path and change the flag to cmd not found
-		*/
+	if (*token->arg && check_absolute_path(token->arg))
 		cmd->cmd = get_full_path(stock, token->arg, &cmd->cmd_not_found);
-	}
 	else
-	{
-		/*
-		 the user entred a cmd wih the absolute path.
-		*/
 		cmd->cmd = token->arg;
-		//if (check_for_err(cmd) == -1)
-		//	return (-1);
-	}
-	// this condition handle enmpty strings as cmd: "" or ''
 	if (!*token->arg && (token->is_dquote || token->is_squote))
-			cmd->cmd_not_found = 1;
+		cmd->cmd_not_found = 1;
 	cmd->argv[0] = ft_strdup(token->arg);
 	cmd->argv[1] = NULL;
 	return (0);
@@ -246,13 +269,9 @@ void	add_heredoc(t_heredoc **head, t_heredoc *new)
 
 void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data)
 {
-//	int	i;
-//	int	len;
-	char	*heredoc_name;
+	char		*heredoc_name;
 	t_heredoc	*heredoc_node;
 
-//	len = 0;
-//	i = 0;
 	(void)data;
 	heredoc_node = ft_collector(sizeof(t_heredoc), ALLOC);
 	heredoc_node->heredoc_del = token->arg;
@@ -262,7 +281,6 @@ void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data)
 	heredoc_node->expand = 1;
 	if (token->is_dquote || token->is_squote)
 		heredoc_node->expand = 0;
-		//return (perror("minishell"), -1);
 	add_heredoc(&cmd->heredcs, heredoc_node);
 }
 
@@ -293,12 +311,44 @@ void	init_stuff(t_token *head, t_cmd *node)
 	node->next = NULL;
 }
 
-
 int	empty_env_var(t_token *current)
 {
-	if (current->is_env_var && !is_redir(current) && !current->prev && !current->next && !current->is_dquote && !current->arg[0])
+	if (current->is_env_var && !is_redir(current)
+		&& !current->prev && !current->next
+		&& !current->is_dquote && !current->arg[0])
 		return (1);
 	return (0);
+}
+
+int	is_valid_cmd_name(t_token *current)
+{
+	if ((current->is_dquote
+			|| current->is_word
+			|| current->is_squote
+			|| current->is_env_var)
+		&& !(current->is_env_var
+			&& !current->is_dquote
+			&& !current->arg[0])
+		&& !is_redir(current)
+		&& !current->is_ambiguous)
+		return (1);
+	return (0);
+}
+
+void	do_while(t_token *current, t_cmd *node, t_data *data, int *flag)
+{
+	if (current->is_heredoc == HEREDOC)
+		handle_heredoc(node, current, data);
+	else if (flag && is_valid_cmd_name(current))
+	{
+		*flag = 0;
+		if (set_cmd_name(node, current, data) == -1)
+			node->should_not_execute = 1;
+	}
+	else if (!(current->is_env_var && !current->arg[0] && !current->is_dquote)
+		&& !current->is_ambiguous
+		&& !is_redir(current))
+		add_to_argv(node, current);
 }
 
 void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
@@ -314,27 +364,7 @@ void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 	current = head;
 	while (current)
 	{
-		if (current->is_heredoc == HEREDOC)
-			handle_heredoc(node, current, data);
-
-		else if(flag && (current->is_dquote
-				|| current->is_word
-				|| current->is_squote
-				|| current->is_env_var)
-				&& !(current->is_env_var
-				&& !current->is_dquote
-				&& !current->arg[0])
-				&& !is_redir(current)
-				&& !current->is_ambiguous)
-		{
-			flag = 0;
-			if (set_cmd_name(node, current, data) == -1)
-				node->should_not_execute = 1;
-		}
-		else if (!(current->is_env_var && !current->arg[0] && !current->is_dquote)
-				&& !current->is_ambiguous
-				&& !is_redir(current))
-			add_to_argv(node, current);
+		do_while(current, node, data, &flag);
 		current = current->next;
 	}
 	if (node->cmd && !ft_strcmp("ls", get_cmd_name(node->argv[0])))
@@ -345,7 +375,7 @@ void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 t_cmd	*exec_setup(void	**stock, t_data *data)
 {
 	t_cmd	*cmd_list;
-	int	i;
+	int		i;
 
 	i = 0;
 	cmd_list = NULL;
@@ -356,90 +386,3 @@ t_cmd	*exec_setup(void	**stock, t_data *data)
 	}
 	return (cmd_list);
 }
-
-/*
-void    pretty_print_cmd_list(t_cmd *cmd_list)
-{
-    int i;
-    int cmd_num = 1;
-
-    if (!cmd_list)
-    {
-        printf("----------------------------------------\n");
-        printf("|           Command List is Empty      |\n");
-        printf("----------------------------------------\n");
-        return;
-    }
-
-    // Traverse the linked list of commands
-    while (cmd_list)
-    {
-        printf("\n.---------------------------------------.\n");
-        printf("|               COMMAND %-3d             |\n", cmd_num++);
-        printf(":---------------------------------------:\n");
-
-        // Print the full command path
-        printf("| %-12s: %s\n", "Command", cmd_list->cmd ? cmd_list->cmd : "(null)");
-        printf(":---------------------------------------:\n");
-
-        // Print the arguments (argv)
-        if (cmd_list->argv && cmd_list->argv[0])
-        {
-            printf("| %-12s: [%s]\n", "argv[0]", cmd_list->argv[0]);
-            i = 1;
-            while (cmd_list->argv[i])
-            {
-                printf("| %-12s  [%s]\n", "", cmd_list->argv[i]);
-                i++;
-            }
-        }
-        else
-        {
-            printf("| %-12s: (empty)\n", "argv");
-        }
-        printf(":---------------------------------------:\n");
-
-        // Print I/O file descriptors
-        printf("| %-12s: %d\n", "stdin_", cmd_list->stdin_);
-        printf("| %-12s: %d\n", "stdout_", cmd_list->stdout_);
-        printf(":---------------------------------------:\n");
-        
-        // --- NEW SECTION for flags ---
-        printf("| %-19s: %d\n", "Cmd Not Found Flag", cmd_list->cmd_not_found);
-        printf("| %-19s: %d\n", "Should Not Execute Flag", cmd_list->should_not_execute); // Print as a positive condition
-        printf(":---------------------------------------:\n");
-
-
-        // Print heredoc list
-        t_heredoc *current_heredoc = cmd_list->heredcs;
-        if (current_heredoc)
-        {
-            int heredoc_num = 1;
-            // Loop through each heredoc associated with this command
-            while (current_heredoc)
-            {
-                printf("| Heredoc #%-2d\n", heredoc_num++);
-                printf("|   %-10s: [%s]\n", "Delimiter", current_heredoc->heredoc_del ? current_heredoc->heredoc_del : "(null)");
-                printf("|   %-10s: [%s]\n", "File", current_heredoc->heredoc_file ? current_heredoc->heredoc_file : "(null)");
-                printf("|   %-10s: %d\n", "FD", current_heredoc->fd);
-                
-                current_heredoc = current_heredoc->next;
-                // Add a sub-divider if there is another heredoc to print
-                if (current_heredoc)
-                {
-                    printf(":.......................................:\n");
-                }
-            }
-        }
-        else
-        {
-            printf("| %-12s: (none)\n", "Heredocs");
-        }
-
-        printf("'---------------------------------------'\n");
-
-        // Move to the next command in the list
-        cmd_list = cmd_list->next;
-    }
-}
-*/
