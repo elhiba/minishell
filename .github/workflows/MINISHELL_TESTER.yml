@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: install dependencies
-        run: sudo apt update; sudo apt install -y build-essential libreadline8 libreadline-dev valgrind
+        run:  sudo apt update; sudo apt install -y build-essential libreadline8 libreadline-dev valgrind python3 pipx
 
       - name: Compile
         run: make
@@ -22,3 +22,18 @@ jobs:
 
       - name: Run with valgrind
         run: valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=readline.supp -q ./minishell < inputs.txt
+
+      - name: Install norminette
+        id: norm
+        run: pipx install norminette
+        continue-on-error: true
+
+      - name: Final result (For norminette)
+        run: |
+          if [[ "${{ steps.norm.outcome }}" == "success" ]]; then
+            # Green text: \033[0;32m … \033[0m
+            echo -e "\033[0;32m✅ Norminette succeeded\033[0m"
+          else
+            # Red text: \033[0;31m … \033[0m
+            echo -e "\033[0;31m❌ Norminette failed\033[0m"
+          fi
