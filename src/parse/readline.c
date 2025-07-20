@@ -6,11 +6,97 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/19 16:23:27 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/20 12:22:07 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void    pretty_print_cmd_list(t_cmd *cmd_list)
+{
+    int i;
+    int cmd_num = 1;
+
+    if (!cmd_list)
+    {
+        printf("----------------------------------------\n");
+        printf("|           Command List is Empty      |\n");
+        printf("----------------------------------------\n");
+        return;
+    }
+
+    // Traverse the linked list of commands
+    while (cmd_list)
+    {
+        printf("\n.---------------------------------------.\n");
+        printf("|               COMMAND %-3d             |\n", cmd_num++);
+        printf(":---------------------------------------:\n");
+
+        // Print the full command path
+        printf("| %-12s: %s\n", "Command", cmd_list->cmd ? cmd_list->cmd : "(null)");
+        printf(":---------------------------------------:\n");
+
+        // Print the arguments (argv)
+        if (cmd_list->argv && cmd_list->argv[0])
+        {
+            printf("| %-12s: [%s]\n", "argv[0]", cmd_list->argv[0]);
+            i = 1;
+            while (cmd_list->argv[i])
+            {
+                printf("| %-12s  [%s]\n", "", cmd_list->argv[i]);
+                i++;
+            }
+        }
+        else
+        {
+            printf("| %-12s: (empty)\n", "argv");
+        }
+        printf(":---------------------------------------:\n");
+
+        // Print I/O file descriptors
+        printf("| %-12s: %d\n", "stdin_", cmd_list->stdin_);
+        printf("| %-12s: %d\n", "stdout_", cmd_list->stdout_);
+        printf(":---------------------------------------:\n");
+        
+        // --- NEW SECTION for flags ---
+        printf("| %-19s: %d\n", "Cmd Not Found Flag", cmd_list->cmd_not_found);
+        printf("| %-19s: %d\n", "Should Not Execute Flag", cmd_list->should_not_execute); // Print as a positive condition
+        printf(":---------------------------------------:\n");
+
+
+        // Print heredoc list
+        t_heredoc *current_heredoc = cmd_list->heredcs;
+        if (current_heredoc)
+        {
+            int heredoc_num = 1;
+            // Loop through each heredoc associated with this command
+            while (current_heredoc)
+            {
+                printf("| Heredoc #%-2d\n", heredoc_num++);
+                printf("|   %-10s: [%s]\n", "Delimiter", current_heredoc->heredoc_del ? current_heredoc->heredoc_del : "(null)");
+                printf("|   %-10s: [%s]\n", "File", current_heredoc->heredoc_file ? current_heredoc->heredoc_file : "(null)");
+                printf("|   %-10s: %d\n", "FD", current_heredoc->fd);
+                
+                current_heredoc = current_heredoc->next;
+                // Add a sub-divider if there is another heredoc to print
+                if (current_heredoc)
+                {
+                    printf(":.......................................:\n");
+                }
+            }
+        }
+        else
+        {
+            printf("| %-12s: (none)\n", "Heredocs");
+        }
+
+        printf("'---------------------------------------'\n");
+
+        // Move to the next command in the list
+        cmd_list = cmd_list->next;
+    }
+}
+
 
 void	ft_parse(t_data *data)
 {

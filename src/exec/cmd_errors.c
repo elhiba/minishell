@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:19 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 22:54:49 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/20 12:10:33 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,8 @@ void	check_errors(t_cmd *cmd_list, t_token **token_list)
 	{
 		token_current = token_list[i];
 		check_and_set_fd(cmd_current, token_current);
-		check_cmd_errors(cmd_current, token_current);
+		if (!is_a_builtin(cmd_current->cmd))
+			check_cmd_errors(cmd_current, token_current);
 		i++;
 		cmd_current = cmd_current->next;
 	}

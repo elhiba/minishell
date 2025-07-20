@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 19:44:16 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/20 12:23:17 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@ int	main(int ac, char **av, char **env)
 		{
 			write(2, "exit\n", 5);
 			close(data.stdin_);
-			close(data.stdout_);
+			close(data.stdout_); 
 			ft_collector(0, FREE);
 			exit(data.last_exit_code);
 		}
 		if (*data.readline_in && data.readline_in)
 			add_history(data.readline_in);
 		ft_parse(&data);
+		free(data.readline_in);
 	}
 }
