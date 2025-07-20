@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 14:59:36 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/20 20:52:47 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/20 21:58:25 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,12 @@ void	update_pwd(char *old_pwd, t_cmd *data)
 			exist(ft_strjoin("PWD=", cwd), &data->data->env);
 		}
 	}
-	else 
+	else
 		unset_filter("OLDPWD", &data->data->env);
 }
-/*
- * We will try to make it performant handling more stuff like:
- *	[cd - and updating the old pwd]
- * */
-int	do_cd(t_cmd *data)
-{
-	char		*path;
-	char		*old_pwd;
-	char		*cwd;
 
-	path = *(++data->argv);
-	old_pwd = sea_ret(data->data->env, "PWD");
+int	cd_errors(char *path, char *old_pwd, t_cmd *data)
+{
 	if (path && !path[0])
 	{
 		data->data->last_exit_code = 0;
@@ -94,6 +85,24 @@ int	do_cd(t_cmd *data)
 		data->data->last_exit_code = 1;
 		return (2);
 	}
+	return (0);
+}
+
+/*
+ * We will try to make it performant handling more stuff like:
+ *	[cd - and updating the old pwd]
+ * */
+int	do_cd(t_cmd *data)
+{
+	char	*path;
+	char	*old_pwd;
+	int		ret;
+
+	path = *(++data->argv);
+	old_pwd = sea_ret(data->data->env, "PWD");
+	ret = cd_errors(path, old_pwd, data);
+	if (ret)
+		return (ret);
 	else if (chdir(path) == -1)
 	{
 		perror(ft_strjoin("minishell: cd: ", path));

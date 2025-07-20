@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/20 15:43:47 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/20 21:16:03 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	ft_parse(t_data *data)
 		if (list)
 			execute(list, data);
 	}
+	free(data->readline_in);
 }
 
 void	dup_to_redir(t_cmd *current)
