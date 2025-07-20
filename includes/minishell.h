@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/20 16:07:17 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:43:38 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,9 @@ int			additional_check(t_token *token);
 int			joining_result(t_token	*token, t_data *data);
 void		set_ambiguous(t_token *token, t_data *data);
 t_cmd		*exec_setup(void	**stock, t_data *data);
+int			exist(char *ptr, char ***env);
+void		add_to_env(char *arg, char ***env);
+int			unset_filter(char *arg, char ***env);
 
 /* Heredoc utilities */
 char		*read_rand(void);
