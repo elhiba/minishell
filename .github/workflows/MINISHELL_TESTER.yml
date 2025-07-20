@@ -40,5 +40,5 @@ jobs:
           if [[ "${{ steps.norm.outcome }}" == "success" ]]; then
           echo -e "\033[0;32m✅ Norminette succeeded\033[0m"
           else
-          echo -e "\033[0;31m❌ Norminette failed with $NORM_EXIT_CODE error(s)\033[0m"
+          echo -e "\033[0;31m❌ Norminette failed with $error_count error(s)\033[0m"
           fi
