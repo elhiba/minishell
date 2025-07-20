@@ -32,7 +32,7 @@ jobs:
         run: |
           norminette . | tee norm.txt
           norm_exit=${PIPESTATUS[0]}
-          echo $norm_exit
+          exit $norm_exit
       - name: Final result (For norminette)
         run: |
           echo "Errors"
