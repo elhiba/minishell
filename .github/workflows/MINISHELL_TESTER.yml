@@ -32,7 +32,7 @@ jobs:
         run: |
           norminette . | tee norm.txt
           norm_exit=${PIPELINE[0]}
-          echo "NORM_EXIT_CODE=$norm_exit" >> "$GITHUB_ENV"
+          echo $norm_exit
       - name: Final result (For norminette)
         run: |
           echo "Errors"
