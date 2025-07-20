@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/20 00:42:40 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:07:17 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,149 +139,158 @@ typedef struct s_data
 # define MAX_PATH_SIZE 4096
 
 /* debug*/
-void	print_list(void **head);
+void		print_list(void **head);
 
-/* Signal func */
-void	handle_signals(void);
-void	sigint_handler(int sig);
+/* Signa	l func */
+void		handle_signals(void);
+void		sigint_handler(int sig);
 
-/* Syntax checker */
-int		syntax_checker(t_data *data);
-int		check_hereappend(char *str, int *i);
-int		check_redirect(char *str, int *i);
-int		check_pipe(char *str, int *i);
+/* Synta	x checker */
+int			syntax_checker(t_data *data);
+int			check_hereappend(char *str, int *i);
+int			check_redirect(char *str, int *i);
+int			check_pipe(char *str, int *i);
 
-/* Parse */
-void	ft_parse(t_data *data);
-char	*dollar_handler(char *str, int *i);
-char	*quotes_handler(char *str, int *i, int *flag);
-void	ft_spliter(t_token **token, char *str, t_data *data);
-char	*ft_strjoin3(const char *str1, const char *middle, const char *str2);
-void	expand_variable(t_token *current, t_data *data,
-			char **envp, char **token);
-void	join_tokens(t_token **tokens);
-int		check_is_expandable(t_token *current);
-void	split_expanded(t_token **token, t_data *data, void **boat);
-void	check_and_expand(t_token **head, t_data *data, char **envp);
-int		operator_cleaner(char *arg);
-int		there_is_space(char *s);
-int		all_spaces(char *s);
-bool	is_white_space(char c);
-bool	is_alnum_(char c);
-bool	is_alpha_(char c);
-bool	is_digit_(char c);
-bool	is_space(char c);
-void	extract_word(char **buffer, t_token **head, t_token *save);
-void	expand_variable_heredoc(t_data *data, char **envp, char **token);
-int		is_it_expandable(char *buffer);
-void	get_env_value(char **envp, t_env *env);
-void	extract_variable_name(char *token, t_env *env);
-char	*ft_trim(char *str, int len);
-char	*prompt_builder(t_data *data);
-void	cp_flag(t_token *dest, t_token *src);
-void	check_errors(t_cmd *cmd_list, t_token **token_list);
-bool	is_redir(t_token *current);
-void	set_to_default(void);
-void	set_to_inter(void);
-void	heredoc(t_cmd *cmd_list);
-int		is_a_directory(char *cmd);
-int		empty_env_var(t_token *current);
-void	execute(t_cmd *cmd_list, t_data *data);
-int		is_a_builtin(char *name);
-void	expand_verifier(t_token *current, char **token, void **data);
-void	space_checker(char *str, t_token **tok, int index);
-int		operation_len(char *str);
-void	typer(t_token **token, char *arg);
-void	build_error_name(t_token *token);
-int		additional_check(t_token *token);
-int		joining_result(t_token	*token, t_data *data);
-void	set_ambiguous(t_token *token, t_data *data);
-t_cmd	*exec_setup(void	**stock, t_data *data);
+/* Parse	 */
+void		ft_parse(t_data *data);
+char		*dollar_handler(char *str, int *i);
+char		*quotes_handler(char *str, int *i, int *flag);
+void		ft_spliter(t_token **token, char *str, t_data *data);
+char		*ft_strjoin3(const char *str1, const char *middle, \
+				const char *str2);
+void		expand_variable(t_token *current, t_data *data,
+				char **envp, char **token);
+void		join_tokens(t_token **tokens);
+int			check_is_expandable(t_token *current);
+void		split_expanded(t_token **token, t_data *data, void **boat);
+void		check_and_expand(t_token **head, t_data *data, char **envp);
+int			operator_cleaner(char *arg);
+int			there_is_space(char *s);
+int			all_spaces(char *s);
+bool		is_white_space(char c);
+bool		is_alnum_(char c);
+bool		is_alpha_(char c);
+bool		is_digit_(char c);
+bool		is_space(char c);
+void		extract_word(char **buffer, t_token **head, t_token *save);
+void		expand_variable_heredoc(t_data *data, char **envp, char **token);
+int			is_it_expandable(char *buffer);
+void		get_env_value(char **envp, t_env *env);
+void		extract_variable_name(char *token, t_env *env);
+char		*ft_trim(char *str, int len);
+char		*prompt_builder(t_data *data);
+void		cp_flag(t_token *dest, t_token *src);
+void		check_errors(t_cmd *cmd_list, t_token **token_list);
+bool		is_redir(t_token *current);
+void		set_to_default(void);
+void		set_to_inter(void);
+void		heredoc(t_cmd *cmd_list);
+int			is_a_directory(char *cmd);
+int			empty_env_var(t_token *current);
+void		execute(t_cmd *cmd_list, t_data *data);
+int			is_a_builtin(char *name);
+void		expand_verifier(t_token *current, char **token, void **data);
+void		space_checker(char *str, t_token **tok, int index);
+int			operation_len(char *str);
+void		typer(t_token **token, char *arg);
+void		build_error_name(t_token *token);
+int			additional_check(t_token *token);
+int			joining_result(t_token	*token, t_data *data);
+void		set_ambiguous(t_token *token, t_data *data);
+t_cmd		*exec_setup(void	**stock, t_data *data);
 
 /* Heredoc utilities */
-char	*read_rand(void);
-int		count_heredoc(t_token *head);
-void	add_heredoc(t_heredoc **head, t_heredoc *new);
-void	handle_heredoc(t_cmd *cmd, t_token *token, t_data *data);
+char		*read_rand(void);
+int			count_heredoc(t_token *head);
+void		add_heredoc(t_heredoc **head, t_heredoc *new);
+void		handle_heredoc(t_cmd *cmd, t_token *token, t_data *data);
+void		ft_putendl_fd(char *s, int fd);
+void		prevent_exec(t_cmd *cmd_list);
+int			prevent_flag(int sigint_was_here);
+void		write_heredoc_warning(t_heredoc *heredoc);
+void		heredoc_input(t_heredoc *heredoc, t_data *data);
+void		heredoc_exit_code(int status, t_data *data, pid_t pid);
+t_cmd		*save_cmd(t_cmd *cmd);
+t_heredoc	*save_heredoc(t_heredoc *heredocs);
 
 /* Command path utilities */
-char	*get_cmd_name(char *buffer);
-char	*handle_empty_path(char *cmd_name);
-char	**cp_stock(char *cmd_name, char **path_stock);
-char	*check_for_cmd_existence(char **tmp_stock);
+char		*get_cmd_name(char *buffer);
+char		*handle_empty_path(char *cmd_name);
+char		**cp_stock(char *cmd_name, char **path_stock);
+char		*check_for_cmd_existence(char **tmp_stock);
 
 /* Argument vector utilities */
-int		count_argv(t_token *head);
-void	add_to_argv(t_cmd *cmd, t_token *token);
-char	**realloc_argv(char **old_argv);
+int			count_argv(t_token *head);
+void		add_to_argv(t_cmd *cmd, t_token *token);
+char		**realloc_argv(char **old_argv);
 
 /* Validation utilities */
-char	*get_full_path(char **path_stock, char *cmd_name, int *not_found);
-int		check_absolute_path(char *s);
-char	*check_if_correct(char *path);
-int		is_valid_cmd_name(t_token *current);
+char		*get_full_path(char **path_stock, char *cmd_name, int *not_found);
+int			check_absolute_path(char *s);
+char		*check_if_correct(char *path);
+int			is_valid_cmd_name(t_token *current);
 
 /* Command builder utilities */
-int		set_cmd_name(t_cmd *cmd, t_token *token, t_data *data);
-void	add_cmd(t_cmd **cmd, t_cmd *new);
-void	init_stuff(t_token *head, t_cmd *node);
-void	do_while(t_token *current, t_cmd *node, t_data *data, int *flag);
-void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data);
+int			set_cmd_name(t_cmd *cmd, t_token *token, t_data *data);
+void		add_cmd(t_cmd **cmd, t_cmd *new);
+void		init_stuff(t_token *head, t_cmd *node);
+void		do_while(t_token *current, t_cmd *node, t_data *data, int *flag);
+void		cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data);
 
 /* error handler */
-void	error_handler(char *error_name, t_data *data);
+void		error_handler(char *error_name, t_data *data);
 
 /* built in functions */
-int		ft_builtin(t_cmd *data);
-int		do_cd(t_cmd *data);
-int		do_echo(t_cmd *data);
-int		do_env(t_cmd *data);
-int		do_exit(t_cmd *data);
-int		do_export(t_cmd *data);
-int		do_pwd(t_cmd *data);
-int		do_unset(t_cmd *data);
+int			ft_builtin(t_cmd *data);
+int			do_cd(t_cmd *data);
+int			do_echo(t_cmd *data);
+int			do_env(t_cmd *data);
+int			do_exit(t_cmd *data);
+int			do_export(t_cmd *data);
+int			do_pwd(t_cmd *data);
+int			do_unset(t_cmd *data);
 
 /* env functions */
-char	**copy_env(char **env);
-void	sort_env(char **env);
-void	ft_setenv(char ***env, char *key, char *val);
-char	*ft_getenv(char *key, t_data *data);
-void	get_env_value(char **envp, t_env *env);
+char		**copy_env(char **env);
+void		sort_env(char **env);
+void		ft_setenv(char ***env, char *key, char *val);
+char		*ft_getenv(char *key, t_data *data);
+void		get_env_value(char **envp, t_env *env);
 
 /* Excecution! */
 //void	ft_execution(t_data *data);
-void	multiple_pipes(t_data *data, t_cmd *cmd_list);
+void		multiple_pipes(t_data *data, t_cmd *cmd_list);
 
 /* clean-up functions */
-void	free_d_arr(char **arr);
-void	free_token_list(t_token **head);
+void		free_d_arr(char **arr);
+void		free_token_list(t_token **head);
 
 /* New spliter function:
  * it can remove any other tabs stuff and replaced by space
  */
-void	**ft_tokenizer(t_data *data);
-char	**special_split(char const *s, char c);
-void	check_quotes(char *str, int i, int *is_dquote, int *is_squote);
+void		**ft_tokenizer(t_data *data);
+char		**special_split(char const *s, char c);
+void		check_quotes(char *str, int i, int *is_dquote, int *is_squote);
 
 /* Linked list stuff*/
-void	add_token_node(t_token **head, char *arg);
+void		add_token_node(t_token **head, char *arg);
 
 /* Utils */
-char	*ft_strtrim(char *str, int limit);
-int		ft_arglen(char **args);
-char	*sea_ret(char **env, char *arg);
+char		*ft_strtrim(char *str, int limit);
+int			ft_arglen(char **args);
+char		*sea_ret(char **env, char *arg);
 
 /* prompt */
-char	*check_git(char *dir_path);
-char	*get_parent_dir(char *current_path);
-char	*cp_buffer(char *buffer);
-char	*dir_name(t_data *data);
-int		validate_branch_ref(char *git_root, char *head);
-char	*read_head(int *git_type);
-char	*search_for_git(void);
-char	*format_exit_code(int exit_code);
-char	*get_status_arrow(int exit_code);
-char	*build_git_part(void);
-int		is_git_valid(void);
+char		*check_git(char *dir_path);
+char		*get_parent_dir(char *current_path);
+char		*cp_buffer(char *buffer);
+char		*dir_name(t_data *data);
+int			validate_branch_ref(char *git_root, char *head);
+char		*read_head(int *git_type);
+char		*search_for_git(void);
+char		*format_exit_code(int exit_code);
+char		*get_status_arrow(int exit_code);
+char		*build_git_part(void);
+int			is_git_valid(void);
 
 #endif

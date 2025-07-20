@@ -33,7 +33,7 @@ FILES = $(addprefix $(SRC), main.c) \
 		$(addprefix dollar_expand/, dollar_expander.c expand.c expand_modifier.c) \
 		$(addprefix syntax/, op_checkers.c syntax_checker.c) \
 		$(addprefix set_cmd_list/, heredoc_utils.c cmd_path_utils.c argv_utils.c validation_utils.c cmd_builder.c exec_setup.c) \
-		$(addprefix heredoc/, heredoc_expand.c heredoc.c) \
+		$(addprefix heredoc/, heredoc.c heredoc_expand.c heredoc_tools0.c heredoc_tools1.c) \
 		$(addprefix spliter/, spliter.c spliter_utils0.c spliter_utils1.c spliter_utils2.c spliter_utils3.c) \
 		$(addprefix split_expander/, split_expanded.c split_util.c) ) \
 		$(GCFT)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:06:51 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 17:47:48 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/20 15:35:56 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ int	is_it_expandable(char *buffer)
 	return (0);
 }
 
+void	extrajoin(char **token, char **envp, char **expanded_token, t_env **env)
+{
+	extract_variable_name(*token + 1, *env);
+	get_env_value(envp, *env);
+	*expanded_token = ft_strnjoin(*expanded_token, \
+					(*env)->value, (*env)->value_len);
+	*token = ft_trim(*token, (*env)->name_len + 1);
+}
 
 void	expand_variable_heredoc(t_data *data, char **envp, char **token)
 {
@@ -36,21 +44,18 @@ void	expand_variable_heredoc(t_data *data, char **envp, char **token)
 
 	exit_code = ft_itoa(data->last_exit_code);
 	env = ft_collector(sizeof(t_env), ALLOC);
-	expanded_token = ft_strdup("");	
+	expanded_token = ft_strdup("");
 	while (**token)
 	{
 		if (**token == '$' && *(*token + 1) == '?')
 		{
-			expanded_token = ft_strnjoin(expanded_token, exit_code, ft_strlen(exit_code));
+			expanded_token = ft_strnjoin(expanded_token, exit_code, \
+							ft_strlen(exit_code));
 			*token = ft_trim(*token, 2);
 		}
-		else if ((**token == '$' && !ft_isdigit(*(*token + 1)) && is_alnum_(*(*token + 1)) == true))
-		{
-			extract_variable_name(*token + 1, env);
-			get_env_value(envp, env);
-			expanded_token = ft_strnjoin(expanded_token, env->value, env->value_len);
-			*token = ft_trim(*token, env->name_len + 1);
-		}
+		else if ((**token == '$' && !ft_isdigit(*(*token + 1))
+				&& is_alnum_(*(*token + 1)) == true))
+			extrajoin(token, envp, &expanded_token, &env);
 		else
 		{
 			expanded_token = ft_strnjoin(expanded_token, *token, 1);
