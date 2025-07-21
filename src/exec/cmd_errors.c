@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 09:52:19 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/21 03:44:51 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 10:36:46 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	error_execution(char *arg, char *erroname, t_err flag)
 		buff = ft_strjoin3(PRG_NAME, arg, ": Is SuS\n");
 	else
 		buff = ft_strjoin3(PRG_NAME, arg,
-				ft_strjoin(" ", ft_strjoin(erroname, "\n")));
+				ft_strjoin(": ", ft_strjoin(erroname, "\n")));
 
 	return (write(2, buff, ft_strlen(buff)));
 }

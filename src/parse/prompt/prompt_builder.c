@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_builder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/18 19:29:03 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 09:57:28 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*build_git_prompt(t_data *data, char *colored_dirname, int is_tilde)
 	if (!is_tilde)
 		prompt = ft_strjoin(prompt, arrow);
 	else
-		prompt = ft_strjoin(prompt, " ");
+		prompt = ft_strjoin(prompt, " \x7f");
 	return (prompt);
 }
 
@@ -43,11 +43,11 @@ static char	*build_simple_prompt(int exit_code, \
 	prompt = ft_strjoin(exit_code_part, colored_dirname);
 	if (!is_tilde)
 	{
-		prompt = ft_strjoin(prompt, " ");
+		prompt = ft_strjoin(prompt, " \x7f");
 		prompt = ft_strjoin(prompt, arrow);
 	}
 	else
-		prompt = ft_strjoin(prompt, " ");
+		prompt = ft_strjoin(prompt, " \x7f");
 	return (prompt);
 }
 
@@ -69,9 +69,15 @@ char	*prompt_builder(t_data *data)
 {
 	static char	*old_prompt;
 	char		*dirname;
+	static int	flag;
 	int			is_tilde;
 
 	is_tilde = 0;
+	if (!flag)
+	{
+		old_prompt = ft_strdup("minishell");
+		flag = 1;
+	}
 	dirname = build_dir_name(data, &is_tilde);
 	if (!dirname)
 		dirname = old_prompt;
