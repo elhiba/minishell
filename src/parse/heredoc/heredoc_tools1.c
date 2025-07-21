@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_tools1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 15:52:09 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/20 16:07:27 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 12:24:55 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,21 @@ void	heredoc_input(t_heredoc *heredoc, t_data *data)
 
 void	signal_term(int signal, pid_t pid)
 {
+	char	*tmp;
+
+	tmp = ft_itoa(pid);
 	if (signal == SIGSEGV)
-		printf("%d Segmentation fault (core dumped) HEREDOC", pid);
+	{
+		tmp = ft_strjoin(tmp,
+				"Segmentation fault (core dumped) HEREDOC\n");
+		write(2, tmp, ft_strlen(tmp));
+	}
 	else if (signal == SIGTERM)
-		printf("%d terminated HEREDOC", pid);
-	write(2, "\n", 1);
+	{
+		tmp = ft_strjoin(tmp,
+				"terminated HEREDOC\n");
+		write(2, tmp, ft_strlen(tmp));
+	}
 }
 
 void	heredoc_exit_code(int status, t_data *data

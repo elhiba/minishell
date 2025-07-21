@@ -6,11 +6,36 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:50 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/21 11:14:08 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/21 12:49:32 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	signal_code(int signal, pid_t pid, t_cmd *last, int status)
+{
+	char	*tmp;
+
+	tmp = ft_itoa(pid);
+	if (signal == SIGSEGV)
+	{
+		tmp = ft_strjoin3(tmp,
+				" Segmentation fault (core dumped) ",
+				last->argv[0]);
+		write(2, tmp, ft_strlen(tmp));
+	}
+	else if (signal == SIGTERM)
+	{
+		tmp = ft_strjoin3(tmp,
+				"terminated ", last->argv[0]);
+		write(2, tmp, ft_strlen(tmp));
+	}
+	else if (WIFSTOPPED(status))
+	{
+		last->data->last_exit_code = 128 + WSTOPSIG(status);
+	}
+	write(2, "\n", 1);
+}
 
 void	save_exit_status(t_cmd *last, t_data *data, pid_t pid)
 {
@@ -23,15 +48,6 @@ void	save_exit_status(t_cmd *last, t_data *data, pid_t pid)
 	else if (WIFSIGNALED(status))
 	{
 		data->last_exit_code = 128 + WTERMSIG(status);
-		if (WTERMSIG(status) == SIGSEGV)
-			printf("%d Segmentation fault (core dumped) %s",
-				pid, last->argv[0]);
-		else if (WTERMSIG(status) == SIGTERM)
-			printf("%s terminated", last->argv[0]);
-		else if (WIFSTOPPED(status))
-		{
-			data->last_exit_code = 128 + WSTOPSIG(status);
-		}
-		write(2, "\n", 1);
+		signal_code(WTERMSIG(status), pid, last, status);
 	}
 }
