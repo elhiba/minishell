@@ -6,12 +6,15 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 01:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/05/31 16:30:22 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 12:39:57 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gc_collector.h"
 
+/*
+	Old way to add node that allocated
+	-- IT WASTE TIME --
 void	add_back(void **head, void *node)
 {
 	t_collector	*ptr;
@@ -26,6 +29,23 @@ void	add_back(void **head, void *node)
 		ptr->next = node;
 	}
 }
+*/
+
+void	add_front(void **head, void *node)
+{
+	t_collector	*f_head;
+	t_collector	*f_node;
+
+	f_head = *head;
+	f_node = node;
+	if (!f_head)
+		*head = node;
+	else
+	{
+		*head = f_node;
+		f_node->next = f_head;
+	}
+}
 
 void	node_handler(void **head, t_collector *node, size_t size)
 {
@@ -38,7 +58,7 @@ void	node_handler(void **head, t_collector *node, size_t size)
 	if (!node->addr)
 		ft_collector(0, EXIT);
 	node->next = NULL;
-	add_back(head, node);
+	add_front(head, node);
 }
 
 void	free_head(void **head, int flag)
@@ -71,8 +91,6 @@ void	*ft_collector(size_t size, int flag)
 	{
 		node_handler(&head, node, size);
 		ptr = (t_collector *)head;
-		while (ptr->next)
-			ptr = ptr->next;
 	}
 	else if (flag == FREE || flag == EXIT)
 		free_head(&head, flag);
