@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 20:59:49 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/20 21:16:19 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:46:19 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ volatile sig_atomic_t	g_received_signal = 0;
 
 void	init_stuff_main(char **env, t_data *data, ...)
 {
+	if (!isatty(0) || !isatty(2))
+	{
+		write(2, "Non-interactive mode? come back again in 42sh\n", 80);
+		exit(1);
+	}
 	data->env = copy_env(env);
 	data->stdin_ = dup(STDIN_FILENO);
 	data->stdout_ = dup(STDOUT_FILENO);
