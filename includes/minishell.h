@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/20 19:43:38 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/21 03:45:27 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ typedef struct s_data
 	int				stdout_;
 }	t_data;
 
+# define PRG_NAME "minishell: "
 # define SYN_OP_ERROR "minishell: syntax error near unexpected token"
 # define SYN_Q_ERROR "minishell: unexpected EOF while looking for matching"
 # define MAX_PATH_SIZE 4096
