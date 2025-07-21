@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/21 11:28:09 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:31:03 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ typedef enum s_type
 	HEREDOC,
 	APPEND
 }	t_type;
+
+typedef struct s_export
+{
+	char	*var;
+	char	*value;
+	int		is_equal;
+}	t_export;
 
 typedef struct s_env
 {
@@ -208,7 +215,8 @@ int			joining_result(t_token	*token, t_data *data);
 void		set_ambiguous(t_token *token, t_data *data);
 t_cmd		*exec_setup(void	**stock, t_data *data);
 int			exist(char *ptr, char ***env);
-void		add_to_env(char *arg, char ***env);
+int			export_exist(t_export *export, char ***env);
+void		add_to_env(t_export *export, char ***env);
 int			unset_filter(char *arg, char ***env);
 
 /* Heredoc utilities */

@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:17:49 by slasfar           #+#    #+#             */
-/*   Updated: 2025/05/31 16:40:13 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:15:36 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strndup(const char *s1, size_t n)
 	char	*str;
 	size_t	i;
 
-	if (!s1)
+	if (!s1 || n <= 0)
 		return (NULL);
 	str = ft_collector(sizeof(char) * (n + 1), ALLOC);
 	if (!str)

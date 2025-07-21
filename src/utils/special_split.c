@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:12:11 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 19:41:04 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:20:32 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,30 @@ char	**special_split(char const *s, char c)
 		return (ft_collector(0, EXIT));
 	arr = alloc_words(arr, s, c);
 	return (arr);
+}
+
+int	exist(char *ptr, char ***env)
+{
+	char	*trim;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (ptr[j] && ptr[j] != '=')
+		j++;
+	trim = ft_strtrim(ptr, j);
+	if (ptr[j])
+	{
+		while ((*env)[i])
+		{
+			if (ft_strncmp(trim, (*env)[i], ft_strlen(trim)) == 0)
+			{
+				(*env)[i] = ft_strdup(ptr);
+				return (1);
+			}
+			i++;
+		}
+	}
+	return (0);
 }

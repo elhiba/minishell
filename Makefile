@@ -67,6 +67,8 @@ clearscr:
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) $^ $(CLIB) $(LIBFT) -o $@
 	@echo "$(GREEN)Your$(RESET) 🗽 $(BLUE)$(NAME)$(RESET) 🗽 $(GREEN)is ready to run!$(RESET)"
+	@echo "\e[1;31m THIS FILE SHOULD BE REVIEWED >> utils_env.c <<\e[1;0m"
+	@echo "\e[1;31m }MAKE SURE NEW LINE AND TAB WORKS FINE IN PARSING{ \e[1;0m"
 	@echo "\e[1;31m->>>> U REMOVED -Wall -Wextra -Werror! <<<<-\e[1;0m"
 
 %.o: %.c

@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:46:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/14 15:42:07 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:31:10 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	do_env(t_cmd *data)
 	{
 		if (ft_strchr(data->data->env[i], '='))
 		{
-			write(fd, data->data->env[i], ft_strlen(data->data->env[i]));
-			write(fd, "\n", 1);
+			write(fd, ft_strjoin(data->data->env[i], "\n"), ft_strlen(data->data->env[i]));
 		}
 		i++;
 	}

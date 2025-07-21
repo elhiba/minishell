@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/15 16:29:58 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:53:02 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
  *	-[X] i should loop on all this vars and add them to the env var!
  * */
 
-void	add_to_env(char *arg, char ***env)
+void	add_to_env(t_export *export, char ***env)
 {
 	char	**new_env;
 	int		counter;
@@ -42,7 +42,10 @@ void	add_to_env(char *arg, char ***env)
 		new_env[index] = (*env)[index];
 		index++;
 	}
-	new_env[index] = ft_strdup(arg);
+	if (export->value)
+		new_env[index] = ft_strjoin3(export->var, "=", export->value);
+	else
+		new_env[index] = ft_strdup(export->var);
 	*env = new_env;
 }
 
@@ -64,76 +67,119 @@ int	is_export(char *arg)
 	return (1);
 }
 
-void	export_filter(t_cmd *data, char *arg, char ***env)
-{
-	int	i;
+//void	export_filter(t_cmd *data, char *arg, char ***env)
+//{
+//	int	i;
+//
+//	i = 0;
+//	if (is_export(arg))
+//	{
+//		if (arg[i])
+//			add_to_env(arg, env);
+//		data->data->last_exit_code = 0;
+//	}
+//	else
+//	{
+//		write(2, \
+//		ft_strjoin3("minishell: export: `", arg, "': not a valid identifier\n"),
+//			ft_strlen(arg) + 47);
+//		data->data->last_exit_code = 1;
+//	}
+//}
 
-	i = 0;
-	if (is_export(arg))
-	{
-		if (arg[i])
-			add_to_env(arg, env);
-		data->data->last_exit_code = 0;
-	}
-	else
-	{
-		write(2, "minishell: export: `", 20);
-		write(2, arg, ft_strlen(arg));
-		write(2, "': not a valid identifier\n", 27);
-		data->data->last_exit_code = 1;
-	}
-}
-
-int	exist(char *ptr, char ***env)
+int	export_exist(t_export *export, char ***env)
 {
-	char	*trim;
 	int		i;
-	int		j;
+	int		len;
 
 	i = 0;
-	j = 0;
-	while (ptr[j] && ptr[j] != '=')
-		j++;
-	trim = ft_strtrim(ptr, j);
-	if (ptr[j])
+	len = ft_strlen(export->var);
+	while ((*env)[i])
 	{
-		while ((*env)[i])
+		if (ft_strncmp(export->var, (*env)[i], len) == 0)
 		{
-			if (ft_strncmp(trim, (*env)[i], ft_strlen(trim)) == 0)
-			{
-				(*env)[i] = ft_strdup(ptr);
-				return (1);
-			}
-			i++;
+			if (export->is_equal)
+				(*env)[i] = ft_strjoin3(export->var, "=", export->value);
+			else
+				(*env)[i] = ft_strdup(export->var);
+			return (1);
 		}
+		i++;
 	}
 	return (0);
 }
 
-int	do_export(t_cmd *data)
+void	parse_export(t_export **export, char *arg)
 {
-	int		i;
-	char	**ptr;
+	int	export_len;
+	int	var_len;
 
-	(1) && (i = 0, ptr = ++data->argv);
-	if (!ptr[i])
-	{
-		while (data->data->env[i])
-		{
-			write(1, ft_strjoin3("declare -> ", data->data->env[i], "\n"), \
-					ft_strlen(data->data->env[i]) + 12);
-			i++;
-		}
-		data->data->last_exit_code = 0;
-	}
+	if (!*export)
+		*export = ft_collector(sizeof(t_export), ALLOC);
+	ft_bzero(*export, sizeof(t_export));
+	export_len = ft_strlen(arg);
+	var_len = export_len - ft_strlen(ft_strchr(arg, '='));
+	if (ft_strchr(arg, '='))
+		(*export)->is_equal = 1;
+	(*export)->var = ft_strndup(arg, var_len);
+	if (!((export_len - (var_len + 1)) <= 0))
+		(*export)->value = ft_strndup(arg + (var_len + 1) , (export_len - (var_len + 1)));
+	else
+		(*export)->value = "\0";
+
+}
+
+void	export_analyser(t_export *export, t_cmd *data)
+{
+	if (export_exist(export, &data->data->env))
+		;
+	else
+		add_to_env(export, &data->data->env);
+}
+
+void	export_printer(char **env)
+{
+	t_export	*export;
+	char		*var;
+	char		*value;
+	int			i;
+	char		*full_expo;
+
 	i = 0;
-	while (ptr[i])
+	while (env[i])
 	{
-		if (exist(ptr[i], &data->data->env))
-			;
+		export = NULL;
+		parse_export(&export, env[i]);
+		var = export->var;
+		value = ft_strjoin3("\"", export->value, "\"");
+		if (export->is_equal)
+			full_expo = ft_strjoin3("declare -> ", ft_strjoin3(var, "=", value), "\n");
 		else
-			export_filter(data, ptr[i], &data->data->env);
+			full_expo = ft_strjoin("declare -> ", var);
+		write(1,  full_expo, ft_strlen(full_expo));
 		i++;
 	}
+}
+
+int	do_export(t_cmd *data)
+{
+	t_export	*export;
+	int			i;
+
+	i = 0;
+	export = NULL;
+	++data->argv;
+	if (!*data->argv)
+		export_printer(data->data->env);
+	else
+	{
+		while (data->argv[i])
+		{
+			parse_export(&export, data->argv[i]);
+			export_analyser(export, data);
+			i++;
+		}
+	}
+	data->data->last_exit_code = 0;
 	return (1);
 }
