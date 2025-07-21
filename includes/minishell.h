@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/21 03:45:27 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:10:53 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ typedef enum e_signal_flag
 	DEFAULT,
 	SIGDOC
 }	t_signal_flag;
+
+typedef enum s_err
+{
+	IS_DIR,
+	PERM_DENY,
+	NOR_FILE_DIREC,
+	IS_SUS
+}	t_err;
 
 typedef enum s_type
 {
@@ -264,6 +272,46 @@ void		get_env_value(char **envp, t_env *env);
 /* Excecution! */
 //void	ft_execution(t_data *data);
 void		multiple_pipes(t_data *data, t_cmd *cmd_list);
+
+// cmd_errors_file.c
+int     is_a_directory(char *cmd);
+int     error_execution(char *arg, char *erroname, t_err flag);
+int     check_for_err(t_cmd *cmd);
+
+// cmd_errors_redir.c
+bool    is_redir(t_token *current);
+int     check_redir_err(t_token *current, t_data *data);
+int     infile_norm(t_cmd *cmd, t_token *token, t_data *data);
+int     set_fd(t_cmd *cmd, t_token *token, t_data *data);
+
+// cmd_errors_fd.c
+int     check_and_set_fd(t_cmd *cmd_current, t_token *token_current);
+
+// cmd_errors_cmd.c
+int     check_cmd_errors(t_cmd *cmd_current, t_token *token_current);
+void    check_errors(t_cmd *cmd_list, t_token **token_list);
+
+// exec_utils.c
+void    add_pid(pid_t **pid, pid_t new_pid, int *size);
+void    should_use_last_herdoc(t_cmd *current);
+void    change_std(t_cmd *current, t_data *data);
+void    close_pipe(int fd[2]);
+void    close_cmd_fds(t_cmd *current);
+
+// exec_status.c
+void    save_exit_status(t_cmd *last, t_data *data, pid_t pid);
+
+// exec_multi.c
+void    do_multiple_child(t_data *data, t_cmd *current, int fd[2]);
+void    do_while_pipes(t_data *data, t_cmd *current, int fd[2], int *pid);
+void    multiple_pipes(t_data *data, t_cmd *cmd_list);
+
+// exec_single.c
+void    do_single_child(t_data *data, t_cmd *cmd);
+void    single_command(t_data *data, t_cmd *cmd);
+
+// exec_entry.c
+void    execute(t_cmd *cmd_list, t_data *data);
 
 /* clean-up functions */
 void		free_d_arr(char **arr);

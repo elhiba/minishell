@@ -26,7 +26,8 @@ PARSE = $(SRC)parse/
 # C files
 FILES = $(addprefix $(SRC), main.c) \
 		$(addprefix $(BUITIN), ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c) \
-		$(addprefix $(EXEC), exec.c cmd_errors.c) \
+		$(addprefix $(EXEC), cmd_errors_file.c cmd_errors_redir.c cmd_errors_fd.c cmd_errors_cmd.c exec_utils.c \
+		exec_status.c exec_multi.c exec_single.c exec_entry.c) \
 		$(addprefix $(UTILS), signals.c error.c utils.c linked_list.c utils_env.c special_split.c) \
 		$(addprefix $(PARSE), readline.c quotes_handling.c join_token.c \
 		$(addprefix prompt/, prompt_builder.c git_checker0.c git_checker1.c git_checker2.c) \
