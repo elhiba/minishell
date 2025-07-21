@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:27 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/21 11:13:39 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/21 14:48:30 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	check_errors(t_cmd *cmd_list, t_token **token_list)
 
 	i = 0;
 	cmd_current = cmd_list;
-	while (cmd_current && token_list[i])
+	while (cmd_current && token_list[i] && !prevent_flag(42))
 	{
 		token_current = token_list[i];
 		check_and_set_fd(cmd_current, token_current);
