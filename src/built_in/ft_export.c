@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 11:51:35 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/30 13:55:45 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,22 @@ int	is_export(char *arg)
 	return (1);
 }
 
-//void	export_filter(t_cmd *data, char *arg, char ***env)
-//{
-//	int	i;
-//
-//	i = 0;
-//	if (is_export(arg))
-//	{
-//		if (arg[i])
-//			add_to_env(arg, env);
-//		data->data->last_exit_code = 0;
-//	}
-//	else
-//	{
-//		write(2, \
-//		ft_strjoin3("minishell: export: `", arg, "': not a valid identifier\n"),
-//			ft_strlen(arg) + 47);
-//		data->data->last_exit_code = 1;
-//	}
-//}
+void	export_filter(t_export *export, t_cmd *data)
+{
+	if (is_export(export->var))
+	{
+		if (export->var)
+			add_to_env(export, &data->data->env);
+		data->data->last_exit_code = 0;
+	}
+	else
+	{
+		write(2,
+		ft_strjoin3("minishell: export: `", export->var, "': not a valid identifier\n"),
+			ft_strlen(export->var) + 47);
+		data->data->last_exit_code = 1;
+	}
+}
 
 int	export_exist(t_export *export, char ***env)
 {
@@ -141,9 +138,9 @@ void	parse_export(t_export **export, char *arg)
 void	export_analyser(t_export *export, t_cmd *data)
 {
 	if (export_exist(export, &data->data->env))
-		;
+		return ;
 	else
-		add_to_env(export, &data->data->env);
+		export_filter(export, data);
 }
 
 void	export_printer(char **env)
