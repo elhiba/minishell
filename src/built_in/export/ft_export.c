@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 14:56:46 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/30 22:38:28 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 /*
  * ([X] mean works fine!)
@@ -24,6 +24,8 @@
  *	if he add too mush vars like this example
  *	export SUS="djaja" ABMLO="ls -a" SNAKE="Im not lol!"
  *	-[X] i should loop on all this vars and add them to the env var!
+ * ------------------- THO HOLY EXPORT ------------------------
+ *							DONE								
  * */
 
 void	add_to_env(t_export *export, char ***env)
@@ -52,24 +54,6 @@ void	add_to_env(t_export *export, char ***env)
 	*env = new_env;
 }
 
-int	is_export(char *arg)
-{
-	int	i;
-
-	i = 0;
-	if (!(ft_isalpha(arg[0]) || arg[0] == '_'))
-		return (0);
-	while (arg[i] && arg[i] != '=')
-	{
-		if ((arg[i] >= 21 && arg[i] <= 47) || (arg[i] >= 58 && arg[i] <= 59)
-			|| (arg[i] >= 63 && arg[i] <= 64) || (arg[i] >= 91 && arg[i] <= 94)
-			|| arg[i] == 96 || (arg[i] >= 123 && arg[i] <= 126))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 void	export_filter(t_export *export, t_cmd *data)
 {
 	if (is_export(export->var))
@@ -80,9 +64,10 @@ void	export_filter(t_export *export, t_cmd *data)
 	}
 	else
 	{
-		write(2,
-		ft_strjoin3("minishell: export: `", export->var, "': not a valid identifier\n"),
-			ft_strlen(export->var) + 47);
+		if (export->var)
+			write(2, ft_strjoin3("minishell: export: `", export->var, "': not a valid identifier\n"), ft_strlen(export->var) + 47);
+		else
+			write(2, ft_strjoin3("minishell: export: `", "=", "': not a valid identifier\n"), ft_strlen(export->var) + 47);
 		data->data->last_exit_code = 1;
 	}
 }
@@ -100,7 +85,7 @@ int	export_exist(t_export *export, char ***env)
 		{
 			if (*export->value)
 				(*env)[i] = ft_strjoin3(export->var, "=", export->value);
-			else if (export->is_equal)
+			else if (export->var && export->is_equal)
 				(*env)[i] = ft_strjoin(export->var, "=");
 			else if (!*export->value)
 				return (1);
@@ -133,38 +118,6 @@ void	parse_export(t_export **export, char *arg)
 		(*export)->value = ft_strndup(arg + (var_len + 1) , (export_len - (var_len + 1)));
 	else
 		(*export)->value = "\0";
-}
-
-void	export_analyser(t_export *export, t_cmd *data)
-{
-	if (export_exist(export, &data->data->env))
-		return ;
-	else
-		export_filter(export, data);
-}
-
-void	export_printer(char **env)
-{
-	t_export	*export;
-	char		*var;
-	char		*value;
-	int			i;
-	char		*full_expo;
-
-	i = 0;
-	while (env[i])
-	{
-		export = NULL;
-		parse_export(&export, env[i]);
-		var = export->var;
-		value = ft_strjoin3("\"", export->value, "\"");
-		if (export->is_equal)
-			full_expo = ft_strjoin3("declare -> ", ft_strjoin3(var, "=", value), "\n");
-		else
-			full_expo = ft_strjoin3("declare -> ", var, "\n");
-		write(1,  full_expo, ft_strlen(full_expo));
-		i++;
-	}
 }
 
 int	do_export(t_cmd *data)

@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:46:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 13:56:39 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/30 22:24:22 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,18 @@
 
 int	do_env(t_cmd *data)
 {
-	int	i;
-	int	fd;
+	t_export	*env;
+	int			i;
 
 	i = 0;
-	fd = 1;
+	sort_env(data->data->env);
 	while (data->data->env[i])
 	{
-		if (ft_strchr(data->data->env[i], '='))
+		parse_export(&env, data->data->env[i]);
+		if (env->is_equal)
 		{
-			write(fd, ft_strjoin(data->data->env[i], "\n"),
-				ft_strlen(data->data->env[i]));
+			write(1, ft_strjoin(data->data->env[i], "\n"),
+				ft_strlen(data->data->env[i]) + 1);
 		}
 		i++;
 	}

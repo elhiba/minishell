@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:08:25 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/17 11:42:30 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/30 22:01:45 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ int	unset_filter(char *arg, char ***env)
 	int		i;
 
 	i = 0;
-	full_unset = ft_strjoin(arg, "=");
 	while ((*env)[i])
 	{
-		if (ft_strncmp(full_unset, (*env)[i], ft_strlen(full_unset)) == 0)
+		if (ft_strncmp(arg, (*env)[i], ft_strlen(arg)) == 0)
 		{
-			remove_env(full_unset, env);
+			remove_env(arg, env);
 			break ;
 		}
 		i++;

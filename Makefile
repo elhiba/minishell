@@ -25,7 +25,8 @@ PARSE = $(SRC)parse/
 
 # C files
 FILES = $(addprefix $(SRC), main.c) \
-		$(addprefix $(BUITIN), ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c) \
+		$(addprefix $(BUITIN), ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_pwd.c ft_unset.c \
+		$(addprefix export/, ft_export.c ft_export_tools.c) ) \
 		$(addprefix $(EXEC), cmd_errors_file.c cmd_errors_redir.c cmd_errors_fd.c cmd_errors_cmd.c exec_utils.c \
 		exec_status.c exec_multi.c exec_single.c exec_entry.c) \
 		$(addprefix $(UTILS), signals.c error.c utils.c linked_list.c utils_env.c special_split.c) \
