@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 16:49:49 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/30 22:21:04 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	set_cmd_name(t_cmd *cmd, t_token *token, t_data *data)
 	envp->name_len = 4;
 	get_env_value(data->env, envp);
 	stock = ft_split(envp->value, ':');
-	if (*token->arg && check_absolute_path(token->arg))
+	if (*token->arg && check_absolute_path(token->arg) && !is_a_builtin(token->arg))
 		cmd->cmd = get_full_path(stock, token->arg, &cmd->cmd_not_found);
 	else
 		cmd->cmd = token->arg;
