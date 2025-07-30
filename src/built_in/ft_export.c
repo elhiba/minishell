@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/21 18:53:02 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/30 11:51:35 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,13 @@ void	add_to_env(t_export *export, char ***env)
 		new_env[index] = (*env)[index];
 		index++;
 	}
-	if (export->value)
+	if (*export->value)
 		new_env[index] = ft_strjoin3(export->var, "=", export->value);
+	else if (export->is_equal)
+		new_env[index] = ft_strjoin(export->var, "=");
 	else
 		new_env[index] = ft_strdup(export->var);
+	new_env[++index] = NULL;
 	*env = new_env;
 }
 
@@ -98,8 +101,12 @@ int	export_exist(t_export *export, char ***env)
 	{
 		if (ft_strncmp(export->var, (*env)[i], len) == 0)
 		{
-			if (export->is_equal)
+			if (*export->value)
 				(*env)[i] = ft_strjoin3(export->var, "=", export->value);
+			else if (export->is_equal)
+				(*env)[i] = ft_strjoin(export->var, "=");
+			else if (!*export->value)
+				return (1);
 			else
 				(*env)[i] = ft_strdup(export->var);
 			return (1);
@@ -109,6 +116,9 @@ int	export_exist(t_export *export, char ***env)
 	return (0);
 }
 
+/*
+  I should always use `ft_bzero()` to make sure no garbage value has been taken!
+ */
 void	parse_export(t_export **export, char *arg)
 {
 	int	export_len;
@@ -126,7 +136,6 @@ void	parse_export(t_export **export, char *arg)
 		(*export)->value = ft_strndup(arg + (var_len + 1) , (export_len - (var_len + 1)));
 	else
 		(*export)->value = "\0";
-
 }
 
 void	export_analyser(t_export *export, t_cmd *data)
@@ -155,7 +164,7 @@ void	export_printer(char **env)
 		if (export->is_equal)
 			full_expo = ft_strjoin3("declare -> ", ft_strjoin3(var, "=", value), "\n");
 		else
-			full_expo = ft_strjoin("declare -> ", var);
+			full_expo = ft_strjoin3("declare -> ", var, "\n");
 		write(1,  full_expo, ft_strlen(full_expo));
 		i++;
 	}
