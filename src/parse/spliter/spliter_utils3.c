@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 22:12:15 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/19 23:28:47 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:14:34 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	split_cmp_action(t_token **token, char *str, void **tx)
 		add_token_node(token, quotes_handler(str, (int *)tx[2], (int *)tx[0]));
 	else
 	{
-		while (str[*(int *)tx[2]] && str[*(int *)tx[2]] != ' '
-			&& str[*(int *)tx[2]] != '\'' && str[*(int *)tx[2]] != '\"'
+		while (str[*(int *)tx[2]] && str[*(int *)tx[2]] != ' ' && str[*(int *)tx[2]] != '\t'
+			&& str[*(int *)tx[2]] != '\n' && str[*(int *)tx[2]] != '\v' && str[*(int *)tx[2]] != '\f'
+			&& str[*(int *)tx[2]] != '\r' && str[*(int *)tx[2]] != '\'' && str[*(int *)tx[2]] != '\"'
 			&& !operation_len(str + *(int *)tx[2]))
 			(*(int *)tx[2])++;
 		add_token_node(token, ft_substr(str, *(int *)tx[1], \
@@ -31,7 +32,9 @@ void	split_cmp_action(t_token **token, char *str, void **tx)
 
 int	split_actions(t_token **token, char *str, void **tx)
 {
-	while (str[*(int *)tx[2]] == ' ')
+	while (str[*(int *)tx[2]] == ' ' || str[*(int *)tx[2]] == '\t'
+		|| str[*(int *)tx[2]] == '\n' || str[*(int *)tx[2]] == '\v'
+		|| str[*(int *)tx[2]] == '\f' || str[*(int *)tx[2]] == '\r')
 		(*(int *)tx[2])++;
 	if (!str[*(int *)tx[2]])
 		return (1);

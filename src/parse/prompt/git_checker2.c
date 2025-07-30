@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:26:51 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 19:28:24 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/30 14:48:11 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ char	*build_git_part(void)
 char	*get_status_arrow(int exit_code)
 {
 	if (exit_code == 0)
-		return (ft_strjoin("\001\033[1;32m\002➜\001\033[0m\002", " "));
+		return (ft_strjoin("\001\e[1;32m➜\e[0m\002", " \x7f"));
 	else
-		return (ft_strjoin("\001\033[1;31m\002➜\001\033[0m\002", " "));
+		return (ft_strjoin("\001\e[1;31m➜\e[0m\002", " \x7f"));
 }
 
 char	*format_exit_code(int exit_code)
@@ -81,11 +81,11 @@ char	*format_exit_code(int exit_code)
 
 	code_str = ft_itoa(exit_code);
 	if (exit_code == 0)
-		colored_code = ft_strjoin("\001\033[1;32m\002", code_str);
+		colored_code = ft_strjoin("\001\e[1;32m\002", code_str);
 	else
-		colored_code = ft_strjoin("\001\033[1;31m\002", code_str);
-	colored_code = ft_strjoin(colored_code, "\001\033[0m\002");
-	bracket_code = ft_strjoin("[", colored_code);
+		colored_code = ft_strjoin("\001\e[1;31m\002", code_str);
+	colored_code = ft_strjoin(colored_code, "\001\e[0m\002");
+	bracket_code = ft_strjoin("\001[\002", colored_code);
 	bracket_code = ft_strjoin(bracket_code, "] ");
 	return (bracket_code);
 }

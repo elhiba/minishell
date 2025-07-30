@@ -306,9 +306,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -322,9 +319,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -338,9 +332,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -354,9 +345,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -370,9 +358,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -386,9 +371,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -402,9 +384,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -418,9 +397,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -434,41 +410,123 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
-      "src/exec/exec.o",
-      "src/exec/exec.c"
+      "src/exec/cmd_errors_file.o",
+      "src/exec/cmd_errors_file.c"
     ],
     "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/exec/exec.c",
-    "output": "/home/moel-hib/Documents/minishell/src/exec/exec.o"
+    "file": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors_file.c",
+    "output": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors_file.o"
   },
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
-      "src/exec/cmd_errors.o",
-      "src/exec/cmd_errors.c"
+      "src/exec/cmd_errors_redir.o",
+      "src/exec/cmd_errors_redir.c"
     ],
     "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors.c",
-    "output": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors.o"
+    "file": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors_redir.c",
+    "output": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors_redir.o"
   },
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "src/exec/cmd_errors_fd.o",
+      "src/exec/cmd_errors_fd.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors_fd.c",
+    "output": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors_fd.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/exec/cmd_errors_cmd.o",
+      "src/exec/cmd_errors_cmd.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors_cmd.c",
+    "output": "/home/moel-hib/Documents/minishell/src/exec/cmd_errors_cmd.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/exec/exec_utils.o",
+      "src/exec/exec_utils.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/exec/exec_utils.c",
+    "output": "/home/moel-hib/Documents/minishell/src/exec/exec_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/exec/exec_status.o",
+      "src/exec/exec_status.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/exec/exec_status.c",
+    "output": "/home/moel-hib/Documents/minishell/src/exec/exec_status.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/exec/exec_multi.o",
+      "src/exec/exec_multi.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/exec/exec_multi.c",
+    "output": "/home/moel-hib/Documents/minishell/src/exec/exec_multi.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/exec/exec_single.o",
+      "src/exec/exec_single.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/exec/exec_single.c",
+    "output": "/home/moel-hib/Documents/minishell/src/exec/exec_single.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/exec/exec_entry.o",
+      "src/exec/exec_entry.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/exec/exec_entry.c",
+    "output": "/home/moel-hib/Documents/minishell/src/exec/exec_entry.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
       "-g3",
       "-c",
       "-o",
@@ -482,9 +540,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -498,9 +553,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -514,9 +566,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -530,9 +579,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -546,9 +592,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -562,9 +605,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -578,25 +618,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-g3",
-      "-c",
-      "-o",
-      "src/parse/spliter.o",
-      "src/parse/spliter.c"
-    ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/spliter.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/spliter.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -610,57 +631,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-g3",
-      "-c",
-      "-o",
-      "src/parse/syntax_checker.o",
-      "src/parse/syntax_checker.c"
-    ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/syntax_checker.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/syntax_checker.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-g3",
-      "-c",
-      "-o",
-      "src/parse/heredoc_expand.o",
-      "src/parse/heredoc_expand.c"
-    ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/heredoc_expand.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/heredoc_expand.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-g3",
-      "-c",
-      "-o",
-      "src/parse/heredoc.o",
-      "src/parse/heredoc.c"
-    ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/heredoc.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/heredoc.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -674,41 +644,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-g3",
-      "-c",
-      "-o",
-      "src/parse/split_expanded.o",
-      "src/parse/split_expanded.c"
-    ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/split_expanded.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/split_expanded.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-g3",
-      "-c",
-      "-o",
-      "src/parse/handle_redir.o",
-      "src/parse/handle_redir.c"
-    ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/parse/handle_redir.c",
-    "output": "/home/moel-hib/Documents/minishell/src/parse/handle_redir.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -722,9 +657,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -738,9 +670,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -754,9 +683,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -770,9 +696,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -786,9 +709,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -802,9 +722,6 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
       "-g3",
       "-c",
       "-o",
@@ -818,9 +735,253 @@
   {
     "arguments": [
       "/usr/bin/cc",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/syntax/op_checkers.o",
+      "src/parse/syntax/op_checkers.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/syntax/op_checkers.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/syntax/op_checkers.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/syntax/syntax_checker.o",
+      "src/parse/syntax/syntax_checker.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/syntax/syntax_checker.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/syntax/syntax_checker.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/set_cmd_list/heredoc_utils.o",
+      "src/parse/set_cmd_list/heredoc_utils.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/heredoc_utils.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/heredoc_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/set_cmd_list/cmd_path_utils.o",
+      "src/parse/set_cmd_list/cmd_path_utils.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/cmd_path_utils.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/cmd_path_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/set_cmd_list/argv_utils.o",
+      "src/parse/set_cmd_list/argv_utils.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/argv_utils.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/argv_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/set_cmd_list/validation_utils.o",
+      "src/parse/set_cmd_list/validation_utils.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/validation_utils.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/validation_utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/set_cmd_list/cmd_builder.o",
+      "src/parse/set_cmd_list/cmd_builder.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/cmd_builder.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/cmd_builder.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/set_cmd_list/exec_setup.o",
+      "src/parse/set_cmd_list/exec_setup.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/exec_setup.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/set_cmd_list/exec_setup.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/heredoc/heredoc.o",
+      "src/parse/heredoc/heredoc.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/heredoc/heredoc.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/heredoc/heredoc.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/heredoc/heredoc_expand.o",
+      "src/parse/heredoc/heredoc_expand.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/heredoc/heredoc_expand.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/heredoc/heredoc_expand.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/heredoc/heredoc_tools0.o",
+      "src/parse/heredoc/heredoc_tools0.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/heredoc/heredoc_tools0.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/heredoc/heredoc_tools0.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/heredoc/heredoc_tools1.o",
+      "src/parse/heredoc/heredoc_tools1.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/heredoc/heredoc_tools1.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/heredoc/heredoc_tools1.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/spliter/spliter.o",
+      "src/parse/spliter/spliter.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/spliter/spliter.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/spliter/spliter.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/spliter/spliter_utils0.o",
+      "src/parse/spliter/spliter_utils0.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/spliter/spliter_utils0.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/spliter/spliter_utils0.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/spliter/spliter_utils1.o",
+      "src/parse/spliter/spliter_utils1.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/spliter/spliter_utils1.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/spliter/spliter_utils1.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/spliter/spliter_utils2.o",
+      "src/parse/spliter/spliter_utils2.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/spliter/spliter_utils2.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/spliter/spliter_utils2.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/spliter/spliter_utils3.o",
+      "src/parse/spliter/spliter_utils3.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/spliter/spliter_utils3.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/spliter/spliter_utils3.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/split_expander/split_expanded.o",
+      "src/parse/split_expander/split_expanded.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/split_expander/split_expanded.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/split_expander/split_expanded.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/parse/split_expander/split_util.o",
+      "src/parse/split_expander/split_util.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/parse/split_expander/split_util.c",
+    "output": "/home/moel-hib/Documents/minishell/src/parse/split_expander/split_util.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
       "-g3",
       "-c",
       "-o",
