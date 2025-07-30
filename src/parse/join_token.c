@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:42:31 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/19 23:59:35 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/30 14:09:32 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ void	update_flags(t_token *current, t_token *save_next)
 		current->is_space_next = 1;
 	if (current->is_env_var || save_next->is_env_var)
 		current->is_env_var = 1;
+	if (current->is_env_var && save_next->is_squote)
+	{
+		current->is_squote = 1;
+		current->is_env_var = 0;
+	}
 	if (current->is_env_var && save_next->is_dquote)
 	{
 		current->is_dquote = 1;

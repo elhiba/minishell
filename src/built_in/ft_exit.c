@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:24:56 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/20 22:21:30 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/30 14:12:33 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,11 @@ void	is_numeric_arg(char **args, int *index)
 
 void	exit_errors(char **args, int *i, t_cmd **data)
 {
+	int	exit_code;
+
 	if (args[0] != NULL)
 	{
+		exit_code = ft_atoi(args[0]);
 		is_numeric_arg(args, i);
 		if ((args[1]))
 		{
@@ -47,7 +50,7 @@ void	exit_errors(char **args, int *i, t_cmd **data)
 		else
 		{
 			ft_collector(0, FREE);
-			exit(ft_atoi(args[0]));
+			exit(exit_code);
 		}
 	}
 }
