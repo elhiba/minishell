@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 14:59:36 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/20 21:58:25 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:55:35 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,36 @@ int	get_cwd(char **cwd)
 	}
 	else
 	{
-		perror("minishell: cd");
 		return (0);
 	}
 }
 
-void	update_pwd(char *old_pwd, t_cmd *data)
+void	update_pwd(char *old_pwd, char *old_cwd, t_cmd *data)
 {
-	char	*cwd;
+	char		*cwd;
+	t_export	*export;
 
+	export = NULL;
 	cwd = NULL;
-	if (old_pwd)
+	if (old_pwd && get_cwd(&cwd))
 	{
-		if (get_cwd(&cwd))
+		parse_export(&export, ft_strjoin("OLDPWD=", old_pwd));
+		if (export_exist(export, &data->data->env))
+			;
+		else
 		{
-			exist(ft_strjoin("OLDPWD=", old_pwd), &data->data->env);
-			exist(ft_strjoin("PWD=", cwd), &data->data->env);
+			if (old_cwd)
+				parse_export(&export, ft_strjoin("OLDPWD=", old_cwd));
+			add_to_env(export, &data->data->env);
 		}
+		parse_export(&export, ft_strjoin("PWD=", cwd));
+		export_exist(export, &data->data->env);
 	}
 	else
 		unset_filter("OLDPWD", &data->data->env);
 }
 
-int	cd_errors(char *path, char *old_pwd, t_cmd *data)
+int	cd_errors(char *path, char *old_pwd, char *old_cwd, t_cmd *data)
 {
 	if (path && !path[0])
 	{
@@ -75,7 +82,7 @@ int	cd_errors(char *path, char *old_pwd, t_cmd *data)
 			data->data->last_exit_code = 1;
 			return (1);
 		}
-		update_pwd(old_pwd, data);
+		update_pwd(old_pwd, old_cwd, data);
 		data->data->last_exit_code = 0;
 		return (1);
 	}
@@ -96,11 +103,14 @@ int	do_cd(t_cmd *data)
 {
 	char	*path;
 	char	*old_pwd;
+	char	*old_cwd;
 	int		ret;
 
 	path = *(++data->argv);
+	old_cwd = NULL;
+	get_cwd(&old_cwd);
 	old_pwd = sea_ret(data->data->env, "PWD");
-	ret = cd_errors(path, old_pwd, data);
+	ret = cd_errors(path, old_pwd, old_cwd, data);
 	if (ret)
 		return (ret);
 	else if (chdir(path) == -1)
@@ -109,7 +119,7 @@ int	do_cd(t_cmd *data)
 		data->data->last_exit_code = 1;
 		return (1);
 	}
-	update_pwd(old_pwd, data);
+	update_pwd(old_pwd, old_cwd, data);
 	data->data->last_exit_code = 0;
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 10:34:04 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/30 14:43:13 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,8 @@ int			exist(char *ptr, char ***env);
 int			export_exist(t_export *export, char ***env);
 void		add_to_env(t_export *export, char ***env);
 int			unset_filter(char *arg, char ***env);
+void		parse_export(t_export **export, char *arg);
+int			export_exist(t_export *export, char ***env);
 
 /* Heredoc utilities */
 char		*read_rand(void);
