@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/31 17:05:03 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 19:41:34 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	dup_to_redir(t_cmd *current)
 	}
 	if (current->stdout_s != NULL)
 	{
-		current->stdout_ = open(current->stdout_s, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		current->stdout_ = open(current->stdout_s, O_WRONLY
+				| O_CREAT | O_TRUNC, 0644);
 		dup2(current->stdout_, STDOUT_FILENO);
 		close(current->stdout_);
 	}

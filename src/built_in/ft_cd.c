@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 14:59:36 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/31 18:09:11 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 19:50:09 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,37 +69,27 @@ void	update_pwd(char *old_pwd, char *old_cwd, t_cmd *data)
 
 int	cd_errors(char *path, char *old_pwd, char *old_cwd, t_cmd *data)
 {
-	char	*home;
-
-	home = sea_ret(data->data->env, "HOME");
 	if (path && !path[0])
-	{
-		data->data->last_exit_code = 0;
-		return (1);
-	}
+		return (data->data->last_exit_code = 0, 1);
 	if (!path)
 	{
-		if (!home)
+		if (!sea_ret(data->data->env, "HOME"))
 		{
 			write(2, "minishell: cd: HOME not set\n", 28);
-			data->data->last_exit_code = 1;
-			return (1);
+			return (data->data->last_exit_code = 1, 1);
 		}
-		if (chdir(home) == -1)
+		if (chdir(sea_ret(data->data->env, "HOME")) == -1)
 		{
 			perror("minishell: cd: chdir");
-			data->data->last_exit_code = 1;
-			return (1);
+			return (data->data->last_exit_code = 1, 1);
 		}
 		update_pwd(old_pwd, old_cwd, data);
-		data->data->last_exit_code = 0;
-		return (1);
+		return (data->data->last_exit_code = 0, 1);
 	}
 	else if (data->argv[1])
 	{
-		write(2, "minishell: too many arguments\n", 31);
-		data->data->last_exit_code = 1;
-		return (2);
+		write(2, "minishell: too many arguments\n", 30);
+		return (data->data->last_exit_code = 1, 2);
 	}
 	return (0);
 }
