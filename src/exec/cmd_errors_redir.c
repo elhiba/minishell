@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:36 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/31 16:47:51 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 20:02:50 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ int	infile_norm(t_cmd *cmd, t_token *token, t_data *data)
 	return (0);
 }
 
+int	outfile_norm(t_cmd *cmd, t_token *token, t_data *data)
+{
+	if (cmd->stdout_ != 1)
+		close(cmd->stdout_);
+	cmd->stdout_ = open(token->arg, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	cmd->stdout_s = token->arg;
+	if (cmd->stdout_ == -1)
+		return (data->last_exit_code = 1,
+			error_execution(token->arg, strerror(errno), -1), -1);
+	close(cmd->stdout_);
+}
+
 int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 {
 	if (token->is_infile == INPUT_FILE)
@@ -59,14 +71,8 @@ int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
 	}
 	else if (token->is_outfile == OUTPUT_FILE)
 	{
-		if (cmd->stdout_ != 1)
-			close(cmd->stdout_);
-		cmd->stdout_ = open(token->arg, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		cmd->stdout_s = token->arg;
-		if (cmd->stdout_ == -1)
-			return (data->last_exit_code = 1,
-				error_execution(token->arg, strerror(errno), -1), -1);
-		close(cmd->stdout_);
+		if (outfile_norm(cmd, token, data) == -1)
+			return (-1);
 	}
 	else if (token->is_append == APPEND)
 	{
