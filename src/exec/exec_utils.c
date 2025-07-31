@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:55 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/31 19:43:06 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:43:35 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void	should_use_last_herdoc(t_cmd *current)
 
 void	change_std(t_cmd *current, t_data *data)
 {
+	if ((current->should_not_execute
+			|| current->cmd_not_found) && !current->cmd)
+		return ;
 	if (current->stdin_s != NULL)
 	{
 		current->stdin_ = open(current->stdin_s, O_RDONLY, 0644);
