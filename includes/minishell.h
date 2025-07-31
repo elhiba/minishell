@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 20:36:12 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:02:31 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_token
 	char			*key;
 	char			*value;
 	char			*ambiguous_name;
+
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -104,6 +105,7 @@ typedef struct s_heredoc
 	char				*heredoc_del;
 	int					fd;
 	int					expand;
+
 	struct s_heredoc	*next;
 }	t_heredoc;
 
@@ -273,11 +275,11 @@ int			do_pwd(t_cmd *data);
 int			do_unset(t_cmd *data);
 
 /**/
-void	parse_export(t_export **export, char *arg);
-void	export_printer(char **env);
-void	export_analyser(t_export *export, t_cmd *data);
-void	export_filter(t_export *export, t_cmd *data);
-int		is_export(char *arg);
+void		parse_export(t_export **export, char *arg);
+void		export_printer(char **env);
+void		export_analyser(t_export *export, t_cmd *data);
+void		export_filter(t_export *export, t_cmd *data);
+int			is_export(char *arg);
 
 /* env functions */
 char		**copy_env(char **env);

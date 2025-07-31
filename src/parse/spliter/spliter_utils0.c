@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:30:15 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 15:10:12 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:05:38 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	arg_counter(char *str)
 		else
 		{
 			count++;
-			while (str[i] && (str[i] != ' ' || str[i] == '\t') && !operation_len(str + i))
+			while (str[i] && (str[i] != ' ' || str[i] == '\t')
+				&& !operation_len(str + i))
 				i++;
 		}
 	}
@@ -51,7 +52,10 @@ int	arg_counter(char *str)
 
 void	space_checker(char *str, t_token **tok, int index)
 {
-	if (!str[index] || str[index] == ' ' || str[index] == '\t' || operation_len(str + index))
+	if (!str[index]
+		|| str[index] == ' '
+		|| str[index] == '\t'
+		|| operation_len(str + index))
 		(*tok)->is_space_next = 1;
 }
 

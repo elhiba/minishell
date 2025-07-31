@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_builder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/30 22:21:04 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 11:06:33 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	set_cmd_name(t_cmd *cmd, t_token *token, t_data *data)
 	envp->name_len = 4;
 	get_env_value(data->env, envp);
 	stock = ft_split(envp->value, ':');
-	if (*token->arg && check_absolute_path(token->arg) && !is_a_builtin(token->arg))
+	if (*token->arg && check_absolute_path(token->arg)
+		&& !is_a_builtin(token->arg))
 		cmd->cmd = get_full_path(stock, token->arg, &cmd->cmd_not_found);
 	else
 		cmd->cmd = token->arg;

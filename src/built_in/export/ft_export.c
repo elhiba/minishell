@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/31 10:28:29 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:10:04 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,13 @@ void	export_filter(t_export *export, t_cmd *data)
 	else
 	{
 		if (export->var)
-			write(2, ft_strjoin3("minishell: export: `", export->var, "': not a valid identifier\n"), ft_strlen(export->var) + 47);
+			write(2, ft_strjoin3("minishell: export: `",
+					export->var, "': not a valid identifier\n"),
+				ft_strlen(export->var) + 47);
 		else
-			write(2, ft_strjoin3("minishell: export: `", "=", "': not a valid identifier\n"), ft_strlen(export->var) + 47);
+			write(2,
+				ft_strjoin3("minishell: export: `", "=",
+					"': not a valid identifier\n"), ft_strlen(export->var) + 47);
 		data->data->last_exit_code = 1;
 	}
 }
@@ -114,7 +118,8 @@ void	parse_export(t_export **export, char *arg)
 		(*export)->is_equal = 1;
 	(*export)->var = ft_strndup(arg, var_len);
 	if (!((export_len - (var_len + 1)) <= 0))
-		(*export)->value = ft_strndup(arg + (var_len + 1) , (export_len - (var_len + 1)));
+		(*export)->value = ft_strndup(arg + (var_len + 1),
+				(export_len - (var_len + 1)));
 	else
 		(*export)->value = "\0";
 }

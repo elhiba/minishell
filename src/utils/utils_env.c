@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 14:33:18 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/21 14:33:45 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 10:47:12 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ char	**copy_env(char **env)
 	while (env[i])
 		i++;
 	new_env = ft_collector(sizeof(char *) * (i + 1), ALLOC);
-	if (!new_env)
-		error_handler("env malloc error", NULL);
 	i = 0;
 	while (env[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 17:30:51 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/31 09:56:28 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:03:11 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	export_printer(char **env)
 					ft_strjoin3(var, "=", value), "\n");
 		else
 			full_expo = ft_strjoin3("declare -> ", var, "\n");
-		write(1,  full_expo, ft_strlen(full_expo));
+		write(1, full_expo, ft_strlen(full_expo));
 		i++;
 	}
 }
