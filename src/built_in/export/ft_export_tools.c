@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 17:30:51 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 22:45:15 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 09:56:28 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	export_analyser(t_export *export, t_cmd *data)
 			return ;
 		else
 			export_filter(export, data);
-
 	}
 	else
 		export_filter(export, data);
@@ -59,7 +58,6 @@ void	sort(char ***env)
 {
 	int		i;
 	int		j;
-	char	*tmp;
 
 	i = 0;
 	while ((*env)[i])

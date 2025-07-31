@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 22:38:28 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 10:28:29 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,7 @@ void	parse_export(t_export **export, char *arg)
 	int	export_len;
 	int	var_len;
 
-	if (!*export)
-		*export = ft_collector(sizeof(t_export), ALLOC);
+	*export = ft_collector(sizeof(t_export), ALLOC);
 	ft_bzero(*export, sizeof(t_export));
 	export_len = ft_strlen(arg);
 	var_len = export_len - ft_strlen(ft_strchr(arg, '='));

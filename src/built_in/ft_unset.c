@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 13:08:25 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 22:01:45 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 09:44:11 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	remove_env(char *var, char ***env)
 
 int	unset_filter(char *arg, char ***env)
 {
-	char	*full_unset;
 	int		i;
 
 	i = 0;
