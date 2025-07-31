@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:23:14 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 19:52:46 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 18:21:26 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,19 @@ int	ft_arglen(char **args)
 char	*sea_ret(char **env, char *arg)
 {
 	int	i;
+	int	len;
 
 	i = 0;
+	len = ft_strlen(arg);
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], arg, ft_strlen(arg)) == 0)
-			return (env[i] + (ft_strlen(arg) + 1));
+		if (ft_strncmp(env[i], arg, len) == 0)
+		{
+			if (env[i][len] == '=')
+				return (env[i] + (len + 1));
+			else
+				return (ft_strdup(""));
+		}
 		i++;
 	}
 	return (NULL);
