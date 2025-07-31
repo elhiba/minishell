@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 14:59:36 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 15:55:35 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 16:13:07 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ void	update_pwd(char *old_pwd, char *old_cwd, t_cmd *data)
 
 int	cd_errors(char *path, char *old_pwd, char *old_cwd, t_cmd *data)
 {
+	char	*home;
+
+	home = sea_ret(data->data->env, "HOME");
 	if (path && !path[0])
 	{
 		data->data->last_exit_code = 0;
@@ -76,9 +79,15 @@ int	cd_errors(char *path, char *old_pwd, char *old_cwd, t_cmd *data)
 	}
 	if (!path)
 	{
-		if (chdir(sea_ret(data->data->env, "HOME")) == -1)
+		if (!home)
 		{
 			write(2, "minishell: cd: HOME not set\n", 28);
+			data->data->last_exit_code = 1;
+			return (1);
+		}
+		if (chdir(home) == -1)
+		{
+			perror("minishell: cd: chdir");
 			data->data->last_exit_code = 1;
 			return (1);
 		}

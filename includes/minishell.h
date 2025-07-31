@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/31 11:02:31 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:44:56 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ typedef struct s_cmd
 	int				use_last_heredoc;
 	t_heredoc		*last_heredoc;
 	int				stdin_;
+	char			*stdin_s;
+	char			*stdout_s;
 	int				stdout_;
 	int				exit_code;
 

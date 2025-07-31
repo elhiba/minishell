@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:55 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/21 11:14:11 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 17:11:45 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,25 @@ void	should_use_last_herdoc(t_cmd *current)
 {
 	if (current->last_heredoc && current->use_last_heredoc)
 	{
-		if (current->stdin_ != 0)
-			close(current->stdin_);
-		current->stdin_ = open(current->last_heredoc->heredoc_file,
-				O_RDONLY, 0644);
+		current->stdin_s = current->last_heredoc->heredoc_file;
+		// if (current->stdin_ != 0)
+		// 	close(current->stdin_);
+		// current->stdin_ = open(current->last_heredoc->heredoc_file,
+		// 		O_RDONLY, 0644);
 	}
 }
 
 void	change_std(t_cmd *current, t_data *data)
 {
-	if (current->stdin_ != 0)
+	if (current->stdin_s != NULL)
 	{
+		current->stdin_ = open(current->stdin_s, O_RDONLY, 0644);
 		dup2(current->stdin_, STDIN_FILENO);
 		close(current->stdin_);
 	}
-	if (current->stdout_ != 1)
+	if (current->stdout_s != NULL)
 	{
+		current->stdout_ = open(current->stdout_s, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		dup2(current->stdout_, STDOUT_FILENO);
 		close(current->stdout_);
 	}

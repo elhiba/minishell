@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:53:24 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/21 10:10:07 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 17:05:03 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ void	ft_parse(t_data *data)
 
 void	dup_to_redir(t_cmd *current)
 {
-	if (current->stdin_ != 0)
+	if (current->stdin_s != NULL)
 	{
+		current->stdin_ = open(current->stdin_s, O_RDONLY, 0644);
 		dup2(current->stdin_, STDIN_FILENO);
 		close(current->stdin_);
 	}
-	if (current->stdout_ != 1)
+	if (current->stdout_s != NULL)
 	{
+		current->stdout_ = open(current->stdout_s, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		dup2(current->stdout_, STDOUT_FILENO);
 		close(current->stdout_);
 	}
