@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:55 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/31 20:43:35 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 20:46:55 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	close_pipe(int fd[2])
 
 void	close_cmd_fds(t_cmd *current)
 {
+	if ((current->should_not_execute
+			|| current->cmd_not_found) && !current->cmd)
+		return ;
 	if (current->stdin_ != 0)
 		close(current->stdin_);
 	if (current->stdout_ != 1)
