@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:48 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/31 17:10:22 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 17:30:45 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	do_single_child(t_data *data, t_cmd *cmd)
 {
 	set_to_default();
-	should_use_last_herdoc(cmd);
-	change_std(cmd, data);
 	if (cmd->should_not_execute || cmd->cmd_not_found)
 	{
 		ft_collector(0, FREE);
@@ -24,6 +22,8 @@ void	do_single_child(t_data *data, t_cmd *cmd)
 	}
 	if (!cmd->cmd)
 		ft_collector(0, EXIT);
+	change_std(cmd, data);
+	should_use_last_herdoc(cmd);
 	execve(cmd->cmd, cmd->argv, data->env);
 	printf("minishell: %s: %s\n", cmd->argv[0], strerror(errno));
 	ft_collector(0, FREE);

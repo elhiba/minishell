@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:03:06 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/31 11:10:04 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/07/31 18:04:45 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	parse_export(t_export **export, char *arg)
 		(*export)->value = ft_strndup(arg + (var_len + 1),
 				(export_len - (var_len + 1)));
 	else
-		(*export)->value = "\0";
+		(*export)->value = ft_strdup("");
 }
 
 int	do_export(t_cmd *data)

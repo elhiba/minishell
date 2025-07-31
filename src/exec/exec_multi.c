@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:42 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/31 17:11:24 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 17:32:14 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	do_multiple_child(t_data *data, t_cmd *current, int fd[2])
 	set_to_default();
 	if (current->next)
 		dup2(fd[1], STDOUT_FILENO);
-	should_use_last_herdoc(current);
-	change_std(current, data);
 	close_pipe(fd);
 	if (current->should_not_execute || current->cmd_not_found)
 	{
@@ -27,6 +25,8 @@ void	do_multiple_child(t_data *data, t_cmd *current, int fd[2])
 	}
 	if (!current->cmd)
 		ft_collector(0, EXIT);
+	should_use_last_herdoc(current);
+	change_std(current, data);
 	if (ft_builtin(current) == 0)
 	{
 		execve(current->cmd, current->argv, data->env);
