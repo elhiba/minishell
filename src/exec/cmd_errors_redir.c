@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:36 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/31 20:02:50 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 20:08:32 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	outfile_norm(t_cmd *cmd, t_token *token, t_data *data)
 		return (data->last_exit_code = 1,
 			error_execution(token->arg, strerror(errno), -1), -1);
 	close(cmd->stdout_);
+	return (0);
 }
 
 int	set_fd(t_cmd *cmd, t_token *token, t_data *data)
