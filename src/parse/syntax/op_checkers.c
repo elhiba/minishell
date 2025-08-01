@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 12:10:29 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/19 12:10:49 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/08/01 11:12:13 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ char	*check_op(char *str)
 
 int	check_pipe(char *str, int *i)
 {
+	if (*i == 0 && str[*i] == '|')
+	{
+		printf("%s `%c'\n", SYN_OP_ERROR, str[*i]);
+		return 2;
+	}
 	if (str[*i] == '|')
 	{
 		while (str[*i + 1] == ' ')
