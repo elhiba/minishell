@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:26:51 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/31 20:09:40 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/08/01 00:52:34 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ char	*build_git_part(void)
 
 	head = cp_buffer(read_head(NULL));
 	if (!head)
-		return (ft_strdup(""));
+		return (ft_strdup("\x7f"));
 	head = ft_strjoin("\001\033[1m\033[31m\002", head);
 	head = ft_strjoin(head, "\001\033[0m\033[1m\033[34m)\033[0m\002");
 	git_prefix = ft_strjoin(" \001\033[1m\033[34m\002git:(\001\033[0m\002", head);
-	git_info = ft_strjoin(git_prefix, " ");
+	git_info = ft_strjoin(git_prefix, " \x7f");
 	if (!git_info)
-		return (ft_strdup(""));
+		return (ft_strdup("\x7f"));
 	return (git_info);
 }
 

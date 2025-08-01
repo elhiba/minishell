@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/30 14:50:44 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/08/01 00:49:45 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static char	*build_simple_prompt(int exit_code, \
 	prompt = ft_strjoin(exit_code_part, colored_dirname);
 	if (!is_tilde)
 	{
-		prompt = ft_strjoin(prompt, " ");
+		prompt = ft_strjoin(prompt, " \x7f");
 		prompt = ft_strjoin(prompt, arrow);
 	}
 	else
-		prompt = ft_strjoin(prompt, " ");
+		prompt = ft_strjoin(prompt, " \x7f");
 	return (prompt);
 }
 
