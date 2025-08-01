@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 15:24:56 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 14:12:33 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/08/01 13:44:20 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	do_exit(t_cmd *data)
 	else
 	{
 		ft_collector(0, FREE);
-		exit(0);
+		exit(data->data->last_exit_code);
 	}
 	return (1);
 }
