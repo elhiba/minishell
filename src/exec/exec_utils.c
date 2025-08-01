@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:55 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/31 20:46:55 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/07/31 21:06:11 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	should_use_last_herdoc(t_cmd *current)
 
 void	change_std(t_cmd *current, t_data *data)
 {
+	close(data->stdin_);
+	close(data->stdout_);
 	if ((current->should_not_execute
 			|| current->cmd_not_found) && !current->cmd)
 		return ;
@@ -55,8 +57,6 @@ void	change_std(t_cmd *current, t_data *data)
 		dup2(current->stdout_, STDOUT_FILENO);
 		close(current->stdout_);
 	}
-	close(data->stdin_);
-	close(data->stdout_);
 }
 
 void	close_pipe(int fd[2])
