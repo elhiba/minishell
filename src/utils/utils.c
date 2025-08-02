@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:23:14 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/31 18:21:26 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/08/02 10:21:58 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,8 @@
 
 char	*ft_strjoin3(const char *str1, const char *middle, const char *str2)
 {
-	char	*tmp;
-	char	*full_result;
-
-	tmp = ft_strjoin(str1, middle);
-	full_result = ft_strjoin(tmp, str2);
-	return (full_result);
+	return (ft_strjoin(ft_strjoin(str1, middle)
+			, str2));
 }
 
 char	*ft_strtrim(char *str, int limit)
@@ -47,7 +43,7 @@ int	ft_arglen(char **args)
 	return (i);
 }
 
-/* Search And Replace */
+/* Search And Retrieve */
 char	*sea_ret(char **env, char *arg)
 {
 	int	i;

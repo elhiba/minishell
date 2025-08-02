@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_builder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/08/01 00:49:45 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/08/02 10:13:46 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*build_git_prompt(t_data *data, char *colored_dirname, int is_tilde)
 	prompt = ft_strjoin(exit_code_part, colored_dirname);
 	prompt = ft_strjoin(prompt, git_part);
 	if (!is_tilde)
-		prompt = ft_strjoin(prompt, arrow);
+		prompt = ft_strjoin3(prompt, arrow, "\x7f");
 	else
 		prompt = ft_strjoin(prompt, " \x7f");
 	return (prompt);
