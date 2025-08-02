@@ -374,19 +374,6 @@
       "-g3",
       "-c",
       "-o",
-      "src/built_in/ft_export.o",
-      "src/built_in/ft_export.c"
-    ],
-    "directory": "/home/moel-hib/Documents/minishell",
-    "file": "/home/moel-hib/Documents/minishell/src/built_in/ft_export.c",
-    "output": "/home/moel-hib/Documents/minishell/src/built_in/ft_export.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/cc",
-      "-g3",
-      "-c",
-      "-o",
       "src/built_in/ft_pwd.o",
       "src/built_in/ft_pwd.c"
     ],
@@ -406,6 +393,32 @@
     "directory": "/home/moel-hib/Documents/minishell",
     "file": "/home/moel-hib/Documents/minishell/src/built_in/ft_unset.c",
     "output": "/home/moel-hib/Documents/minishell/src/built_in/ft_unset.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/built_in/export/ft_export.o",
+      "src/built_in/export/ft_export.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/built_in/export/ft_export.c",
+    "output": "/home/moel-hib/Documents/minishell/src/built_in/export/ft_export.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-g3",
+      "-c",
+      "-o",
+      "src/built_in/export/ft_export_tools.o",
+      "src/built_in/export/ft_export_tools.c"
+    ],
+    "directory": "/home/moel-hib/Documents/minishell",
+    "file": "/home/moel-hib/Documents/minishell/src/built_in/export/ft_export_tools.c",
+    "output": "/home/moel-hib/Documents/minishell/src/built_in/export/ft_export_tools.o"
   },
   {
     "arguments": [
