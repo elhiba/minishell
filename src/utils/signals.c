@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:13:33 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/18 19:51:32 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/08/02 11:01:22 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	handle_signals(void)
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
-	sigaddset(&sa.sa_mask, SIGQUIT);
 	sa.sa_flags = 0;
 	sa.sa_handler = sigint_handler;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
