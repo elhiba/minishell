@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 00:42:31 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/30 14:09:32 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/08/01 17:07:20 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	update_flags(t_token *current, t_token *save_next)
 		current->is_dquote = 1;
 		current->is_env_var = 0;
 	}
+	if (save_next->is_dquote)
+		current->is_dquote = 1;
 	if (current->is_env_var && current->is_dquote)
 		current->is_dquote = 1;
 	else if (save_next->is_dquote && save_next->is_env_var)
