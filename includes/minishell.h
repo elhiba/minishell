@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/08/02 11:44:20 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/08/02 16:23:21 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ void		add_to_env(t_export *export, char ***env);
 int			unset_filter(char *arg, char ***env);
 void		parse_export(t_export **export, char *arg);
 int			export_exist(t_export *export, char ***env);
+void		remove_var_without_equal_sign(t_data *data);	
 
 /* Heredoc utilities */
 char		*read_rand(void);

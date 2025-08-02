@@ -6,11 +6,26 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 11:12:42 by slasfar           #+#    #+#             */
-/*   Updated: 2025/08/01 17:00:05 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/08/02 16:34:12 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	do_multiple_child_part_2(t_data *data, t_cmd *current)
+{
+	if (ft_builtin(current) == 0)
+	{
+		remove_var_without_equal_sign(data);
+		execve(current->cmd, current->argv, data->env);
+		error_execution(current->cmd, strerror(errno), 1337);
+		ft_collector(0, FREE);
+		if (errno == ENOENT)
+			exit(127);
+		else
+			exit (126);
+	}
+}
 
 void	do_multiple_child(t_data *data, t_cmd *current, int fd[2])
 {
@@ -27,16 +42,7 @@ void	do_multiple_child(t_data *data, t_cmd *current, int fd[2])
 	}
 	if (!current->cmd)
 		ft_collector(0, EXIT);
-	if (ft_builtin(current) == 0)
-	{
-		execve(current->cmd, current->argv, data->env);
-		printf("minishell: %s: %s\n", current->argv[0], strerror(errno));
-		ft_collector(0, FREE);
-		if (errno == ENOENT)
-			exit(127);
-		else
-			exit (126);
-	}
+	do_multiple_child_part_2(data, current);
 	ft_collector(0, FREE);
 	exit(data->last_exit_code);
 }
