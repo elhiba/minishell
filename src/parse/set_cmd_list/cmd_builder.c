@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:55:28 by slasfar           #+#    #+#             */
-/*   Updated: 2025/07/31 11:06:33 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:22:48 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	cmd_builder(t_cmd **cmd_list, t_token *head, t_data *data)
 		do_while(current, node, data, &flag);
 		current = current->next;
 	}
-	if (node->cmd && !ft_strcmp("ls", get_cmd_name(node->argv[0])))
+	if (node->cmd && (!ft_strcmp("ls", get_cmd_name(node->argv[0]))
+		|| !ft_strcmp("grep", get_cmd_name(node->argv[0]))))
 		node->argv = realloc_argv(node->argv);
 	add_cmd(cmd_list, node);
 }
