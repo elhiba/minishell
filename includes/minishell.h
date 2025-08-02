@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/08/02 11:10:24 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/08/02 11:44:20 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,7 @@ int			is_export(char *arg);
 
 /* env functions */
 char		**copy_env(char **env);
-void		sort_env(char **env);
+void		sort(char ***env);
 void		ft_setenv(char ***env, char *key, char *val);
 char		*ft_getenv(char *key, t_data *data);
 void		get_env_value(char **envp, t_env *env);

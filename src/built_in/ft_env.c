@@ -6,7 +6,7 @@
 /*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 18:46:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/30 22:24:22 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/08/02 11:43:13 by moel-hib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	do_env(t_cmd *data)
 	int			i;
 
 	i = 0;
-	sort_env(data->data->env);
+	sort(&data->data->env);
 	while (data->data->env[i])
 	{
 		parse_export(&env, data->data->env[i]);
