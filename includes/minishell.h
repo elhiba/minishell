@@ -6,7 +6,7 @@
 /*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:16:17 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/31 16:44:56 by slasfar          ###   ########.fr       */
+/*   Updated: 2025/08/02 11:10:24 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,6 @@ void		print_list(void **head);
 
 /* Signa	l func */
 void		handle_signals(void);
-void		sigint_handler(int sig);
 
 /* Synta	x checker */
 int			syntax_checker(t_data *data);

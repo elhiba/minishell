@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_tools0.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moel-hib <moel-hib@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: slasfar <slasfar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 15:44:40 by moel-hib          #+#    #+#             */
-/*   Updated: 2025/07/20 15:45:00 by moel-hib         ###   ########.fr       */
+/*   Updated: 2025/08/02 11:05:26 by slasfar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	write_heredoc_warning(t_heredoc *heredoc)
 	char	*tmp;
 
 	tmp = ft_strjoin("minishell: warning: here-document\
-			delimited by end-of-file (wanted `", heredoc->heredoc_del);
+delimited by end-of-file (wanted `", heredoc->heredoc_del);
 	tmp = ft_strjoin(tmp, "')\n");
 	write (2, tmp, ft_strlen(tmp));
 }
